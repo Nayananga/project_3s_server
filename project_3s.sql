@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 25, 2019 at 09:44 AM
+-- Generation Time: Jul 25, 2019 at 11:32 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `COMPLAINTS` (
   `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `geo_tag` text NOT NULL,
   `discription` varchar(300) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -79,13 +80,15 @@ CREATE TABLE `USER` (
 -- Indexes for table `COMPLAINTS`
 --
 ALTER TABLE `COMPLAINTS`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `complaints_1` (`user_id`);
 
 --
 -- Indexes for table `REVIEWS`
 --
 ALTER TABLE `REVIEWS`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reviews_1` (`user_id`);
 
 --
 -- Indexes for table `USER`
@@ -115,6 +118,22 @@ ALTER TABLE `REVIEWS`
 --
 ALTER TABLE `USER`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `COMPLAINTS`
+--
+ALTER TABLE `COMPLAINTS`
+  ADD CONSTRAINT `complaints_1` FOREIGN KEY (`user_id`) REFERENCES `USER` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `REVIEWS`
+--
+ALTER TABLE `REVIEWS`
+  ADD CONSTRAINT `reviews_1` FOREIGN KEY (`user_id`) REFERENCES `USER` (`id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
