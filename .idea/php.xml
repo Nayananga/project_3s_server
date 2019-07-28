@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/restapi/vendor/nette/di" />
+      <path value="$PROJECT_DIR$/restapi/vendor/jean85/pretty-package-versions" />
+      <path value="$PROJECT_DIR$/restapi/vendor/nette/robot-loader" />
+      <path value="$PROJECT_DIR$/restapi/vendor/palanik/corsslim" />
+      <path value="$PROJECT_DIR$/restapi/vendor/nette/bootstrap" />
+      <path value="$PROJECT_DIR$/restapi/vendor/nette/utils" />
+      <path value="$PROJECT_DIR$/restapi/vendor/nette/schema" />
+      <path value="$PROJECT_DIR$/restapi/vendor/nette/finder" />
+      <path value="$PROJECT_DIR$/restapi/vendor/pimple/pimple" />
+      <path value="$PROJECT_DIR$/restapi/vendor/respect/validation" />
+      <path value="$PROJECT_DIR$/restapi/vendor/nette/neon" />
+      <path value="$PROJECT_DIR$/restapi/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/restapi/vendor/nette/php-generator" />
+      <path value="$PROJECT_DIR$/restapi/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phpstan/phpstan" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/restapi/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/restapi/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/restapi/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/restapi/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/restapi/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/restapi/vendor/ocramius/package-versions" />
+      <path value="$PROJECT_DIR$/restapi/vendor/nikic/fast-route" />
+      <path value="$PROJECT_DIR$/restapi/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phpunit/php-token-stream" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/restapi/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/restapi/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/restapi/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/restapi/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/restapi/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/restapi/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/restapi/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/restapi/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/restapi/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/restapi/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/restapi/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/restapi/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/restapi/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/restapi/vendor/slim/slim" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phpstan/phpdoc-parser" />
+      <path value="$PROJECT_DIR$/restapi/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phpspec/prophecy" />
+      <path value="$PROJECT_DIR$/restapi/vendor/predis/predis" />
+      <path value="$PROJECT_DIR$/restapi/vendor/container-interop/container-interop" />
+      <path value="$PROJECT_DIR$/restapi/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/restapi/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/restapi/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/restapi/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/restapi/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/restapi/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/restapi/vendor/composer" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7" />
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings load_method="CUSTOM_LOADER" custom_loader_path="$PROJECT_DIR$/restapi/vendor/autoload.php" />
+    </phpunit_settings>
+  </component>
+</project>

@@ -2,12 +2,14 @@
 
 namespace Tests\integration;
 
+use Dotenv\Dotenv;
+use PHPUnit\Framework\TestCase;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Http\Environment;
 
-class BaseTestCase extends \PHPUnit\Framework\TestCase
+class BaseTestCase extends TestCase
 {
     public static $jwt;
 
@@ -17,7 +19,9 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
      * @param string $requestMethod the request method (e.g. GET, POST, etc.)
      * @param string $requestUri the request URI
      * @param array|object|null $requestData the request data
-     * @return \Slim\Http\Response
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Slim\Exception\MethodNotAllowedException
+     * @throws \Slim\Exception\NotFoundException
      */
     public function runApp($requestMethod, $requestUri, $requestData = null)
     {
@@ -42,7 +46,7 @@ class BaseTestCase extends \PHPUnit\Framework\TestCase
         $baseDir = __DIR__ . '/../../';
         $envFile = $baseDir . '.env';
         if (file_exists($envFile)) {
-            $dotenv = new \Dotenv\Dotenv($baseDir);
+            $dotenv = new Dotenv($baseDir);
             $dotenv->load();
         }
 

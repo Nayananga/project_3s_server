@@ -2,6 +2,12 @@
 
 namespace Tests\integration;
 
+use App\Exception\UserException;
+use App\Repository\UserRepository;
+use App\Service\UserService;
+use PDO;
+use PDOException;
+
 class UserServiceTest extends BaseTestCase
 {
     private static $id;
@@ -10,21 +16,21 @@ class UserServiceTest extends BaseTestCase
     {
         $database = sprintf('mysql:host=%s;dbname=%s', getenv('DB_HOSTNAME'), getenv('DB_DATABASE'));
 
-        return new \PDO($database, getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
+        return new PDO($database, getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
     }
 
     public function testGetUser()
     {
-        $userRepository = new \App\Repository\UserRepository($this->getDatabase());
-        $userService = new \App\Service\UserService($userRepository);
+        $userRepository = new UserRepository($this->getDatabase());
+        $userService = new UserService($userRepository);
         $user = $userService->getUser(1);
         $this->assertStringContainsString('Juan', $user->name);
     }
 
     public function testCreateUser()
     {
-        $userRepository = new \App\Repository\UserRepository($this->getDatabase());
-        $userService = new \App\Service\UserService($userRepository);
+        $userRepository = new UserRepository($this->getDatabase());
+        $userService = new UserService($userRepository);
         $input = ['name' => 'Eze', 'email' => 'eze@gmail.com', 'password' => 'AnyPass1000'];
         $user = $userService->createUser($input);
         self::$id = $user->id;
@@ -33,10 +39,10 @@ class UserServiceTest extends BaseTestCase
 
     public function testCreateUserWithoutNameExpectError()
     {
-        $this->expectException(\App\Exception\UserException::class);
+        $this->expectException(UserException::class);
 
-        $userRepository = new \App\Repository\UserRepository($this->getDatabase());
-        $userService = new \App\Service\UserService($userRepository);
+        $userRepository = new UserRepository($this->getDatabase());
+        $userService = new UserService($userRepository);
         $input = ['email' => 'eze@gmail.com', 'password' => 'AnyPass1000'];
         $user = $userService->createUser($input);
         self::$id = $user->id;
@@ -45,8 +51,8 @@ class UserServiceTest extends BaseTestCase
 
     public function testDeleteUser()
     {
-        $userRepository = new \App\Repository\UserRepository($this->getDatabase());
-        $userService = new \App\Service\UserService($userRepository);
+        $userRepository = new UserRepository($this->getDatabase());
+        $userService = new UserService($userRepository);
         $userId = self::$id;
         $user = $userService->deleteUser((int) $userId);
         $this->assertStringContainsString('The user was deleted.', $user);
