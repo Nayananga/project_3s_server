@@ -1,16 +1,8 @@
 {
-    "name": "maurobonfietti/rest-api-slim-php",
-    "description": "Example of REST API with Slim PHP Framework.",
+    "name": "group_3s/hotel-feedback-system",
+    "description": " REST API with Slim PHP Framework.",
     "keywords": ["php", "slim-micro-framework", "rest-api", "mysql", "slim3", "slim", "rest", "api"],
-    "homepage": "https://github.com/maurobonfietti/rest-api-slim-php",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Mauro Bonfietti",
-            "email": "mauro.bonfietti@gmail.com",
-            "homepage": "https://github.com/maurobonfietti"
-        }
-    ],
+    "homepage": "https://github.com/nayananga/project_3s_server",
     "require": {
         "slim/slim": "^3.1",
         "respect/validation": "^1.1",

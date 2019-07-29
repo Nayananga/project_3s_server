@@ -6,7 +6,6 @@ use App\Exception\UserException;
 use App\Repository\UserRepository;
 use App\Service\UserService;
 use PDO;
-use PDOException;
 
 class UserServiceTest extends BaseTestCase
 {
@@ -16,7 +15,7 @@ class UserServiceTest extends BaseTestCase
     {
         $database = sprintf('mysql:host=%s;dbname=%s', getenv('DB_HOSTNAME'), getenv('DB_DATABASE'));
 
-        return new PDO($database, getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
+        return new PDO($database, $this->getName(getenv('DB_USERNAME')), $this->getName(getenv('DB_PASSWORD')));
     }
 
     public function testGetUser()

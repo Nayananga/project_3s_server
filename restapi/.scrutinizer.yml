@@ -2,15 +2,15 @@ build:
     environment:
         variables:
             DB_HOSTNAME: '127.0.0.1'
-            DB_DATABASE: 'rest_api_slim_php'
-            DB_USERNAME: 'root'
+            DB_DATABASE: 'project_3s'
+            DB_USERNAME: 'nayananga'
             DB_PASSWORD: ''
         php:
             version: 7.1
     project_setup:
         before:
-            - mysql -e "CREATE DATABASE rest_api_slim_php"
-            - mysql rest_api_slim_php < database/database.sql
+            - mysql -e "CREATE DATABASE project_3s"
+            - mysql project_3s < database/project_3s.sql
         override:
             - php-scrutinizer-run
             -
