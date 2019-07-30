@@ -1,4 +1,4 @@
-/vendor/
+/restapi/vendor/
 /logs/*
 !/logs/README.md
 /coverage/
@@ -9,4 +9,4 @@
 /.env
 /.scannerwork/
 /.phpunit.result.cache
-../.idea
+.idea
