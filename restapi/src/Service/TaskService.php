@@ -3,38 +3,38 @@
 namespace App\Service;
 
 use App\Exception\ReviewException;
-use App\Repository\TaskRepository;
+use App\Repository\ReviewRepository;
 
 class TaskService extends BaseService
 {
     /**
-     * @var TaskRepository
+     * @var ReviewRepository
      */
     protected $taskRepository;
 
-    public function __construct(TaskRepository $taskRepository)
+    public function __construct(ReviewRepository $taskRepository)
     {
         $this->taskRepository = $taskRepository;
     }
 
-    protected function getTaskRepository(): TaskRepository
+    protected function getTaskRepository(): ReviewRepository
     {
         return $this->taskRepository;
     }
 
     protected function checkAndGetTask(int $taskId, int $userId)
     {
-        return $this->getTaskRepository()->checkAndGetTask($taskId, $userId);
+        return $this->getTaskRepository()->checkAndGetReview($taskId, $userId);
     }
 
     public function getAllTasks(): array
     {
-        return $this->getTaskRepository()->getAllTasks();
+        return $this->getTaskRepository()->getAllReviews();
     }
 
     public function getTasks(int $userId): array
     {
-        return $this->getTaskRepository()->getTasks($userId);
+        return $this->getTaskRepository()->getReviews($userId);
     }
 
     public function getTask(int $taskId, int $userId)
@@ -48,7 +48,7 @@ class TaskService extends BaseService
             $status = (int) $status;
         }
 
-        return $this->getTaskRepository()->searchTasks($tasksName, $userId, $status);
+        return $this->getTaskRepository()->searchReviews($tasksName, $userId, $status);
     }
 
     public function createTask(array $input)
@@ -69,7 +69,7 @@ class TaskService extends BaseService
         }
         $task->userId = $data->decoded->sub;
 
-        return $this->getTaskRepository()->createTask($task);
+        return $this->getTaskRepository()->createReview($task);
     }
 
     public function updateTask(array $input, int $taskId)
@@ -90,13 +90,13 @@ class TaskService extends BaseService
         }
         $task->userId = $data->decoded->sub;
 
-        return $this->getTaskRepository()->updateTask($task);
+        return $this->getTaskRepository()->updateReview($task);
     }
 
     public function deleteTask(int $taskId, int $userId): string
     {
         $this->checkAndGetTask($taskId, $userId);
 
-        return $this->getTaskRepository()->deleteTask($taskId, $userId);
+        return $this->getTaskRepository()->deleteReview($taskId, $userId);
     }
 }

@@ -40,7 +40,7 @@ CREATE TABLE `complaints` (
 -- Dumping data for table `complaints`
 --
 
-INSERT INTO `complaints` (`id`, `user_id`, `geo_tag`, `discription`, `created_at`, `updated_at`, `image`) VALUES
+INSERT INTO `complaints` (`id`, `user_id`, `geo_tag`, description, `created_at`, `updated_at`, `image`) VALUES
 (1, 3, '<meta name=\"geo.region\" content=\"TW\" />\r\n<meta name=\"geo.placename\" content=\"Xinyi Township\" />\r\n<meta name=\"geo.position\" content=\"23.598298;120.835363\" />\r\n<meta name=\"ICBM\" content=\"23.598298, 120.835363\" />\r\n', 'Hotel\'s staffs are not in good mood.', '2019-07-29 20:14:00', '2019-07-28 11:18:38', NULL),
 (2, 1, '<meta name=\"geo.region\" content=\"SG\" />\r\n<meta name=\"geo.placename\" content=\"Singapore\" />\r\n<meta name=\"geo.position\" content=\"1.340853;103.878447\" />\r\n<meta name=\"ICBM\" content=\"1.340853, 103.878447\" />\r\n', 'Foods are not testy and their services very bad.', '2019-07-29 20:14:00', '2019-07-28 11:18:38', NULL),
 (3, 2, '<meta name=\"geo.region\" content=\"RU\" />\r\n<meta name=\"geo.position\" content=\"64.686314;97.745306\" />\r\n<meta name=\"ICBM\" content=\"64.686314, 97.745306\" />\r\n', 'Tables are arranged in bad way.', '2019-07-29 20:14:00', '2019-07-28 11:24:50', NULL),

@@ -2,7 +2,7 @@
 
 use App\Repository\UserRepository;
 # TODO: Change these classes accordingly
-use App\Repository\TaskRepository;
+use App\Repository\ReviewRepository;
 use App\Repository\ComplaintRepository;
 use Psr\Container\ContainerInterface;
 
