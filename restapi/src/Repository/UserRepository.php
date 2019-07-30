@@ -3,19 +3,20 @@
 namespace App\Repository;
 
 use App\Exception\UserException;
+use PDO;
 
 class UserRepository extends BaseRepository
 {
-    public function __construct(\PDO $database)
+    public function __construct(PDO $database)
     {
         $this->database = $database;
     }
 
-    public function checkAndGetUser(int $userId)
+    public function checkAndGetUser(int $user_id)
     {
-        $query = 'SELECT `id`, `name`, `email` FROM `users` WHERE `id` = :id';
+        $query = 'SELECT `id`, `nic`, `nickname` FROM `user` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('id', $userId);
+        $statement->bindParam('id', $user_id);
         $statement->execute();
         $user = $statement->fetchObject();
         if (empty($user)) {
@@ -25,48 +26,49 @@ class UserRepository extends BaseRepository
         return $user;
     }
 
-    public function checkUserByEmail(string $email)
+    public function checkUserByNic(string $nic)
     {
-        $query = 'SELECT * FROM `users` WHERE `email` = :email';
+        $query = 'SELECT * FROM `user` WHERE `nic` = :nic';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('email', $email);
+        $statement->bindParam('nic', $nic);
         $statement->execute();
         $user = $statement->fetchObject();
         if (empty(!$user)) {
-            throw new UserException('Email already exists.', 400);
+            throw new UserException('Nic already exists.', 400);
         }
     }
 
     public function getUsers(): array
     {
-        $query = 'SELECT `id`, `name`, `email` FROM `users` ORDER BY `id`';
+        $query = 'SELECT `id`, `nic`, `email` FROM `user` ORDER BY `id`';
         $statement = $this->database->prepare($query);
         $statement->execute();
 
         return $statement->fetchAll();
     }
 
-    public function searchUsers(string $usersName): array
+# TODO: get nickname in lowecase
+    public function searchUsers(string $nickname): array
     {
-        $query = 'SELECT `id`, `name`, `email` FROM `users` WHERE UPPER(name) LIKE :name ORDER BY `id`';
-        $name = '%' . $usersName . '%';
+        $query = 'SELECT `id`, `nic`, `nickname` FROM `user` WHERE LOWER(nickname) LIKE :name ORDER BY `id`';
+        $name = '%' . $nickname . '%';
         $statement = $this->database->prepare($query);
         $statement->bindParam('name', $name);
         $statement->execute();
         $users = $statement->fetchAll();
         if (!$users) {
-            throw new UserException('User name not found.', 404);
+            throw new UserException('User nickname not found.', 404);
         }
 
         return $users;
     }
-
-    public function loginUser(string $email, string $password)
+# TODO: SMS Auth needed
+    public function loginUser(string $nic)
     {
-        $query = 'SELECT * FROM `users` WHERE `email` = :email AND `password` = :password ORDER BY `id`';
+        $query = 'SELECT * FROM `user` WHERE `nic` = :nic ORDER BY `id`';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('email', $email);
-        $statement->bindParam('password', $password);
+        $statement->bindParam('nic', $nic);
+//        $statement->bindParam('password', $password);
         $statement->execute();
         $user = $statement->fetchObject();
         if (empty($user)) {
@@ -78,11 +80,13 @@ class UserRepository extends BaseRepository
 
     public function createUser($user)
     {
-        $query = 'INSERT INTO `users` (`name`, `email`, `password`) VALUES (:name, :email, :password)';
+        $query = 'INSERT INTO `user` (`nic`, `nickname`, `email`, `phoneNo`, `image`) VALUES (:nic, :nickname, :email, :phoneNo, :image)';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('name', $user->name);
+        $statement->bindParam('nic', $user->nic);
+        $statement->bindParam('nickname', $user->nickname);
         $statement->bindParam('email', $user->email);
-        $statement->bindParam('password', $user->password);
+        $statement->bindParam('phoneNo', $user->phoneNo);
+        $statement->bindParam('image', $user->image);
         $statement->execute();
 
         return $this->checkAndGetUser((int) $this->database->lastInsertId());
@@ -90,31 +94,31 @@ class UserRepository extends BaseRepository
 
     public function updateUser($user)
     {
-        $query = 'UPDATE `users` SET `name` = :name, `email` = :email WHERE `id` = :id';
+        $query = 'UPDATE `user` SET `nickname` = :name, `email` = :email, `image` = :image WHERE `id` = :id';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('id', $user->id);
-        $statement->bindParam('name', $user->name);
+        $statement->bindParam('name', $user->nickname);
         $statement->bindParam('email', $user->email);
+        $statement->bindParam('image', $user->image);
         $statement->execute();
 
         return $this->checkAndGetUser((int) $user->id);
     }
 
-    public function deleteUser(int $userId): string
+    public function deleteUser(int $user_id): string
     {
-        $query = 'DELETE FROM `users` WHERE `id` = :id';
+        $query = 'DELETE FROM `user` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('id', $userId);
+        $statement->bindParam('id', $user_id);
         $statement->execute();
 
         return 'The user was deleted.';
     }
 
-    public function deleteUserTasks(int $userId)
-    {
-        $query = 'DELETE FROM `tasks` WHERE `userId` = :userId';
-        $statement = $this->database->prepare($query);
-        $statement->bindParam('userId', $userId);
-        $statement->execute();
-    }
+//    public function deleteUserTasks(int $userId)
+//    {
+//        $query = 'DELETE FROM `tasks` WHERE `userId` = :userId';
+//        $statement = $this->database->prepare($query);
+//        $statement->bindParam('userId', $userId);
+//        $statement->execute();
+//    }
 }
