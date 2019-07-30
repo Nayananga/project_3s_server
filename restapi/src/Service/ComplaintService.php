@@ -2,17 +2,17 @@
 
 namespace App\Service;
 
-use App\Exception\NoteException;
-use App\Repository\NoteRepository;
+use App\Exception\ComplaintException;
+use App\Repository\ComplaintRepository;
 
-class NoteService extends BaseService
+class ComplaintService extends BaseService
 {
     /**
-     * @var NoteRepository
+     * @var ComplaintRepository
      */
     protected $noteRepository;
 
-    public function __construct(NoteRepository $noteRepository)
+    public function __construct(ComplaintRepository $noteRepository)
     {
         $this->noteRepository = $noteRepository;
     }
@@ -22,12 +22,12 @@ class NoteService extends BaseService
         return $this->noteRepository->checkAndGetNote($noteId);
     }
 
-    public function getNotes(): array
+    public function getComplaints(): array
     {
         return $this->noteRepository->getNotes();
     }
 
-    public function getNote(int $noteId)
+    public function getComplaint(int $noteId)
     {
         return $this->checkAndGetNote($noteId);
     }
@@ -37,12 +37,12 @@ class NoteService extends BaseService
         return $this->noteRepository->searchNotes($notesName);
     }
 
-    public function createNote($input)
+    public function ccomplaintNote($input)
     {
         $note = new \stdClass();
         $data = json_decode(json_encode($input), false);
         if (!isset($data->name)) {
-            throw new NoteException('Invalid data: name is required.', 400);
+            throw new ComplaintException('Invalid data: name is required.', 400);
         }
         $note->name = self::validateNoteName($data->name);
         $note->description = null;
@@ -53,12 +53,12 @@ class NoteService extends BaseService
         return $this->noteRepository->createNote($note);
     }
 
-    public function updateNote($input, int $noteId)
+    public function updateComplaint($input, int $noteId)
     {
         $note = $this->checkAndGetNote($noteId);
         $data = json_decode(json_encode($input), false);
         if (!isset($data->name) && !isset($data->description)) {
-            throw new NoteException('Enter the data to update the note.', 400);
+            throw new ComplaintException('Enter the data to update the note.', 400);
         }
         if (isset($data->name)) {
             $note->name = self::validateNoteName($data->name);

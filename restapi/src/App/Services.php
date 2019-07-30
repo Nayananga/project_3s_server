@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 
 use App\Service\UserService;
+# TODO: Change these classes accordingly
 use App\Service\TaskService;
-use App\Service\NoteService;
+use App\Service\ComplaintService;
 use Psr\Container\ContainerInterface;
 
 $container = $app->getContainer();
@@ -11,10 +12,10 @@ $container['user_service'] = function (ContainerInterface $container): UserServi
     return new UserService($container->get('user_repository'));
 };
 
-$container['task_service'] = function (ContainerInterface $container): TaskService {
-    return new TaskService($container->get('task_repository'));
+$container['review_service'] = function (ContainerInterface $container): ReviewService {
+    return new ReviewService($container->get('review_repository'));
 };
 
-$container['note_service'] = function (ContainerInterface $container): NoteService {
-    return new NoteService($container->get('note_repository'));
+$container['complaint_service'] = function (ContainerInterface $container): ComplaintService {
+    return new ComplaintService($container->get('Complaint_repository'));
 };

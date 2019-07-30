@@ -2,6 +2,6 @@
 
 namespace App\Exception;
 
-class NoteException extends BaseException
+class ReviewException extends BaseException
 {
 }

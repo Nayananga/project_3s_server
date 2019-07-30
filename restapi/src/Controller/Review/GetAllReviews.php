@@ -1,20 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace App\Controller\Task;
+namespace App\Controller\Review;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class GetOneTask extends BaseTask
+class GetAllReviews extends BaseReview
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->setParams($request, $response, $args);
         $input = $this->getInput();
-        $taskId = (int) $this->args['id'];
         $userId = (int) $input['decoded']->sub;
-        $task = $this->getTaskService()->getTask($taskId, $userId);
+        $reviews = $this->getReviewService()->getReviews($userId);
 
-        return $this->jsonResponse('success', $task, 200);
+        return $this->jsonResponse('success', $reviews, 200);
     }
 }

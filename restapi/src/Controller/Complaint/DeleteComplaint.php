@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace App\Controller\Note;
+namespace App\Controller\Complaint;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class DeleteNote extends BaseNote
+class DeleteComplaint extends BaseComplaint
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->setParams($request, $response, $args);
-        $this->getNoteService()->deleteNote((int) $this->args['id']);
+        $this->getComplaintService()->deleteNote((int) $this->args['id']);
         if ($this->useRedis() === true) {
             $this->deleteFromCache((int) $this->args['id']);
         }

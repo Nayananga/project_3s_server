@@ -20,9 +20,9 @@ class DefaultController extends BaseController
         $this->setParams($request, $response, $args);
         $url = getenv('APP_DOMAIN');
         $endpoints = [
-            'tasks' => $url . '/api/v1/tasks',
+            'reviews' => $url . '/api/v1/reviews',
             'users' => $url . '/api/v1/users',
-            'notes' => $url . '/api/v1/notes',
+            'complaints' => $url . '/api/v1/complaints',
             'status' => $url . '/status',
             'this help' => $url . '',
         ];
@@ -39,12 +39,12 @@ class DefaultController extends BaseController
     {
         $this->setParams($request, $response, $args);
         $userService = $this->container->get('user_service');
-        $noteService = $this->container->get('note_service');
-        $taskService = $this->container->get('task_service');
+        $complaintService = $this->container->get('complaint_service');
+        $reviewService = $this->container->get('review_service');
         $db = [
-            'users' => count($userService->getUsers()),
-            'tasks' => count($taskService->getAllTasks()),
-            'notes' => count($noteService->getNotes()),
+            'users' => count($userService->getUsers()), #TODO: These functions need to rename in other places as well
+            'reviews' => count($reviewService->getAllReviews()),
+            'complaints' => count($complaintService->getComplaints()),
         ];
         $status = [
             'db' => $db,

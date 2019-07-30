@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace App\Controller\Task;
+namespace App\Controller\Review;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class SearchTasks extends BaseTask
+class SearchReview extends BaseReview
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
@@ -17,8 +17,8 @@ class SearchTasks extends BaseTask
             $query = $this->args['query'];
         }
         $status = $request->getParam('status', null);
-        $tasks = $this->getTaskService()->searchTasks($query, $userId, $status);
+        $reviews = $this->getReviewService()->searchReviews($query, $userId, $status);
 
-        return $this->jsonResponse('success', $tasks, 200);
+        return $this->jsonResponse('success', $reviews, 200);
     }
 }

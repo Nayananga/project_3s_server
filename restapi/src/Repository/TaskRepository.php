@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Exception\TaskException;
+use App\Exception\ReviewException;
 
 class TaskRepository extends BaseRepository
 {
@@ -20,7 +20,7 @@ class TaskRepository extends BaseRepository
         $statement->execute();
         $task = $statement->fetchObject();
         if (empty($task)) {
-            throw new TaskException('Task not found.', 404);
+            throw new ReviewException('Task not found.', 404);
         }
 
         return $task;

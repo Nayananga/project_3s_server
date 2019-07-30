@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Predis\Client;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -60,7 +61,7 @@ abstract class BaseController
         return $this->request->getParsedBody();
     }
 
-    protected function getRedisClient(): \Predis\Client
+    protected function getRedisClient(): Client
     {
         return $this->container->get('redis');
     }

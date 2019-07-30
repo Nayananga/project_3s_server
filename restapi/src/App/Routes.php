@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+# TODO: Need to change routes accordingly
 
 $app->get('/', 'App\Controller\DefaultController:getHelp');
 $app->get('/status', 'App\Controller\DefaultController:getStatus');

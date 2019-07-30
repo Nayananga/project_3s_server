@@ -1,21 +1,21 @@
 <?php declare(strict_types=1);
 
-namespace App\Controller\Note;
+namespace App\Controller\Complaint;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class UpdateNote extends BaseNote
+class CreateComplaint extends BaseComplaint
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->setParams($request, $response, $args);
         $input = $this->getInput();
-        $note = $this->getNoteService()->updateNote($input, (int) $this->args['id']);
+        $note = $this->getComplaintService()->ccomplaintNote($input);
         if ($this->useRedis() === true) {
-            $this->saveInCache((int) $this->args['id'], $note);
+            $this->saveInCache((int) $note->id, $note);
         }
 
-        return $this->jsonResponse('success', $note, 200);
+        return $this->jsonResponse('success', $note, 201);
     }
 }
