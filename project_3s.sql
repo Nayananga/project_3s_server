@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jul 30, 2019 at 01:53 AM
--- Server version: 5.7.27-0ubuntu0.19.04.1
--- PHP Version: 7.2.19-0ubuntu0.19.04.1
+-- Host: 127.0.0.1
+-- Generation Time: Jul 30, 2019 at 06:02 PM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -23,6 +25,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `username` varchar(56) NOT NULL,
+  `email` varchar(56) NOT NULL,
+  `password` varchar(76) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `username`, `email`, `password`) VALUES
+(1, 'user1', 'user1@gmail.com', 'user147'),
+(2, 'slahiru', 'slahiru147@gmail.com', 'shehanlahiru'),
+(3, 'user2', 'user2@gmail.com', 'user123456'),
+(4, 'user3', 'user3@gmail.com', 'user123');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `complaints`
 --
 
@@ -30,17 +55,17 @@ CREATE TABLE `complaints` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `geo_tag` text NOT NULL,
-  `discription` varchar(300) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `image` blob
+  `description` varchar(300) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `image` blob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `complaints`
 --
 
-INSERT INTO `complaints` (`id`, `user_id`, `geo_tag`, description, `created_at`, `updated_at`, `image`) VALUES
+INSERT INTO `complaints` (`id`, `user_id`, `geo_tag`, `description`, `created_at`, `updated_at`, `image`) VALUES
 (1, 3, '<meta name=\"geo.region\" content=\"TW\" />\r\n<meta name=\"geo.placename\" content=\"Xinyi Township\" />\r\n<meta name=\"geo.position\" content=\"23.598298;120.835363\" />\r\n<meta name=\"ICBM\" content=\"23.598298, 120.835363\" />\r\n', 'Hotel\'s staffs are not in good mood.', '2019-07-29 20:14:00', '2019-07-28 11:18:38', NULL),
 (2, 1, '<meta name=\"geo.region\" content=\"SG\" />\r\n<meta name=\"geo.placename\" content=\"Singapore\" />\r\n<meta name=\"geo.position\" content=\"1.340853;103.878447\" />\r\n<meta name=\"ICBM\" content=\"1.340853, 103.878447\" />\r\n', 'Foods are not testy and their services very bad.', '2019-07-29 20:14:00', '2019-07-28 11:18:38', NULL),
 (3, 2, '<meta name=\"geo.region\" content=\"RU\" />\r\n<meta name=\"geo.position\" content=\"64.686314;97.745306\" />\r\n<meta name=\"ICBM\" content=\"64.686314, 97.745306\" />\r\n', 'Tables are arranged in bad way.', '2019-07-29 20:14:00', '2019-07-28 11:24:50', NULL),
@@ -58,8 +83,8 @@ CREATE TABLE `reviews` (
   `q&a` text NOT NULL,
   `geo_tag` text NOT NULL,
   `device_signature` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -84,9 +109,8 @@ CREATE TABLE `user` (
   `nickname` varchar(300) NOT NULL,
   `email` varchar(300) DEFAULT NULL,
   `phoneNo` varchar(100) DEFAULT NULL,
-  `admin` tinyint(1) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `image` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -94,16 +118,22 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `nic`, `nickname`, `email`, `phoneNo`, `admin`, `created_at`, `updated_at`, `image`) VALUES
-(1, '953464110v', 'Slahiru', 's.lahiru1995@gmail.com', '0766352082', 1, '2019-07-28 08:53:59', '2019-07-28 08:53:59', NULL),
-(2, '951413135v', 'aththa', 'lahirupre21@gmmail.com', '0776512789', 1, '2019-07-28 09:06:17', '2019-07-28 09:07:49', NULL),
-(3, '354858109v', 'ashan', 'agfdnine@gmail.com', '0715898741', 1, '2019-07-28 10:10:44', '2019-07-28 10:10:44', NULL),
-(4, '874578963v', 'west', 'west1234@gmail.com', '0784546987', 1, '2019-07-28 10:12:45', '2019-07-28 10:12:45', NULL),
-(5, '971258796v', 'dinesh', 'dineshlakshitha@gmail.com', '0714578964', 1, '2019-07-28 10:15:10', '2019-07-28 10:15:10', NULL);
+INSERT INTO `user` (`id`, `nic`, `nickname`, `email`, `phoneNo`, `created_at`, `updated_at`, `image`) VALUES
+(1, '953464110v', 'Slahiru', 's.lahiru1995@gmail.com', '0766352082', '2019-07-28 08:53:59', '2019-07-28 08:53:59', NULL),
+(2, '951413135v', 'aththa', 'lahirupre21@gmmail.com', '0776512789', '2019-07-28 09:06:17', '2019-07-28 09:07:49', NULL),
+(3, '354858109v', 'ashan', 'agfdnine@gmail.com', '0715898741', '2019-07-28 10:10:44', '2019-07-28 10:10:44', NULL),
+(4, '874578963v', 'west', 'west1234@gmail.com', '0784546987', '2019-07-28 10:12:45', '2019-07-28 10:12:45', NULL),
+(5, '971258796v', 'dinesh', 'dineshlakshitha@gmail.com', '0714578964', '2019-07-28 10:15:10', '2019-07-28 10:15:10', NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `complaints`
@@ -131,20 +161,29 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- Constraints for dumped tables
 --
@@ -160,6 +199,7 @@ ALTER TABLE `complaints`
 --
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
