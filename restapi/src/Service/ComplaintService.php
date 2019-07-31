@@ -4,75 +4,76 @@ namespace App\Service;
 
 use App\Exception\ComplaintException;
 use App\Repository\ComplaintRepository;
+use stdClass;
 
 class ComplaintService extends BaseService
 {
     /**
      * @var ComplaintRepository
      */
-    protected $noteRepository;
+    protected $complaintRepository;
 
-    public function __construct(ComplaintRepository $noteRepository)
+    public function __construct(ComplaintRepository $complaintRepository)
     {
-        $this->noteRepository = $noteRepository;
+        $this->complaintRepository = $complaintRepository;
     }
 
-    protected function checkAndGetNote(int $noteId)
+    protected function checkAndGetComplaint(int $complaint_id)
     {
-        return $this->noteRepository->checkAndGetNote($noteId);
+        return $this->complaintRepository->checkAndGetComplaint($complaint_id);
     }
 
     public function getComplaints(): array
     {
-        return $this->noteRepository->getNotes();
+        return $this->complaintRepository->getComplaints();
     }
 
-    public function getComplaint(int $noteId)
+    public function getComplaint(int $complaint_id)
     {
-        return $this->checkAndGetNote($noteId);
+        return $this->checkAndGetComplaint($complaint_id);
     }
 
-    public function searchNotes(string $notesName): array
+    public function searchComplaints(string $strComplaints): array
     {
-        return $this->noteRepository->searchNotes($notesName);
+        return $this->complaintRepository->searchComplaints($strComplaints);
     }
 
-    public function ccomplaintNote($input)
+    public function createComplaint($data)
     {
-        $note = new \stdClass();
-        $data = json_decode(json_encode($input), false);
-        if (!isset($data->name)) {
-            throw new ComplaintException('Invalid data: name is required.', 400);
+        $complaint = new stdClass();
+        $data = json_decode(json_encode($data), false);
+        if (!isset($data->user_id)) {
+            throw new ComplaintException('Invalid data: user_id is required.', 400);
         }
-        $note->name = self::validateNoteName($data->name);
-        $note->description = null;
+        $complaint->geo_tag = self::validateComplaintGeoTag($data->geo_tag);
+        $complaint->description = null;
         if (isset($data->description)) {
-            $note->description = $data->description;
+            $complaint->description = $data->description;
         }
 
-        return $this->noteRepository->createNote($note);
+        return $this->complaintRepository->createComplaint($complaint);
     }
 
-    public function updateComplaint($input, int $noteId)
+    public function updateComplaint($input, int $complaint_id)
     {
-        $note = $this->checkAndGetNote($noteId);
+        $complaint = $this->checkAndGetComplaint($complaint_id);
         $data = json_decode(json_encode($input), false);
-        if (!isset($data->name) && !isset($data->description)) {
-            throw new ComplaintException('Enter the data to update the note.', 400);
+        if (!isset($data->description)) { #TODO: VALIDATE IMAGE UPDATED OR NOT
+            throw new ComplaintException('Enter the data to update the complaint.', 400);
         }
-        if (isset($data->name)) {
-            $note->name = self::validateNoteName($data->name);
+        if (isset($data->geo_tag)) {
+            $complaint->geo_tag = self::validateComplaintGeoTag($data->geo_tag);
         }
         if (isset($data->description)) {
-            $note->description = $data->description;
+            $complaint->description = $data->description;
         }
 
-        return $this->noteRepository->updateNote($note);
+        return $this->complaintRepository->updateComplaint($complaint);
     }
 
-    public function deleteNote(int $noteId)
+    public function deleteComplaint(int $complaint_id)
     {
-        $this->checkAndGetNote($noteId);
-        $this->noteRepository->deleteNote($noteId);
+        $this->checkAndGetComplaint($complaint_id);
+        $this->complaintRepository->deleteComplaint($complaint_id);
     }
 }

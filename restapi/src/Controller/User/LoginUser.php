@@ -12,7 +12,7 @@ class LoginUser extends BaseUser
         $this->setParams($request, $response, $args);
         $jwt = $this->getUserService()->loginUser($this->getInput());
         $message = [
-            'Authorization' => 'Bearer ' . $jwt,
+            'Authorization' => 'Bearer ' . $jwt, # TODO: Check this
         ];
 
         return $this->jsonResponse('success', $message, 200);

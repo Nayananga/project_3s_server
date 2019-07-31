@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Exception\UserException;
 use App\Repository\UserRepository;
 use \Firebase\JWT\JWT;
+use stdClass;
 
 class UserService extends BaseService
 {
@@ -18,9 +19,9 @@ class UserService extends BaseService
         $this->userRepository = $userRepository;
     }
 
-    protected function checkAndGetUser(int $userId)
+    protected function checkAndGetUser(int $user_id)
     {
-        return $this->userRepository->checkAndGetUser($userId);
+        return $this->userRepository->checkAndGetUser($user_id);
     }
 
     public function getUsers(): array
@@ -28,40 +29,43 @@ class UserService extends BaseService
         return $this->userRepository->getUsers();
     }
 
-    public function getUser(int $userId)
+    public function getUser(int $user_id)
     {
-        return $this->checkAndGetUser($userId);
+        return $this->checkAndGetUser($user_id);
     }
 
-    public function searchUsers(string $usersName): array
+    public function searchUsers(string $nickname): array
     {
-        return $this->userRepository->searchUsers($usersName);
+        return $this->userRepository->searchUsers($nickname);
     }
-
+# TODO: Ask about how to put image
     public function createUser($input)
     {
-        $user = new \stdClass();
+        $user = new stdClass();
         $data = json_decode(json_encode($input), false);
-        if (!isset($data->name)) {
-            throw new UserException('The field "name" is required.', 400);
+        if (!isset($data->nic)) {
+            throw new UserException('The field "NIC" is required.', 400);
+        }
+        if (!isset($data->nickname)) {
+            throw new UserException('The field "nickname" is required.', 400);
         }
         if (!isset($data->email)) {
             throw new UserException('The field "email" is required.', 400);
         }
-        if (!isset($data->password)) {
-            throw new UserException('The field "password" is required.', 400);
+        if (!isset($data->phoneNo)) {
+            throw new UserException('The field "phoneNo" is required.', 400);
         }
         $user->name = self::validateUserName($data->name);
         $user->email = self::validateEmail($data->email);
-        $user->password = hash('sha512', $data->password);
-        $this->userRepository->checkUserByNic($user->email);
+//        $user->password = hash('sha512', $data->password); # TODO: validate nic,phone no
+//        $this->userRepository->checkUserByNic($user->email);
 
         return $this->userRepository->createUser($user);
     }
 
-    public function updateUser(array $input, int $userId)
+    public function updateUser(array $input, int $user_id)
     {
-        $user = $this->checkAndGetUser($userId);
+        $user = $this->checkAndGetUser($user_id);
         $data = json_decode(json_encode($input), false);
         if (!isset($data->name) && !isset($data->email)) {
             throw new UserException('Enter the data to update the user.', 400);
@@ -76,25 +80,25 @@ class UserService extends BaseService
         return $this->userRepository->updateUser($user);
     }
 
-    public function deleteUser(int $userId): string
+    public function deleteUser(int $user_id): string
     {
-        $this->checkAndGetUser($userId);
-        $this->userRepository->deleteUserTasks($userId);
+        $this->checkAndGetUser($user_id);
+        $this->userRepository->deleteUser($user_id);
 
-        return $this->userRepository->deleteUser($userId);
+        return $this->userRepository->deleteUser($user_id);
     }
 
-    public function loginUser(?array $input): string
+    public function loginUser(array $input): string
     {
         $data = json_decode(json_encode($input), false);
-        if (!isset($data->email)) {
-            throw new UserException('The field "email" is required.', 400);
+        if (!isset($data->nic)) {
+            throw new UserException('The field "nic" is required.', 400);
         }
-        if (!isset($data->password)) {
-            throw new UserException('The field "password" is required.', 400);
-        }
-        $password = hash('sha512', $data->password);
-        $user = $this->userRepository->loginUser($data->email, $password);
+//        if (!isset($data->password)) {
+//            throw new UserException('The field "password" is required.', 400);
+//        }
+//        $password = hash('sha512', $data->password);
+        $user = $this->userRepository->loginUser($data->nic);
         $token = array(
             'sub' => $user->id,
             'email' => $user->email,

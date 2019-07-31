@@ -22,6 +22,6 @@ abstract class BaseComplaint extends BaseController
 
     protected function getComplaintService(): ComplaintService
     {
-        return $this->container->get('note_service');
+        return $this->container->get('complaint_service'); # TODO: I`m not sure about this
     }
 }

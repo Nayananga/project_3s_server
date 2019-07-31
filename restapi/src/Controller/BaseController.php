@@ -7,6 +7,8 @@ use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
+# TODO: check about redis layer
+
 abstract class BaseController
 {
     /**

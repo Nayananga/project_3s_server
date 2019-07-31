@@ -1,13 +1,12 @@
 <?php declare(strict_types=1);
 
 use App\Repository\UserRepository;
-# TODO: Change these classes accordingly
 use App\Repository\ReviewRepository;
 use App\Repository\ComplaintRepository;
 use Psr\Container\ContainerInterface;
 
 $container = $app->getContainer();
-
+# TODO: Im not sure what db is
 $container['user_repository'] = function (ContainerInterface $container): UserRepository {
     return new UserRepository($container->get('db'));
 };

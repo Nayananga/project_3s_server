@@ -10,9 +10,9 @@ class GetOneReview extends BaseReview {
     {
         $this->setParams($request, $response, $args);
         $input = $this->getInput();
-        $reviewId = (int) $this->args['id'];
-        $userId = (int) $input['decoded']->sub;
-        $review = $this->getReviewService()->getReview($reviewId, $userId);
+        $review_id = (int) $this->args['id'];
+        $user_id = (int) $input['decoded']->sub;
+        $review = $this->getReviewService()->getReview($review_id, $user_id);
 
         return $this->jsonResponse('success', $review, 200);
     }

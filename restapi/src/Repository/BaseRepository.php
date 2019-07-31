@@ -2,14 +2,16 @@
 
 namespace App\Repository;
 
+use PDO;
+
 abstract class BaseRepository
 {
     /**
-     * @var \PDO $database
+     * @var PDO $database
      */
     protected $database;
 
-    protected function getDb(): \PDO
+    protected function getDb(): PDO
     {
         return $this->database;
     }

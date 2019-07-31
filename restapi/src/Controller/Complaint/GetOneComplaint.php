@@ -20,15 +20,15 @@ class GetOneComplaint extends BaseComplaint
     }
 
     /**
-     * @param int $complaintId
+     * @param int $complaint_id
      * @return mixed
      */
-    private function getComplaintFromCache(int $complaintId)
+    private function getComplaintFromCache(int $complaint_id)
     {
-        $complaint = $this->getFromCache($complaintId);
+        $complaint = $this->getFromCache($complaint_id);
         if ($complaint === null) {
-            $complaint = $this->getComplaintService()->getComplaint($complaintId);
-            $this->saveInCache($complaintId, $complaint);
+            $complaint = $this->getComplaintService()->getComplaint($complaint_id);
+            $this->saveInCache($complaint_id, $complaint);
         }
 
         return $complaint;

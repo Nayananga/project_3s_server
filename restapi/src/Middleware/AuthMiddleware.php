@@ -3,10 +3,12 @@
 namespace App\Middleware;
 
 use App\Exception\AuthException;
+use DomainException;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use \Firebase\JWT\JWT;
+use UnexpectedValueException;
 
 class AuthMiddleware
 {
@@ -42,9 +44,9 @@ class AuthMiddleware
 
         try {
             $decoded = JWT::decode($token, getenv('SECRET_KEY'), ['HS256']);
-        } catch (\UnexpectedValueException $e) {
+        } catch (UnexpectedValueException $e) {
             $auth = false;
-        } catch (\DomainException $e) {
+        } catch (DomainException $e) {
             $auth = false;
         }
 

@@ -28,30 +28,30 @@ abstract class BaseService
         return $email;
     }
 
-    protected static function validateTaskName(string $name): string
+    protected static function validateReviewAnswers(string $q_a): string
     {
-        if (!v::length(2, 100)->validate($name)) {
-            throw new ReviewException('Invalid name.', 400);
+        if (!v::length(2, 100)->validate($q_a)) {
+            throw new ReviewException('Invalid q&a.', 400);
         }
 
-        return $name;
+        return $q_a;
     }
 
-    protected static function validateTaskStatus(int $status): int
+    protected static function validateReviewGeoTag(string $geo_tag): string
     {
-        if (!v::numeric()->between(0, 1)->validate($status)) {
-            throw new ReviewException('Invalid status', 400);
+        if (!v::length(2, 100)->validate($geo_tag)) {
+            throw new ReviewException('Invalid Geo Tag', 400);
         }
 
-        return $status;
+        return $geo_tag;
     }
 
-    protected static function validateNoteName(string $name): string
+    protected static function validateComplaintGeoTag(string $geo_tag): string
     {
-        if (!v::length(2, 50)->validate($name)) {
-            throw new ComplaintException('The name of the note is invalid.', 400);
+        if (!v::length(2, 100)->validate($geo_tag)) {
+            throw new ComplaintException('The Geo Tag of the position is invalid.', 400);
         }
 
-        return $name;
+        return $geo_tag;
     }
 }

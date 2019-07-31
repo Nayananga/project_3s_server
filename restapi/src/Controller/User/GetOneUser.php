@@ -20,15 +20,15 @@ class GetOneUser extends BaseUser
     }
 
     /**
-     * @param int $userId
+     * @param int $user_id
      * @return mixed
      */
-    private function getUserFromCache(int $userId)
+    private function getUserFromCache(int $user_id)
     {
-        $user = $this->getFromCache($userId);
+        $user = $this->getFromCache($user_id);
         if ($user === null) {
-            $user = $this->getUserService()->getUser($userId);
-            $this->saveInCache($userId, $user);
+            $user = $this->getUserService()->getUser($user_id);
+            $this->saveInCache($user_id, $user);
         }
 
         return $user;

@@ -2,6 +2,7 @@
 
 namespace App\Handler;
 
+use Exception;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use ReflectionClass;
@@ -9,7 +10,7 @@ use Slim\Handlers\Error;
 
 final class ApiError extends Error
 {
-    public function __invoke(Request $request, Response $response, \Exception $exception)
+    public function __invoke(Request $request, Response $response, Exception $exception)
     {
         $statusCode = $exception->getCode() <= 599 ? $exception->getCode() : 500;
         $className = new ReflectionClass(get_class($exception));

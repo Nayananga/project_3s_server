@@ -16,9 +16,9 @@ class SearchReview extends BaseReview
         if (isset($this->args['query'])) {
             $query = $this->args['query'];
         }
-        $status = $request->getParam('status', null);
-        $reviews = $this->getReviewService()->searchReviews($query, $userId, $status);
-
-        return $this->jsonResponse('success', $reviews, 200);
+//        $status = $request->getParam('status', null); # TODO: Discuss about searching reviews
+//        $reviews = $this->getReviewService()->searchReviews($query, $userId, $status);
+//
+//        return $this->jsonResponse('success', $reviews, 200);
     }
 }

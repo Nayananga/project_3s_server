@@ -11,9 +11,9 @@ class DeleteReview extends BaseReview
     {
         $this->setParams($request, $response, $args);
         $input = $this->getInput();
-        $reviewId = (int) $this->args['id'];
-        $userId = (int) $input['decoded']->sub;
-        $review = $this->getReviewService()->deleteReview($reviewId, $userId);
+        $review_id = (int) $this->args['id'];
+        $user_id = (int) $input['decoded']->sub; # TODO: Not sure either
+        $review = $this->getReviewService()->deleteReview($review_id, $user_id);
 
         return $this->jsonResponse('success', $review, 204);
     }

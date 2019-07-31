@@ -17,7 +17,7 @@ class DefaultController extends BaseController
 
     public function getHelp(Request $request, Response $response, array $args): Response
     {
-        $this->setParams($request, $response, $args);
+        $this->setParams($request, $response, $args); # TODO: Check these routes
         $url = getenv('APP_DOMAIN');
         $endpoints = [
             'reviews' => $url . '/api/v1/reviews',
@@ -42,7 +42,7 @@ class DefaultController extends BaseController
         $complaintService = $this->container->get('complaint_service');
         $reviewService = $this->container->get('review_service');
         $db = [
-            'users' => count($userService->getUsers()), #TODO: These functions need to rename in other places as well
+            'users' => count($userService->getUsers()),
             'reviews' => count($reviewService->getAllReviews()),
             'complaints' => count($complaintService->getComplaints()),
         ];
