@@ -15,7 +15,7 @@ abstract class BaseReview extends BaseController
 
     public function __construct(Container $container)
     {
-        $this->reviewService = $container->get('review_service'); # TODO: Im not sure about this
+        $this->reviewService = $container->get('review_service');
     }
 
     protected function getReviewService(): ReviewService

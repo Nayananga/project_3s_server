@@ -17,7 +17,7 @@ class DefaultController extends BaseController
 
     public function getHelp(Request $request, Response $response, array $args): Response
     {
-        $this->setParams($request, $response, $args); # TODO: Check these routes
+        $this->setParams($request, $response, $args);
         $url = getenv('APP_DOMAIN');
         $endpoints = [
             'reviews' => $url . '/api/v1/reviews',

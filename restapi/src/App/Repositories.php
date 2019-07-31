@@ -6,7 +6,7 @@ use App\Repository\ComplaintRepository;
 use Psr\Container\ContainerInterface;
 
 $container = $app->getContainer();
-# TODO: Im not sure what db is
+
 $container['user_repository'] = function (ContainerInterface $container): UserRepository {
     return new UserRepository($container->get('db'));
 };

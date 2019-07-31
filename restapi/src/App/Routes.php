@@ -1,5 +1,4 @@
 <?php declare(strict_types=1);
-# TODO: Need to change routes accordingly
 
 $app->get('/', 'App\Controller\DefaultController:getHelp');
 $app->get('/status', 'App\Controller\DefaultController:getStatus');
@@ -29,5 +28,5 @@ $app->group('/api/v1', function () use ($app) {
         $app->post('', 'App\Controller\Complaint\CreateComplaint');
         $app->put('/[{id}]', 'App\Controller\Complaint\UpdateComplaint');
         $app->delete('/[{id}]', 'App\Controller\Complaint\DeleteComplaint');
-    });
+    })->add(new App\Middleware\AuthMiddleware($app));
 });

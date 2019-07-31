@@ -9,7 +9,7 @@ class AuthLoginTest extends BaseTestCase
      */
     public function testLogin()
     {
-        $response = $this->runApp('POST', '/login', ['email' => 'test@user.com', 'password' => 'AnyPass1000']);
+        $response = $this->runApp('POST', '/login', ['nic' => '953464110v']); # TODO: need sms auth
 
         $result = (string) $response->getBody();
 

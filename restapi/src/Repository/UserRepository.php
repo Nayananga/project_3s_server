@@ -36,6 +36,8 @@ class UserRepository extends BaseRepository
         if (empty(!$user)) {
             throw new UserException('Nic already exists.', 400);
         }
+
+        return $nic;
     }
 
     public function getUsers(): array
@@ -47,7 +49,7 @@ class UserRepository extends BaseRepository
         return $statement->fetchAll();
     }
 
-# TODO: get nickname in lowecase
+# TODO: get nickname in lowercase
     public function searchUsers(string $nickname): array
     {
         $query = 'SELECT `id`, `nic`, `nickname` FROM `user` WHERE LOWER(nickname) LIKE :name ORDER BY `id`';
@@ -72,7 +74,7 @@ class UserRepository extends BaseRepository
         $statement->execute();
         $user = $statement->fetchObject();
         if (empty($user)) {
-            throw new UserException('Login failed: Email or password incorrect.', 400);
+            throw new UserException('Login failed: NIC incorrect.', 400);
         }
 
         return $user;

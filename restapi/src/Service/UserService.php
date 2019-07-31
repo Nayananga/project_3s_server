@@ -55,10 +55,13 @@ class UserService extends BaseService
         if (!isset($data->phoneNo)) {
             throw new UserException('The field "phoneNo" is required.', 400);
         }
-        $user->name = self::validateUserName($data->name);
+        $user->nic = $this->userRepository->checkUserByNic($data->nic);
+        $user->nickname = self::validateUserName($data->nickname);
         $user->email = self::validateEmail($data->email);
+        $user->phoneNo = $data->phoneNo;
+        $user->image = $data->image;
 //        $user->password = hash('sha512', $data->password); # TODO: validate nic,phone no
-//        $this->userRepository->checkUserByNic($user->email);
+
 
         return $this->userRepository->createUser($user);
     }
@@ -101,8 +104,10 @@ class UserService extends BaseService
         $user = $this->userRepository->loginUser($data->nic);
         $token = array(
             'sub' => $user->id,
+            'nic' => $user->nic,
+            'nickname' => $user->nickname,
             'email' => $user->email,
-            'name' => $user->name,
+            'phoneNo' => $user->phoneNo,
             'iat' => time(),
             'exp' => time() + (7 * 24 * 60 * 60),
         );
