@@ -15,7 +15,7 @@ class UserServiceTest extends BaseTestCase
     {
         $database = sprintf('mysql:host=%s;dbname=%s', getenv('DB_HOSTNAME'), getenv('DB_DATABASE'));
 
-        return new PDO($database, $this->getName(getenv('DB_USERNAME')), $this->getName(getenv('DB_PASSWORD')));
+        return new PDO($database, getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
     }
 
     public function testGetUser()
@@ -23,17 +23,17 @@ class UserServiceTest extends BaseTestCase
         $userRepository = new UserRepository($this->getDatabase());
         $userService = new UserService($userRepository);
         $user = $userService->getUser(1);
-        $this->assertStringContainsString('Juan', $user->name);
+        $this->assertStringContainsString('Slahiru', $user->nickname);
     }
 
     public function testCreateUser()
     {
         $userRepository = new UserRepository($this->getDatabase());
         $userService = new UserService($userRepository);
-        $input = ['name' => 'Eze', 'email' => 'eze@gmail.com', 'password' => 'AnyPass1000'];
+        $input =  ['nic' => '948052167v', 'nickname' => 'Dilshan', 'email' => 'dilshan@email.com', 'phoneNo' => '0702016666', 'image' => ''];
         $user = $userService->createUser($input);
         self::$id = $user->id;
-        $this->assertStringContainsString('Eze', $user->name);
+        $this->assertStringContainsString('Dilshan', $user->nickname);
     }
 
     public function testCreateUserWithoutNameExpectError()

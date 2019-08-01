@@ -10,4 +10,4 @@ echo -e "# Create testing data."
 mysql -u$DB_USERNAME -p$DB_PASSWORD -h$DB_HOSTNAME $DB_DATABASE < database/project_3s.sql 2> /dev/null
 
 echo -e "# Run tests."
-#./vendor/bin/phpunit
+./vendor/bin/phpunit

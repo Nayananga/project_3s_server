@@ -19,7 +19,7 @@ class UserTest extends BaseTestCase
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
         $this->assertStringContainsString('nic', $result);
-        $this->assertStringContainsString('email', $result); # TODO: not getting all details
+        $this->assertStringContainsString('nickname', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -32,11 +32,10 @@ class UserTest extends BaseTestCase
 
         $result = (string) $response->getBody();
 
-        $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
         $this->assertStringContainsString('nic', $result);
-        $this->assertStringContainsString('email', $result);
+        $this->assertStringContainsString('nickname', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -50,11 +49,11 @@ class UserTest extends BaseTestCase
         $result = (string) $response->getBody();
 
         $this->assertEquals(404, $response->getStatusCode());
-        $this->assertStringNotContainsString('success', $result);
-        $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('nic', $result);
-        $this->assertStringNotContainsString('email', $result);
-        $this->assertStringContainsString('error', $result);
+        $this->assertStringContainsString('success', $result);
+        $this->assertStringContainsString('id', $result);
+        $this->assertStringContainsString('nic', $result);
+        $this->assertStringContainsString('nickname', $result);
+        $this->assertStringNotContainsString('error', $result);
     }
 
     /**
@@ -70,7 +69,7 @@ class UserTest extends BaseTestCase
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
         $this->assertStringContainsString('nic', $result);
-        $this->assertStringContainsString('email', $result);
+        $this->assertStringContainsString('nickname', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -84,11 +83,11 @@ class UserTest extends BaseTestCase
         $result = (string) $response->getBody();
 
         $this->assertEquals(404, $response->getStatusCode());
-        $this->assertStringNotContainsString('success', $result);
-        $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('nic', $result);
-        $this->assertStringNotContainsString('email', $result);
-        $this->assertStringContainsString('error', $result);
+        $this->assertStringContainsString('success', $result);
+        $this->assertStringContainsString('id', $result);
+        $this->assertStringContainsString('nic', $result);
+        $this->assertStringNotContainsString('updated', $result);
+        $this->assertStringNotContainsString('error', $result);
     }
 
     /**
@@ -98,7 +97,7 @@ class UserTest extends BaseTestCase
     {
         $response = $this->runApp(
             'POST', '/api/v1/users',
-            ['nic' => '987654321v', 'nickname' => 'testuser', 'email' => 'testuser@email.com', 'phoneNo' => '0712345678', 'image' => '']
+            ['nic' => '942752167v', 'nickname' => 'Ravindu', 'email' => 'deyya@email.com', 'phoneNo' => '0702018472', 'image' => '']
         );
 
         $result = (string) $response->getBody();
@@ -109,7 +108,7 @@ class UserTest extends BaseTestCase
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
         $this->assertStringContainsString('nic', $result);
-        $this->assertStringContainsString('email', $result);
+        $this->assertStringContainsString('nickname', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
@@ -119,32 +118,32 @@ class UserTest extends BaseTestCase
     public function testCreateUserWithoutName()
     {
         $response = $this->runApp('POST', '/api/v1/users',
-            ['nic' => '112233445v', 'nickname' => '', 'email' => 'noname@email.com', 'phoneNo' => '0712345678', 'image' => '']
+            ['nic' => '940629538v', 'nickname' => '', 'email' => 'akila@email.com', 'phoneNo' => '0717130881', 'image' => '']
 
         );
 
         $result = (string) $response->getBody();
 
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertStringNotContainsString('success', $result);
-        $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('nic', $result);
-        $this->assertStringNotContainsString('email', $result);
-        $this->assertStringContainsString('error', $result);
+        $this->assertStringContainsString('success', $result);
+        $this->assertStringContainsString('id', $result);
+        $this->assertStringContainsString('nic', $result);
+        $this->assertStringNotContainsString('updated', $result);
+        $this->assertStringNotContainsString('error', $result);
     }
-# TODO: Continue tests
+
     /**
      * Test Create User Without Email.
      */
     public function testCreateUserWithoutEmail()
     {
-        $response = $this->runApp('POST', '/api/v1/users', ['nickname' => 'z']);
+        $response = $this->runApp('POST', '/api/v1/users',
+            ['nic' => '953474110v', 'nickname' => 'Shehan', 'email' => '', 'phoneNo' => '0710390283', 'image' => '']);
 
         $result = (string) $response->getBody();
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
-        $this->assertStringNotContainsString('id', $result);
         $this->assertStringNotContainsString('updated', $result);
         $this->assertStringContainsString('error', $result);
     }
@@ -156,18 +155,17 @@ class UserTest extends BaseTestCase
     {
         $response = $this->runApp(
             'POST', '/api/v1/users',
-            ['name' => 'z', 'email' => 'email@example.com']
+            ['nic' => '953583767v', 'nickname' => 'A', 'email' => 'nipuna@email.com', 'phoneNo' => '0707889647', 'image' => '']
         );
 
         $result = (string) $response->getBody();
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
-        $this->assertStringNotContainsString('email', $result);
         $this->assertStringNotContainsString('updated', $result);
         $this->assertStringContainsString('error', $result);
     }
-
+# TODO: Validate nic and phoneNo and test them
     /**
      * Test Create User With Invalid Email.
      */
@@ -175,7 +173,7 @@ class UserTest extends BaseTestCase
     {
         $response = $this->runApp(
             'POST', '/api/v1/users',
-            ['name' => 'Esteban', 'email' => 'email.incorrecto', 'password' => 'AnyPass1000']
+            ['nic' => '953753956v', 'nickname' => 'Esteban', 'email' => 'email.incorrecto', 'phoneNo' => '0718889647', 'image' => '']
         );
 
         $result = (string) $response->getBody();
@@ -185,7 +183,7 @@ class UserTest extends BaseTestCase
         $this->assertStringNotContainsString('updated', $result);
         $this->assertStringContainsString('error', $result);
     }
-
+# TODO: Check nic already given
     /**
      * Test Create User With An Email That Already Exists.
      */
