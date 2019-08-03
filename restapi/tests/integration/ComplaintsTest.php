@@ -2,16 +2,16 @@
 
 namespace Tests\integration;
 
-class NoteTest extends BaseTestCase
+class ComplaintTest extends BaseTestCase
 {
     private static $id;
 
     /**
-     * Test Get All Notes.
+     * Test Get All Complaints.
      */
-    public function testGetNotes()
+    public function testGetcomplaints()
     {
-        $response = $this->runApp('GET', '/api/v1/notes');
+        $response = $this->runApp('GET', '/api/v1/complaints');
 
         $result = (string) $response->getBody();
         $value = json_encode(json_decode($result));
@@ -19,7 +19,8 @@ class NoteTest extends BaseTestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('user-id', $result);
+        $this->assertStringContainsString('geo_tag', $result);
         $this->assertStringContainsString('description', $result);
         $this->assertStringContainsString('updated', $result);
         $this->assertRegExp('{"code":200,"status":"success"}', $value);
@@ -28,27 +29,27 @@ class NoteTest extends BaseTestCase
     }
 
     /**
-     * Test Get One Note.
+     * Test Get One complaint.
      */
-    public function testGetNote()
+    public function testGetComplaint()
     {
-        $response = $this->runApp('GET', '/api/v1/notes/1');
+        $response = $this->runApp('GET', '/api/v1/complaints/1');
 
         $result = (string) $response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
-        $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('user-id', $result);
+        $this->assertStringContainsString('geo_tag', $result);
         $this->assertStringContainsString('description', $result);
         $this->assertStringContainsString('updated', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
     /**
-     * Test Get Note Not Found.
+     * Test Get complaint Not Found.
      */
-    public function testGetNoteNotFound()
+    public function testGetComplaintNotFound()
     {
         $response = $this->runApp('GET', '/api/v1/notes/123456789');
 
@@ -56,16 +57,17 @@ class NoteTest extends BaseTestCase
 
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
-        $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('description', $result);
+        $this->assertStringContainsString('user-id', $result);
+        $this->assertStringContainsString('geo_tag', $result);
+        $this->assertStringContainsString('description', $result);
         $this->assertStringNotContainsString('updated', $result);
         $this->assertStringContainsString('error', $result);
     }
 
     /**
-     * Test Search Notes.
+     * Test Search Complaint.
      */
-    public function testSearchNotes()
+    public function testSearchComplaints()
     {
         $response = $this->runApp('GET', '/api/v1/notes/search/n');
 
@@ -80,9 +82,9 @@ class NoteTest extends BaseTestCase
     }
 
     /**
-     * Test Search Note Not Found.
+     * Test Search Complaint Not Found.
      */
-    public function testSearchNoteNotFound()
+    public function testSearchComplaintNotFound()
     {
         $response = $this->runApp('GET', '/api/v1/notes/search/123456789');
 
@@ -96,13 +98,13 @@ class NoteTest extends BaseTestCase
     }
 
     /**
-     * Test Create Note.
+     * Test Create Complaint.
      */
-    public function testCreateNote()
+    public function testCreateComplaint()
     {
         $response = $this->runApp(
-            'POST', '/api/v1/notes',
-            ['name' => 'My Test Note', 'description' => 'New Note...']
+            'POST', '/api/v1/reviews',
+            ['name' => 'My Test Complaint', 'description' => 'New Complaint...']
         );
 
         $result = (string) $response->getBody();
@@ -119,11 +121,11 @@ class NoteTest extends BaseTestCase
     }
 
     /**
-     * Test Create Note Without Name.
+     * Test Create Complaint Without Name.
      */
-    public function testCreateNoteWithoutName()
+    public function testCreateComplaintWithoutName()
     {
-        $response = $this->runApp('POST', '/api/v1/notes');
+        $response = $this->runApp('POST', '/api/v1/complaints');
 
         $result = (string) $response->getBody();
 
@@ -135,13 +137,13 @@ class NoteTest extends BaseTestCase
     }
 
     /**
-     * Test Create Note With Invalid Name.
+     * Test Create Complaint With Invalid D.
      */
-    public function testCreateNoteWithInvalidName()
+    public function testCreateComplaintWithInvalidName()
     {
         $response = $this->runApp(
-            'POST', '/api/v1/notes',
-            ['name' => 'z']
+            'POST', '/api/v1/complaints',
+            ['description' => '']
         );
 
         $result = (string) $response->getBody();
@@ -154,13 +156,13 @@ class NoteTest extends BaseTestCase
     }
 
     /**
-     * Test Update Note.
+     * Test Update complaint.
      */
-    public function testUpdateNote()
+    public function testUpdateComplaints()
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/notes/' . self::$id,
-            ['name' => 'Victor Notes', 'description' => 'Pep.']
+            'PUT', '/api/v1/complaints/id=1',
+            ['description' => 'good service']
         );
 
         $result = (string) $response->getBody();
@@ -168,37 +170,37 @@ class NoteTest extends BaseTestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
+        $this->assertStringContainsString('user_id', $result);
         $this->assertStringContainsString('description', $result);
         $this->assertStringContainsString('updated', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
     /**
-     * Test Update Note Without Send Data.
+     * Test Update complaints Without Send Data.
      */
-    public function testUpdateNoteWithOutSendData()
+    public function testUpdateComplaintsWithOutSendData()
     {
-        $response = $this->runApp('PUT', '/api/v1/notes/' . self::$id);
+        $response = $this->runApp('PUT', '/api/v1/complaints/id=1');
 
         $result = (string) $response->getBody();
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('name', $result);
+        $this->assertStringNotContainsString('user-id', $result);
         $this->assertStringNotContainsString('description', $result);
         $this->assertStringNotContainsString('updated', $result);
         $this->assertStringContainsString('error', $result);
     }
 
     /**
-     * Test Update Note Not Found.
+     * Test Update Complaint Not Found.
      */
-    public function testUpdateNoteNotFound()
+    public function testUpdateComplaintsNotFound()
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/notes/123456789', ['name' => 'Note']
+            'PUT', '/api/v1/complaints/123456789', ['' => 'Complaint']
         );
 
         $result = (string) $response->getBody();
@@ -206,18 +208,18 @@ class NoteTest extends BaseTestCase
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('name', $result);
+        $this->assertStringNotContainsString('user_id', $result);
         $this->assertStringNotContainsString('description', $result);
         $this->assertStringNotContainsString('updated', $result);
         $this->assertStringContainsString('error', $result);
     }
 
     /**
-     * Test Delete Note.
+     * Test Delete Complaint.
      */
-    public function testDeleteNote()
+    public function testDeleteCompliant()
     {
-        $response = $this->runApp('DELETE', '/api/v1/notes/' . self::$id);
+        $response = $this->runApp('DELETE', '/api/v1/complaints/id=1');
 
         $result = (string) $response->getBody();
         
@@ -229,18 +231,19 @@ class NoteTest extends BaseTestCase
     }
 
     /**
-     * Test Delete Note Not Found.
+     * Test Delete COmplaint Not Found.
      */
-    public function testDeleteNoteNotFound()
+    public function testDeleteComplaintNotFound()
     {
-        $response = $this->runApp('DELETE', '/api/v1/notes/123456789');
+        $response = $this->runApp('DELETE', '/api/v1/complaints/123456789');
 
         $result = (string) $response->getBody();
 
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('id', $result);
-        $this->assertStringNotContainsString('name', $result);
+        $this->assertStringNotContainsString('user_id', $result);
+        $this->assertStringNotContainsString('geo_tag', $result);
         $this->assertStringNotContainsString('description', $result);
         $this->assertStringNotContainsString('updated', $result);
         $this->assertStringContainsString('error', $result);

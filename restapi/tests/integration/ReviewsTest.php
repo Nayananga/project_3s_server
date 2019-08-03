@@ -2,52 +2,51 @@
 
 namespace Tests\integration;
 
-class TaskTest extends BaseTestCase
+class ReviewTest extends BaseTestCase
 {
     private static $id;
 
     /**
-     * Test Get All Tasks.
+     * Test Get All reviews.
      */
-    public function testGetTasks()
+    public function testGetRevies()
     {
-        $response = $this->runApp('GET', '/api/v1/tasks');
+        $response = $this->runApp('GET', '/api/v1/reviews');
 
         $result = (string) $response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('status', $result);
+        $this->assertStringContainsString('user_id', $result);
         $this->assertStringContainsString('updated', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
     /**
-     * Test Get One Task.
+     * Test Get One review.
      */
-    public function testGetTask()
+    public function testGetReview()
     {
-        $response = $this->runApp('GET', '/api/v1/tasks/1');
+        $response = $this->runApp('GET', '/api/v1/reviews/search/2 ');
 
         $result = (string) $response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('status', $result);
+        $this->assertStringContainsString('user_id', $result);
+        $this->assertStringContainsString('geo_tag', $result);
         $this->assertStringContainsString('updated', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
     /**
-     * Test Get Task Not Found.
+     * Test Get reviews Not Found.
      */
-    public function testGetTaskNotFound()
+    public function testGetReviewsNotFound()
     {
-        $response = $this->runApp('GET', '/api/v1/tasks/123456789');
+        $response = $this->runApp('GET', '/api/v1/reviews/search/123456789');
 
         $result = (string) $response->getBody();
 
@@ -59,37 +58,37 @@ class TaskTest extends BaseTestCase
     }
 
     /**
-     * Test Search All Tasks.
+     * Test Search all Reviews.
      */
-    public function testSearchAllTasks()
+    public function testSearchAllReviews()
     {
-        $response = $this->runApp('GET', '/api/v1/tasks/search/');
+        $response = $this->runApp('GET', '/api/v1/reviews');
 
         $result = (string) $response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('status', $result);
+        $this->assertStringContainsString('user_id', $result);
+        $this->assertStringContainsString('geo_tag', $result);
         $this->assertStringContainsString('updated', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
     /**
-     * Test Search Tasks By Name.
+     * Test Search REviews By deveice signature.
      */
-    public function testSearchTasksByName()
+    public function testSearchReviewByMobileSignature()
     {
-        $response = $this->runApp('GET', '/api/v1/tasks/search/cine');
+        $response = $this->runApp('GET', '/api/v1/reviews/search/device_signature=Sent from Samsung Mobile');
 
         $result = (string) $response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('status', $result);
+        $this->assertStringContainsString('user_id', $result);
+        $this->assertStringContainsString('geo_tag', $result);
         $this->assertStringContainsString('updated', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -97,17 +96,17 @@ class TaskTest extends BaseTestCase
     /**
      * Test Search Tasks with Status Done.
      */
-    public function testSearchTasksWithStatusDone()
+    public function testSearchREviewsWithUserId()
     {
-        $response = $this->runApp('GET', '/api/v1/tasks/search/?status=1');
+        $response = $this->runApp('GET', '/api/v1/reviews/search/user-id=3');
 
         $result = (string) $response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('status', $result);
+        $this->assertStringContainsString('user_id', $result);
+        $this->assertStringContainsString('geo_tag', $result);
         $this->assertStringContainsString('updated', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -115,17 +114,17 @@ class TaskTest extends BaseTestCase
     /**
      * Test Search Tasks with status = 0.
      */
-    public function testSearchTasksWithStatusToDo()
+    public function testSearchReviewsWithId()
     {
-        $response = $this->runApp('GET', '/api/v1/tasks/search/?status=0');
+        $response = $this->runApp('GET', '/api/v1/reviews/search/id= 1');
 
         $result = (string) $response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('status', $result);
+        $this->assertStringContainsString('user_id', $result);
+        $this->assertStringContainsString('geo_tag', $result);
         $this->assertStringContainsString('updated', $result);
         $this->assertStringNotContainsString('error', $result);
     }
@@ -133,31 +132,33 @@ class TaskTest extends BaseTestCase
     /**
      * Test Create Task.
      */
-    public function testCreateTask()
+    public function testCreateReviews()
     {
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => 'New Task']
+            'POST', '/api/v1/reviews', 
+            ['user_id'=> '1','q&a'=>'{\r\n    \"q1\": \"Incididunt amet pariatur occaecat deserunt laborum tempor id.\",\r\n    \"q2\": \"Consectetur mollit consequat ullamco velit ut aliquip veniam enim eu nisi.\",\r\n    \"q3\": \"Consequat amet exercitation consectetur nisi.\",\r\n    \"q4\": \"Enim culpa reprehenderit deserunt dolor ea occaecat aliqua sit.\",\r\n    \"q5\": \"Mollit et ullamco amet ad proident et deserunt est.\",\r\n    \"q6\": \"Do Lorem do nulla occaecat sint.\",\r\n    \"q7\": \"Nostrud ea ad labore ex consequat adipisicing culpa excepteur id in.\",\r\n    \"q8\": \"Quis commodo irure pariatur quis anim nisi laborum incididunt esse aute cillum ad Lorem.\",\r\n    \"q9\": \"Aliquip duis dolor voluptate et.\",\r\n    \"q10\": \"Dolor aute Lorem eu cillum culpa.\"\r\n  }', '<meta name=\"geo.region\" content=\"LK-71\" />\r\n<meta name=\"geo.position\" content=\"7.555494;80.713785\" />\r\n<meta name=\"ICBM\" content=\"7.555494, 80.713785\" />\r\n', 'geo_tag'=>'Sent from my Android phone']
+            
         );
 
         $result = (string) $response->getBody();
 
-        self::$id = json_decode($result)->message->id;
+        /*self::$id = json_decode($result)->message->id;*/
 
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
         $this->assertStringContainsString('id', $result);
-        $this->assertStringContainsString('name', $result);
-        $this->assertStringContainsString('status', $result);
+        $this->assertStringContainsString('user-id', $result);
+        $this->assertStringContainsString('geo_tag', $result);
         $this->assertStringContainsString('updated', $result);
         $this->assertStringNotContainsString('error', $result);
     }
 
     /**
-     * Test Create Task Without Name.
+     * Test Create REview  Without Name.
      */
-    public function testCreateTaskWithOutTaskName()
+    /*public function testCreateReviewsWithOutTaskName()
     {
-        $response = $this->runApp('POST', '/api/v1/tasks');
+        $response = $this->runApp('POST', '/api/v1/reviews');
 
         $result = (string) $response->getBody();
 
@@ -171,10 +172,10 @@ class TaskTest extends BaseTestCase
     /**
      * Test Create Task With Invalid TaskName.
      */
-    public function testCreateTaskWithInvalidTaskName()
+   /* public function testCreateTaskWithInvalidTaskName()
     {
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => 'z', 'status' => 1]
+            'POST', '/api/v1/reviews', ['id' => '1', 'user_id' => '3']
         );
 
         $result = (string) $response->getBody();
@@ -183,12 +184,12 @@ class TaskTest extends BaseTestCase
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('updated', $result);
         $this->assertStringContainsString('error', $result);
-    }
+    }*/
 
     /**
      * Test Create Task With Invalid Status.
      */
-    public function testCreateTaskWithInvalidStatus()
+    /*public function testCreateTaskWithInvalidStatus()
     {
         $response = $this->runApp(
             'POST', '/api/v1/tasks', ['name' => 'ToDo', 'status' => 123]
@@ -200,17 +201,17 @@ class TaskTest extends BaseTestCase
         $this->assertStringNotContainsString('success', $result);
         $this->assertStringNotContainsString('updated', $result);
         $this->assertStringContainsString('error', $result);
-    }
+    }*/
 
     /**
      * Test Create Task With Forbidden JWT.
      */
-    public function testCreateTaskWithInvalidJWT()
+    public function testCreateReviewsWithInvalidJWT()
     {
         $auth = self::$jwt;
         self::$jwt = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Ii';
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => 'my task', 'status' => 0]
+            'POST', '/api/v1/reviews', ['id' => '1']
         );
         self::$jwt = $auth;
 
@@ -229,7 +230,7 @@ class TaskTest extends BaseTestCase
         $auth = self::$jwt;
         self::$jwt = 'Bearer ';
         $response = $this->runApp(
-            'POST', '/api/v1/tasks', ['name' => 'my task', 'status' => 0]
+            'POST', '/api/v1/reviews', ['id' => '1',]
         );
         self::$jwt = $auth;
 
@@ -243,11 +244,12 @@ class TaskTest extends BaseTestCase
     /**
      * Test Update Task.
      */
-    public function testUpdateTask()
-    {
+    public function testUpdatereviews()
+{
+        
         $response = $this->runApp(
-            'PUT', '/api/v1/tasks/' . self::$id,
-            ['name' => 'Update Task', 'status' => 1]
+            'PUT', '/api/v1/reviews/search/id=1',
+            ['description' => 'good']
         );
 
         $result = (string) $response->getBody();
@@ -264,9 +266,9 @@ class TaskTest extends BaseTestCase
     /**
      * Test Update Task Without Send Data.
      */
-    public function testUpdateTaskWithOutSendData()
+    public function testUpdateReviewWithOutSendData()
     {
-        $response = $this->runApp('PUT', '/api/v1/tasks/' . self::$id);
+        $response = $this->runApp('PUT', '/api/v1/reviews/search/id=2' );
 
         $result = (string) $response->getBody();
 
@@ -280,10 +282,10 @@ class TaskTest extends BaseTestCase
     /**
      * Test Update Task Not Found.
      */
-    public function testUpdateTaskNotFound()
+    public function testUpdateReviewNotFound()
     {
         $response = $this->runApp(
-            'PUT', '/api/v1/tasks/123456789', ['name' => 'Task']
+            'PUT', '/api/v1/reviews/search/123456789'
         );
 
         $result = (string) $response->getBody();
@@ -298,9 +300,9 @@ class TaskTest extends BaseTestCase
     /**
      * Test Delete Task.
      */
-    public function testDeleteTask()
+    public function testDeleteReview()
     {
-        $response = $this->runApp('DELETE', '/api/v1/tasks/' . self::$id);
+        $response = $this->runApp('DELETE', '/api/v1/reviews/search/1');
 
         $result = (string) $response->getBody();
 
@@ -310,11 +312,11 @@ class TaskTest extends BaseTestCase
     }
 
     /**
-     * Test Delete Task Not Found.
+     * Test Delete Review Not Found.
      */
-    public function testDeleteTaskNotFound()
+    public function testDeleteReviewNotFound()
     {
-        $response = $this->runApp('DELETE', '/api/v1/tasks/123456789');
+        $response = $this->runApp('DELETE', '/api/v1/reviews/search/id=123456789');
 
         $result = (string) $response->getBody();
 
