@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 30, 2019 at 06:02 PM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.7
+-- Host: localhost:3306
+-- Generation Time: Aug 30, 2019 at 12:01 AM
+-- Server version: 5.7.27-0ubuntu0.19.04.1
+-- PHP Version: 7.2.19-0ubuntu0.19.04.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -56,9 +54,9 @@ CREATE TABLE `complaints` (
   `user_id` int(11) NOT NULL,
   `geo_tag` text NOT NULL,
   `description` varchar(300) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `image` blob DEFAULT NULL
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `image` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -80,18 +78,18 @@ INSERT INTO `complaints` (`id`, `user_id`, `geo_tag`, `description`, `created_at
 CREATE TABLE `reviews` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `q&a` text NOT NULL,
+  `qa` text NOT NULL,
   `geo_tag` text NOT NULL,
   `device_signature` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `reviews`
 --
 
-INSERT INTO `reviews` (`id`, `user_id`, `q&a`, `geo_tag`, `device_signature`, `created_at`, `updated_at`) VALUES
+INSERT INTO `reviews` (`id`, `user_id`, `qa`, `geo_tag`, `device_signature`, `created_at`, `updated_at`) VALUES
 (1, 1, '{\r\n    \"q1\": \"Incididunt amet pariatur occaecat deserunt laborum tempor id.\",\r\n    \"q2\": \"Consectetur mollit consequat ullamco velit ut aliquip veniam enim eu nisi.\",\r\n    \"q3\": \"Consequat amet exercitation consectetur nisi.\",\r\n    \"q4\": \"Enim culpa reprehenderit deserunt dolor ea occaecat aliqua sit.\",\r\n    \"q5\": \"Mollit et ullamco amet ad proident et deserunt est.\",\r\n    \"q6\": \"Do Lorem do nulla occaecat sint.\",\r\n    \"q7\": \"Nostrud ea ad labore ex consequat adipisicing culpa excepteur id in.\",\r\n    \"q8\": \"Quis commodo irure pariatur quis anim nisi laborum incididunt esse aute cillum ad Lorem.\",\r\n    \"q9\": \"Aliquip duis dolor voluptate et.\",\r\n    \"q10\": \"Dolor aute Lorem eu cillum culpa.\"\r\n  }', '<meta name=\"geo.region\" content=\"LK-71\" />\r\n<meta name=\"geo.position\" content=\"7.555494;80.713785\" />\r\n<meta name=\"ICBM\" content=\"7.555494, 80.713785\" />\r\n', 'Sent from my Android phone', '2019-07-28 11:08:32', '2019-07-28 11:08:32'),
 (2, 3, '\r\n{\r\n    \"q1\": \"Dolore ipsum commodo nisi amet est dolore nulla laboris magna labore.\",\r\n    \"q2\": \"Ad nostrud nisi enim culpa ipsum ex Lorem.\",\r\n    \"q3\": \"Elit laborum laborum consectetur exercitation deserunt occaecat eu aliquip deserunt.\",\r\n    \"q4\": \"Ad ipsum pariatur pariatur minim.\",\r\n    \"q5\": \"Veniam deserunt velit nisi anim ex commodo nulla.\",\r\n    \"q6\": \"Consectetur duis aute Lorem aliquip dolore culpa non esse pariatur voluptate exercitation Lorem fugiat.\",\r\n    \"q7\": \"Reprehenderit labore magna do cupidatat nisi officia nisi excepteur commodo minim adipisicing pariatur incididunt.\",\r\n    \"q8\": \"Nisi aliqua eiusmod quis aliquip veniam pariatur quis officia excepteur nostrud officia dolore duis cillum.\",\r\n    \"q9\": \"Sit incididunt dolore culpa aliquip incididunt Lorem veniam velit ea pariatur fugiat sint.\",\r\n    \"q10\": \"Quis id amet fugiat duis non tempor eu cillum sit duis non ea.\"\r\n  }', '<meta name=\"geo.region\" content=\"SM\" />\r\n<meta name=\"geo.position\" content=\"43.945862;12.458306\" />\r\n<meta name=\"ICBM\" content=\"43.945862, 12.458306\" />', 'Sent from Samsung Mobile', '2019-07-28 11:08:32', '2019-07-28 11:08:32'),
 (3, 5, '{\r\n    \"q1\": \"Pariatur minim consectetur voluptate in fugiat aute consectetur deserunt enim.\",\r\n    \"q2\": \"Eu Lorem aute mollit dolor culpa commodo dolor cillum velit.\",\r\n    \"q3\": \"Qui occaecat proident quis ut qui nostrud nostrud anim fugiat commodo ut nulla consequat eiusmod.\",\r\n    \"q4\": \"Fugiat labore sint incididunt in non esse ex nulla qui nostrud anim reprehenderit aute adipisicing.\",\r\n    \"q5\": \"Ex dolore do est nostrud culpa cupidatat eu in dolor nostrud et excepteur.\",\r\n    \"q6\": \"Pariatur commodo do ea minim ea ad amet ut voluptate deserunt adipisicing.\",\r\n    \"q7\": \"Et duis ullamco laboris id nostrud nisi.\",\r\n    \"q8\": \"Tempor laboris laborum sunt qui exercitation.\",\r\n    \"q9\": \"Culpa reprehenderit nulla esse do.\",\r\n    \"q10\": \"Consequat aliquip ad tempor elit irure voluptate.\"\r\n  }', '<meta name=\"geo.region\" content=\"PR\" />\r\n<meta name=\"geo.position\" content=\"18.221417;-66.413282\" />\r\n<meta name=\"ICBM\" content=\"18.221417, -66.413282\" />\r\n', 'Sent from my Windows Phone', '2019-07-28 11:12:53', '2019-07-28 11:12:53'),
@@ -105,12 +103,12 @@ INSERT INTO `reviews` (`id`, `user_id`, `q&a`, `geo_tag`, `device_signature`, `c
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `nic` varchar(12) NOT NULL,
-  `nickname` varchar(300) NOT NULL,
-  `email` varchar(300) DEFAULT NULL,
+  `nic` varchar(12) DEFAULT NULL,
+  `nickname` varchar(300) DEFAULT NULL,
+  `email` varchar(300) NOT NULL,
   `phoneNo` varchar(100) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `image` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -123,7 +121,8 @@ INSERT INTO `user` (`id`, `nic`, `nickname`, `email`, `phoneNo`, `created_at`, `
 (2, '951413135v', 'aththa', 'lahirupre21@gmmail.com', '0776512789', '2019-07-28 09:06:17', '2019-07-28 09:07:49', NULL),
 (3, '354858109v', 'ashan', 'agfdnine@gmail.com', '0715898741', '2019-07-28 10:10:44', '2019-07-28 10:10:44', NULL),
 (4, '874578963v', 'west', 'west1234@gmail.com', '0784546987', '2019-07-28 10:12:45', '2019-07-28 10:12:45', NULL),
-(5, '971258796v', 'dinesh', 'dineshlakshitha@gmail.com', '0714578964', '2019-07-28 10:15:10', '2019-07-28 10:15:10', NULL);
+(5, '971258796v', 'dinesh', 'dineshlakshitha@gmail.com', '0714578964', '2019-07-28 10:15:10', '2019-07-28 10:15:10', NULL),
+(6, '942752167v', 'Ravindu', 'deyya@email.com', '0702018472', '2019-08-27 17:16:27', '2019-08-27 17:16:27', '');
 
 --
 -- Indexes for dumped tables
@@ -154,6 +153,7 @@ ALTER TABLE `reviews`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `nic` (`nic`);
 
 --
@@ -165,25 +165,21 @@ ALTER TABLE `user`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- Constraints for dumped tables
 --
@@ -199,7 +195,6 @@ ALTER TABLE `complaints`
 --
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
