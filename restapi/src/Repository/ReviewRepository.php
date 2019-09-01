@@ -46,7 +46,7 @@ class ReviewRepository extends BaseRepository
         return $statement->fetchAll();
     }
 
-    # TODO: Discuss about searching reviews
+    # TODO: Discuss about searching reviews, best option is to search  by date
 
 //    public function searchReviews($tasksName, int $userId, $status): array
 //    {
@@ -81,12 +81,12 @@ class ReviewRepository extends BaseRepository
     public function createReview($review)
     {
         $query = '
-            INSERT INTO reviews (user_id, `q&a`, geo_tag, device_signature)
-            VALUES (:user_id, :q_a, :geo_tag, :device_signature)
+            INSERT INTO reviews (user_id, `qa`, geo_tag, device_signature)
+            VALUES (:user_id, :qa, :geo_tag, :device_signature)
         ';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('user_id', $review->user_id);
-        $statement->bindParam('q_a', $review->q_a);
+        $statement->bindParam('qa', $review->qa);
         $statement->bindParam('geo_tag', $review->geo_tag);
         $statement->bindParam('device_signature', $review->device_signature);
         $statement->execute();
@@ -100,12 +100,12 @@ class ReviewRepository extends BaseRepository
     {
         $query = '
             UPDATE reviews
-            SET `q&a`=:q_a
+            SET `qa`=:qa
             WHERE id=:id AND user_id = :user_id
         ';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $review->id);
-        $statement->bindParam('q_a', $review->q_a);
+        $statement->bindParam('qa', $review->qa);
         $statement->bindParam('user_id', $review->user_id);
         $statement->execute();
 
