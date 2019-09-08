@@ -11,9 +11,24 @@ class LoginUser extends BaseUser
     {
         $this->setParams($request, $response, $args);
         $loginStatus = $this->getUserService()->loginUser($this->getInput());
-        $message = [
-            'Login_Status'=> $loginStatus
-        ];
-        return $this->jsonResponse('success', $message, 200);
+        switch($loginStatus){
+            case 2000:
+                $message = [
+                    'Login_Status'=> 'Successfully Logged in ',
+                ];
+                return $this->jsonResponse('success', $message, 200);
+                break;
+            case 2001:
+                $message = [
+                    'Login_Status'=> 'Successfully created user and logged in user',
+                ];
+                return $this->jsonResponse('success', $message, 200);
+                break;
+            default:
+                $message = [
+                    'Login_Status'=> 'User creation unsuccessful',
+                ];
+                return $this->jsonResponse('failure', $message, 500);
+        }
     }
 }

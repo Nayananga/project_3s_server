@@ -33,10 +33,12 @@ class UserRepository extends BaseRepository
         $statement->bindParam('google_id', $google_id);
         $statement->execute();
         $user = $statement->fetchObject();
-        if (!empty($user)) {
+        if (empty($user)) {
+            return false;
+        }
+        else{
             return true;
         }
-        return false;
     }
 
     public function getUsers(): array
@@ -50,19 +52,19 @@ class UserRepository extends BaseRepository
 
     public function createUser($user)
     {
-        $query = 'INSERT INTO `user` (`google_id`, `email`, `nickname`, `phoneNo`, `image`, `nic`) VALUES (:google_id, :email, :nickname, :phoneNo, :image, :nic)';
+        $query = 'INSERT INTO `user` (`google_id`, `email`, `nickname`, `image`) VALUES (:google_id, :email, :nickname, :image)';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('google_id', $user->google_id);
-        $statement->bindParam('email', $user->email);
-        $statement->bindParam('nickname', $user->nickname);
-        $statement->bindParam('image', $user->image);
+        $statement->bindParam('google_id', $user["sub"]);
+        $statement->bindParam('email', $user["email"]);
+        $statement->bindParam('nickname', $user["name"]);
+        $statement->bindParam('image', $user["picture"]);
         $statement->execute();
 
         $new_user =  $this->checkAndGetUser((int) $this->database->lastInsertId());
         if(!empty($new_user)){
-            return "Create User and Logged successfully";
+            return 2001;
         }
-        return "Unsuccessful Create User and Login ";
+        return 2002;
     }
 
     public function updateUser($user)

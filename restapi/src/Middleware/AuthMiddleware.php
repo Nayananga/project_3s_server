@@ -27,6 +27,7 @@ class AuthMiddleware
         $object = $request->getParsedBody();
         $object['decoded'] = $decoded;
         return $next($request->withParsedBody($object), $response);
+
     }
 
     /**
@@ -43,7 +44,6 @@ class AuthMiddleware
 
             $decoded = $client->verifyIdToken($token);
             if ($decoded) {
-                var_dump($decoded);
                 return $decoded;
             }
             else{
