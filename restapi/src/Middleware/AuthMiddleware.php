@@ -3,13 +3,10 @@
 namespace App\Middleware;
 
 use App\Exception\AuthException;
-use DomainException;
+use Google_Client;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use \Firebase\JWT\JWT;
-use UnexpectedValueException;
-
 class AuthMiddleware
 {
     /**
@@ -21,15 +18,14 @@ class AuthMiddleware
      */
     public function __invoke(Request $request, Response $response, $next): ResponseInterface
     {
-        $jwtHeader = $request->getHeaderLine('Authorization');
-        $jwt = explode('Bearer ', $jwtHeader)[1];
-        if (empty($jwt) === true) {
+        $authHeader = $request->getHeader('Authorization');
+        $idToken = $authHeader[0];
+        if (empty($idToken) === true) {
             throw new AuthException('JWT Token required.', 400);
         }
-        $decoded = $this->checkToken($jwt);
+        $decoded = $this->checkToken($idToken);
         $object = $request->getParsedBody();
         $object['decoded'] = $decoded;
-
         return $next($request->withParsedBody($object), $response);
     }
 
@@ -40,24 +36,19 @@ class AuthMiddleware
      */
     public function checkToken(string $token)
     {
-        $auth = false;
+        require_once __DIR__ . '/../../vendor/autoload.php';
 
-        try {
-            $decoded = JWT::decode($token, getenv('SECRET_KEY'), ['HS256']);
-        } catch (UnexpectedValueException $e) {
-            $auth = false;
-        } catch (DomainException $e) {
-            $auth = false;
-        }
+        $client_id = getenv('CLIENT_ID');
+        $client = new Google_Client(['client_id' => $client_id]);
 
-        if (isset($decoded) && is_object($decoded) && isset($decoded->sub)) {
-            $auth = true;
-        }
-
-        if ($auth === false) {
-            throw new AuthException('error: Forbidden, not authorized.', 403);
-        }
-
-        return $decoded;
+            $decoded = $client->verifyIdToken($token);
+            if ($decoded) {
+                var_dump($decoded);
+                return $decoded;
+            }
+            else{
+                throw new AuthException('error: Forbidden, not authorized.', 403);
+            }
     }
 }
+

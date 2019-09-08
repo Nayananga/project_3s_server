@@ -62,6 +62,16 @@
       <path value="$PROJECT_DIR$/restapi/vendor/symfony/service-contracts" />
       <path value="$PROJECT_DIR$/restapi/vendor/symfony/finder" />
       <path value="$PROJECT_DIR$/restapi/vendor/composer" />
+      <path value="$PROJECT_DIR$/restapi/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/restapi/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/restapi/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/restapi/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/restapi/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/restapi/vendor/google/apiclient-services" />
+      <path value="$PROJECT_DIR$/restapi/vendor/google/apiclient" />
+      <path value="$PROJECT_DIR$/restapi/vendor/google/auth" />
+      <path value="$PROJECT_DIR$/restapi/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/restapi/vendor/monolog/monolog" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7" />

@@ -15,7 +15,6 @@ class GetOneUser extends BaseUser
         } else {
             $user = $this->getUserService()->getUser((int) $this->args['id']);
         }
-
         return $this->jsonResponse('success', $user, 200);
     }
 
@@ -30,7 +29,6 @@ class GetOneUser extends BaseUser
             $user = $this->getUserService()->getUser($user_id);
             $this->saveInCache($user_id, $user);
         }
-
         return $user;
     }
 }

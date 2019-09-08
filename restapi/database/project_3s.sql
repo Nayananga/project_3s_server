@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 30, 2019 at 12:01 AM
+-- Generation Time: Sep 07, 2019 at 04:23 PM
 -- Server version: 5.7.27-0ubuntu0.19.04.1
 -- PHP Version: 7.2.19-0ubuntu0.19.04.2
 
@@ -103,26 +103,27 @@ INSERT INTO `reviews` (`id`, `user_id`, `qa`, `geo_tag`, `device_signature`, `cr
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `nic` varchar(12) DEFAULT NULL,
-  `nickname` varchar(300) DEFAULT NULL,
+  `google_id` varchar(300) NOT NULL,
   `email` varchar(300) NOT NULL,
+  `nickname` varchar(300) DEFAULT NULL,
   `phoneNo` varchar(100) DEFAULT NULL,
+  `image` varchar(300) DEFAULT NULL,
+  `nic` varchar(12) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `image` varchar(300) DEFAULT NULL
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `nic`, `nickname`, `email`, `phoneNo`, `created_at`, `updated_at`, `image`) VALUES
-(1, '953464110v', 'Slahiru', 's.lahiru1995@gmail.com', '0766352082', '2019-07-28 08:53:59', '2019-07-28 08:53:59', NULL),
-(2, '951413135v', 'aththa', 'lahirupre21@gmmail.com', '0776512789', '2019-07-28 09:06:17', '2019-07-28 09:07:49', NULL),
-(3, '354858109v', 'ashan', 'agfdnine@gmail.com', '0715898741', '2019-07-28 10:10:44', '2019-07-28 10:10:44', NULL),
-(4, '874578963v', 'west', 'west1234@gmail.com', '0784546987', '2019-07-28 10:12:45', '2019-07-28 10:12:45', NULL),
-(5, '971258796v', 'dinesh', 'dineshlakshitha@gmail.com', '0714578964', '2019-07-28 10:15:10', '2019-07-28 10:15:10', NULL),
-(6, '942752167v', 'Ravindu', 'deyya@email.com', '0702018472', '2019-08-27 17:16:27', '2019-08-27 17:16:27', '');
+INSERT INTO `user` (`id`, `google_id`, `email`, `nickname`, `phoneNo`, `image`, `nic`, `created_at`, `updated_at`) VALUES
+(1, '', 's.lahiru1995@gmail.com', 'Slahiru', '0766352082', NULL, '953464110v', '2019-07-28 08:53:59', '2019-07-28 08:53:59'),
+(2, '', 'lahirupre21@gmmail.com', 'aththa', '0776512789', NULL, '951413135v', '2019-07-28 09:06:17', '2019-07-28 09:07:49'),
+(3, '', 'agfdnine@gmail.com', 'ashan', '0715898741', NULL, '354858109v', '2019-07-28 10:10:44', '2019-07-28 10:10:44'),
+(4, '', 'west1234@gmail.com', 'west', '0784546987', NULL, '874578963v', '2019-07-28 10:12:45', '2019-07-28 10:12:45'),
+(5, '', 'dineshlakshitha@gmail.com', 'dinesh', '0714578964', NULL, '971258796v', '2019-07-28 10:15:10', '2019-07-28 10:15:10'),
+(6, '', 'deyya@email.com', 'Ravindu', '0702018472', '', '942752167v', '2019-08-27 17:16:27', '2019-08-27 17:16:27');
 
 --
 -- Indexes for dumped tables
@@ -179,7 +180,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Constraints for dumped tables
 --

@@ -5,17 +5,15 @@ namespace App\Controller\User;
 use App\Controller\BaseController;
 use App\Exception\UserException;
 use App\Service\UserService;
+use Interop\Container\Exception\ContainerException;
+use Respect\Validation\Exceptions\BaseException;
 use Slim\Container;
 
 abstract class BaseUser extends BaseController
 {
-    const KEY = 'rest-api-slim-php:user:';
-
     /**
      * @var UserService
      */
-    protected $userService;
-
     public function __construct(Container $container)
     {
         $this->container = $container;
@@ -23,7 +21,12 @@ abstract class BaseUser extends BaseController
 
     protected function getUserService(): UserService
     {
-        return $this->container->get('user_service');
+        try {
+            return $this->container->get('user_service');
+        } catch (ContainerException $e) {
+            throw new BaseException('Get user_service failed in BaseUser.php.', 400);
+
+        }
     }
 
     /**
@@ -37,3 +40,4 @@ abstract class BaseUser extends BaseController
         }
     }
 }
+

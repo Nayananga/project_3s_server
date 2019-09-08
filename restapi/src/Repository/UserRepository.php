@@ -12,11 +12,11 @@ class UserRepository extends BaseRepository
         $this->database = $database;
     }
 
-    public function checkAndGetUser(int $user_id)
+    public function checkAndGetUser(int $id)
     {
-        $query = 'SELECT `id`, `nic`, `nickname` FROM `user` WHERE `id` = :id';
+        $query = 'SELECT `id`, `email`, `nickname` FROM `user` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('id', $user_id);
+        $statement->bindParam('id', $id);
         $statement->execute();
         $user = $statement->fetchObject();
         if (empty($user)) {
@@ -26,18 +26,17 @@ class UserRepository extends BaseRepository
         return $user;
     }
 
-    public function checkUserByNic(string $nic)
+    public function checkUserByGoogleId(string $google_id)
     {
-        $query = 'SELECT * FROM `user` WHERE `nic` = :nic';
+        $query = 'SELECT `nickname` FROM `user` WHERE `google_id` = :google_id';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('nic', $nic);
+        $statement->bindParam('google_id', $google_id);
         $statement->execute();
         $user = $statement->fetchObject();
-        if (empty(!$user)) {
-            throw new UserException('Nic already exists.', 400);
+        if (!empty($user)) {
+            return true;
         }
-
-        return $nic;
+        return false;
     }
 
     public function getUsers(): array
@@ -49,49 +48,21 @@ class UserRepository extends BaseRepository
         return $statement->fetchAll();
     }
 
-# TODO: get nickname in lowercase
-    public function searchUsers(string $nickname): array
-    {
-        $query = 'SELECT `id`, `nic`, `nickname` FROM `user` WHERE LOWER(nickname) LIKE :name ORDER BY `id`';
-        $name = '%' . $nickname . '%';
-        $statement = $this->database->prepare($query);
-        $statement->bindParam('name', $name);
-        $statement->execute();
-        $users = $statement->fetchAll();
-        if (!$users) {
-            throw new UserException('User nickname not found.', 404);
-        }
-
-        return $users;
-    }
-# TODO: SMS Auth needed
-    public function loginUser(string $nic)
-    {
-        $query = 'SELECT * FROM `user` WHERE `nic` = :nic ORDER BY `id`';
-        $statement = $this->database->prepare($query);
-        $statement->bindParam('nic', $nic);
-//        $statement->bindParam('password', $password);
-        $statement->execute();
-        $user = $statement->fetchObject();
-        if (empty($user)) {
-            throw new UserException('Login failed: NIC incorrect.', 400);
-        }
-
-        return $user;
-    }
-
     public function createUser($user)
     {
-        $query = 'INSERT INTO `user` (`nic`, `nickname`, `email`, `phoneNo`, `image`) VALUES (:nic, :nickname, :email, :phoneNo, :image)';
+        $query = 'INSERT INTO `user` (`google_id`, `email`, `nickname`, `phoneNo`, `image`, `nic`) VALUES (:google_id, :email, :nickname, :phoneNo, :image, :nic)';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('nic', $user->nic);
-        $statement->bindParam('nickname', $user->nickname);
+        $statement->bindParam('google_id', $user->google_id);
         $statement->bindParam('email', $user->email);
-        $statement->bindParam('phoneNo', $user->phoneNo);
+        $statement->bindParam('nickname', $user->nickname);
         $statement->bindParam('image', $user->image);
         $statement->execute();
 
-        return $this->checkAndGetUser((int) $this->database->lastInsertId());
+        $new_user =  $this->checkAndGetUser((int) $this->database->lastInsertId());
+        if(!empty($new_user)){
+            return "Create User and Logged successfully";
+        }
+        return "Unsuccessful Create User and Login ";
     }
 
     public function updateUser($user)

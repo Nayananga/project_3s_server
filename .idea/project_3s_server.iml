@@ -8,7 +8,14 @@
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/container-interop/container-interop" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/firebase/php-jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/google/apiclient" />
+      <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/google/apiclient-services" />
+      <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/google/auth" />
+      <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/jean85/pretty-package-versions" />
+      <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/nette/bootstrap" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/nette/di" />
@@ -27,6 +34,7 @@
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/phpdocumentor/reflection-common" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/phpdocumentor/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/phpdocumentor/type-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/phpseclib/phpseclib" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/phpspec/prophecy" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/phpstan/phpdoc-parser" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/phpstan/phpstan" />
@@ -38,9 +46,11 @@
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/phpunit/phpunit" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/pimple/pimple" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/predis/predis" />
+      <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/ralouphie/getallheaders" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/respect/validation" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/sebastian/code-unit-reverse-lookup" />
       <excludeFolder url="file://$MODULE_DIR$/restapi/vendor/sebastian/comparator" />

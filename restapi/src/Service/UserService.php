@@ -19,6 +19,11 @@ class UserService extends BaseService
         $this->userRepository = $userRepository;
     }
 
+    protected function checkUserByGoogleId(String $sub)
+    {
+        return $this->userRepository->checkUserByGoogleId($sub);
+    }
+
     protected function checkAndGetUser(int $user_id)
     {
         return $this->userRepository->checkAndGetUser($user_id);
@@ -34,35 +39,13 @@ class UserService extends BaseService
         return $this->checkAndGetUser($user_id);
     }
 
-    public function searchUsers(string $nickname): array
-    {
-        return $this->userRepository->searchUsers($nickname);
-    }
-# TODO: Ask about how to put image
-    public function createUser($input)
+    public function createUser($data)
     {
         $user = new stdClass();
-        $data = json_decode(json_encode($input), false);
-        if (!isset($data->nic)) {
-            throw new UserException('The field "NIC" is required.', 400);
-        }
-        if (!isset($data->nickname)) {
-            throw new UserException('The field "nickname" is required.', 400);
-        }
-        if (!isset($data->email)) {
-            throw new UserException('The field "email" is required.', 400);
-        }
-        if (!isset($data->phoneNo)) {
-            throw new UserException('The field "phoneNo" is required.', 400);
-        }
-        $user->nic = $this->userRepository->checkUserByNic($data->nic);
-        $user->nickname = self::validateUserName($data->nickname);
-        $user->email = self::validateEmail($data->email);
-        $user->phoneNo = $data->phoneNo;
-        $user->image = $data->image;
-//        $user->password = hash('sha512', $data->password); # TODO: validate nic,phone no
-
-
+        $user->google_id = $data['sub'];
+        $user->email = $data['email'];
+        $user->nickname = $data['name'];
+        $user->image = $data['picture'];
         return $this->userRepository->createUser($user);
     }
 
@@ -94,24 +77,11 @@ class UserService extends BaseService
     public function loginUser(array $input): string
     {
         $data = json_decode(json_encode($input), false);
-        if (!isset($data->nic)) {
-            throw new UserException('The field "nic" is required.', 400);
+        if($this->checkUserByGoogleId($data->sub) == false){
+            return $this->userRepository->createUser($data);
         }
-//        if (!isset($data->password)) {
-//            throw new UserException('The field "password" is required.', 400);
-//        }
-//        $password = hash('sha512', $data->password);
-        $user = $this->userRepository->loginUser($data->nic);
-        $token = array(
-            'sub' => $user->id,
-            'nic' => $user->nic,
-            'nickname' => $user->nickname,
-            'email' => $user->email,
-            'phoneNo' => $user->phoneNo,
-            'iat' => time(),
-            'exp' => time() + (7 * 24 * 60 * 60),
-        );
-
-        return JWT::encode($token, getenv('SECRET_KEY'));
+        else{
+            return "Logged Successfully";
+        }
     }
 }

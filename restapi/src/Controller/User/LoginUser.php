@@ -10,11 +10,10 @@ class LoginUser extends BaseUser
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->setParams($request, $response, $args);
-        $jwt = $this->getUserService()->loginUser($this->getInput());
+        $loginStatus = $this->getUserService()->loginUser($this->getInput());
         $message = [
-            'Authorization' => 'Bearer ' . $jwt, # TODO: Check this
+            'Login_Status'=> $loginStatus
         ];
-
         return $this->jsonResponse('success', $message, 200);
     }
 }

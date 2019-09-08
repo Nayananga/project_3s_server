@@ -2,7 +2,6 @@
 
 $app->get('/', 'App\Controller\DefaultController:getHelp');
 $app->get('/status', 'App\Controller\DefaultController:getStatus');
-$app->post('/login', 'App\Controller\User\LoginUser');
 
 $app->group('/api/v1', function () use ($app) {
     $app->group('/reviews', function () use ($app) {
@@ -14,13 +13,11 @@ $app->group('/api/v1', function () use ($app) {
         $app->delete('/[{id}]', 'App\Controller\Review\DeleteReview');
     })->add(new App\Middleware\AuthMiddleware($app));
     $app->group('/users', function () use ($app) {
-        $app->get('', 'App\Controller\User\GetAllUsers')->add(new App\Middleware\AuthMiddleware($app));     //TODO: NO NEED
-        $app->get('/[{id}]', 'App\Controller\User\GetOneUser')->add(new App\Middleware\AuthMiddleware($app));
-        $app->get('/search/[{query}]', 'App\Controller\User\SearchUsers')->add(new App\Middleware\AuthMiddleware($app));    //TODO: NO NEED
-        $app->post('', 'App\Controller\User\CreateUser');
-        $app->put('/[{id}]', 'App\Controller\User\UpdateUser')->add(new App\Middleware\AuthMiddleware($app));
-        $app->delete('/[{id}]', 'App\Controller\User\DeleteUser')->add(new App\Middleware\AuthMiddleware($app));
-    });
+        $app->post('/login', 'App\Controller\User\LoginUser');
+        $app->get('', 'App\Controller\User\GetAllUsers');
+        $app->get('/[{id}]', 'App\Controller\User\GetOneUser');
+        $app->put('/[{id}]', 'App\Controller\User\UpdateUser');
+    })->add(new App\Middleware\AuthMiddleware($app));
     $app->group('/complaints', function () use ($app) {
         $app->get('', 'App\Controller\Complaint\GetAllComplaints');
         $app->get('/[{id}]', 'App\Controller\Complaint\GetOneComplaint');

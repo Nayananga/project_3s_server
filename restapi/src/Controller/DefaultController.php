@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Interop\Container\Exception\ContainerException;
+use Respect\Validation\Exceptions\BaseException;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -38,9 +40,21 @@ class DefaultController extends BaseController
     public function getStatus(Request $request, Response $response, array $args): Response
     {
         $this->setParams($request, $response, $args);
-        $userService = $this->container->get('user_service');
-        $complaintService = $this->container->get('complaint_service');
-        $reviewService = $this->container->get('review_service');
+        try {
+            $userService = $this->container->get('user_service');
+        } catch (ContainerException $e) {
+            throw new BaseException('get(user_service) failed in DefaultController.php.', 400);
+        }
+        try {
+            $complaintService = $this->container->get('complaint_service');
+        } catch (ContainerException $e) {
+            throw new BaseException('get(complaint_service) failed in DefaultController.php.', 400);
+        }
+        try {
+            $reviewService = $this->container->get('review_service');
+        } catch (ContainerException $e) {
+            throw new BaseException('get(review_service) failed in DefaultController.php.', 400);
+        }
         $db = [
             'users' => count($userService->getUsers()),
             'reviews' => count($reviewService->getAllReviews()),
