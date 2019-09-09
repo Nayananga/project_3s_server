@@ -15,6 +15,7 @@ class LoginUser extends BaseUser
         if ($data["google_id"]){
             $message = [
                 'Logged_User_Id'=> $data["google_id"],
+                'Logged_User_Name'=> $data["nickname"],
             ];
             return $this->jsonResponse('success', $message, 200);
         }

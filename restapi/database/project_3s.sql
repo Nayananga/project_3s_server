@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 07, 2019 at 04:23 PM
+-- Generation Time: Sep 09, 2019 at 12:35 PM
 -- Server version: 5.7.27-0ubuntu0.19.04.1
 -- PHP Version: 7.2.19-0ubuntu0.19.04.2
 
@@ -123,7 +123,8 @@ INSERT INTO `user` (`id`, `google_id`, `email`, `nickname`, `phoneNo`, `image`, 
 (3, '', 'agfdnine@gmail.com', 'ashan', '0715898741', NULL, '354858109v', '2019-07-28 10:10:44', '2019-07-28 10:10:44'),
 (4, '', 'west1234@gmail.com', 'west', '0784546987', NULL, '874578963v', '2019-07-28 10:12:45', '2019-07-28 10:12:45'),
 (5, '', 'dineshlakshitha@gmail.com', 'dinesh', '0714578964', NULL, '971258796v', '2019-07-28 10:15:10', '2019-07-28 10:15:10'),
-(6, '', 'deyya@email.com', 'Ravindu', '0702018472', '', '942752167v', '2019-08-27 17:16:27', '2019-08-27 17:16:27');
+(6, '', 'deyya@email.com', 'Ravindu', '0702018472', '', '942752167v', '2019-08-27 17:16:27', '2019-08-27 17:16:27'),
+(7, '118044157704803116440', 'nayanangamuhandiram@gmail.com', 'Nayananga Muhandiram', NULL, 'https://lh3.googleusercontent.com/a-/AAuE7mBpeSpCp8amkvOusoZrf0J9tfK398CMJcnHB1ua=s96-c', NULL, '2019-09-08 21:58:50', '2019-09-08 21:58:50');
 
 --
 -- Indexes for dumped tables
