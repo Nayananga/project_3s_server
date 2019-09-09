@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Exception\UserException;
 use PDO;
+use phpDocumentor\Reflection\Types\Object_;
 
 class UserRepository extends BaseRepository
 {
@@ -14,7 +15,7 @@ class UserRepository extends BaseRepository
 
     public function checkAndGetUser(int $id)
     {
-        $query = 'SELECT `id`, `email`, `nickname` FROM `user` WHERE `id` = :id';
+        $query = 'SELECT `google_id`, `email`, `nickname` FROM `user` WHERE `id` = :id';
         $statement = $this->database->prepare($query);
         $statement->bindParam('id', $id);
         $statement->execute();
@@ -22,23 +23,18 @@ class UserRepository extends BaseRepository
         if (empty($user)) {
             throw new UserException('User not found.', 404);
         }
-
         return $user;
     }
 
     public function checkUserByGoogleId(string $google_id)
     {
-        $query = 'SELECT `nickname` FROM `user` WHERE `google_id` = :google_id';
+        $query = 'SELECT `google_id`, `email`, `nickname` FROM `user` WHERE `google_id` = :google_id';
         $statement = $this->database->prepare($query);
         $statement->bindParam('google_id', $google_id);
         $statement->execute();
         $user = $statement->fetchObject();
-        if (empty($user)) {
-            return false;
-        }
-        else{
-            return true;
-        }
+        return $user;
+
     }
 
     public function getUsers(): array
@@ -61,10 +57,7 @@ class UserRepository extends BaseRepository
         $statement->execute();
 
         $new_user =  $this->checkAndGetUser((int) $this->database->lastInsertId());
-        if(!empty($new_user)){
-            return 2001;
-        }
-        return 2002;
+        return $new_user;
     }
 
     public function updateUser($user)
@@ -78,22 +71,4 @@ class UserRepository extends BaseRepository
 
         return $this->checkAndGetUser((int) $user->id);
     }
-
-    public function deleteUser(int $user_id): string
-    {
-        $query = 'DELETE FROM `user` WHERE `id` = :id';
-        $statement = $this->database->prepare($query);
-        $statement->bindParam('id', $user_id);
-        $statement->execute();
-
-        return 'The user was deleted.';
-    }
-
-//    public function deleteUserTasks(int $userId)
-//    {
-//        $query = 'DELETE FROM `tasks` WHERE `userId` = :userId';
-//        $statement = $this->database->prepare($query);
-//        $statement->bindParam('userId', $userId);
-//        $statement->execute();
-//    }
 }

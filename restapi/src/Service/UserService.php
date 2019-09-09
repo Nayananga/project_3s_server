@@ -66,22 +66,15 @@ class UserService extends BaseService
         return $this->userRepository->updateUser($user);
     }
 
-    public function deleteUser(int $user_id): string
-    {
-        $this->checkAndGetUser($user_id);
-        $this->userRepository->deleteUser($user_id);
-
-        return $this->userRepository->deleteUser($user_id);
-    }
-
-    public function loginUser(array $input): int
+    public function loginUser(array $input)
     {
         $data = $input["decoded"];
-        if(!$this->checkUserByGoogleId($data['sub'])){
+        $checkUser = $this->checkUserByGoogleId($data['sub']);
+        if(empty($checkUser)){
             return $this->userRepository->createUser($data);
         }
         else{
-            return 2000;
+            return $checkUser;
         }
     }
 }

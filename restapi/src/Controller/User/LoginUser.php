@@ -10,25 +10,19 @@ class LoginUser extends BaseUser
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->setParams($request, $response, $args);
-        $loginStatus = $this->getUserService()->loginUser($this->getInput());
-        switch($loginStatus){
-            case 2000:
-                $message = [
-                    'Login_Status'=> 'Successfully Logged in ',
-                ];
-                return $this->jsonResponse('success', $message, 200);
-                break;
-            case 2001:
-                $message = [
-                    'Login_Status'=> 'Successfully created user and logged in user',
-                ];
-                return $this->jsonResponse('success', $message, 200);
-                break;
-            default:
-                $message = [
-                    'Login_Status'=> 'User creation unsuccessful',
-                ];
-                return $this->jsonResponse('failure', $message, 500);
+        $loggedUser = $this->getUserService()->loginUser($this->getInput());
+        $data = json_decode(json_encode($loggedUser), True);
+        if ($data["google_id"]){
+            $message = [
+                'Logged_User_Id'=> $data["google_id"],
+            ];
+            return $this->jsonResponse('success', $message, 200);
+        }
+        else{
+            $message = [
+                'Login_Status'=> 'User creation unsuccessful',
+            ];
+            return $this->jsonResponse('failure', $message, 500);
         }
     }
 }
