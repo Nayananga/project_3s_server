@@ -14,7 +14,7 @@ class LoginUser extends BaseUser
         $data = json_decode(json_encode($loggedUser), True);
         if ($data["google_id"]){
             $message = [
-                'Logged_User_Id'=> $data["google_id"],
+                'Logged_User_Id'=> $data["google_id"], // TODO: CHANGE THIS DYNAMIC
                 'Logged_User_Name'=> $data["nickname"],
             ];
             return $this->jsonResponse('success', $message, 200);
