@@ -10,8 +10,7 @@ class CreateReview extends BaseReview
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->setParams($request, $response, $args);
-        $input = $this->getInput();
-        $review = $this->getReviewService()->createReview($input);
+        $review = $this->getReviewService()->createReview( $this->getInput());
 
         return $this->jsonResponse('success', $review, 201);
     }

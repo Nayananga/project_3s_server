@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Exception\ReviewException;
 use App\Repository\ReviewRepository;
+use App\Service\UserService;
 use stdClass;
 
 class ReviewService extends BaseService
@@ -12,25 +13,22 @@ class ReviewService extends BaseService
      * @var ReviewRepository
      */
     protected $reviewRepository;
+    protected $userService;
 
-    public function __construct(ReviewRepository $reviewRepository)
+    public function __construct(ReviewRepository $reviewRepository, UserService $userService)
     {
         $this->reviewRepository = $reviewRepository;
-    }
-
-    protected function getReviewRepository(): ReviewRepository
-    {
-        return $this->reviewRepository;
-    }
-
-    protected function checkAndGetReview(int $review_id, int $user_id)
-    {
-        return $this->getReviewRepository()->checkAndGetReview($review_id, $user_id);
+        $this->userService = $userService;
     }
 
     public function getAllReviews(): array
     {
         return $this->getReviewRepository()->getAllReviews();
+    }
+
+    protected function getReviewRepository(): ReviewRepository
+    {
+        return $this->reviewRepository;
     }
 
     public function getReviews(int $user_id): array
@@ -43,6 +41,39 @@ class ReviewService extends BaseService
         return $this->checkAndGetReview($review_id, $userId);
     }
 
+    protected function checkAndGetReview(int $review_id, int $user_id)
+    {
+        return $this->getReviewRepository()->checkAndGetReview($review_id, $user_id);
+    }
+
+    public function createReview(array $input)
+    {
+        var_dump($input);
+        $data = $input["decoded"];
+        $checkUser = $this->validateCurrentUser($data['sub']);
+        if (empty($checkUser)) {
+            throw new ReviewException('Invalid User.', 400);
+        } else {
+            $review = new stdClass();
+            $data = json_decode(json_encode($input), false);
+//        if (empty($data->q_a)) {
+//            throw new ReviewException('The field "q_a" is required.', 400);
+//        }
+            $review->q_a = self::validateReviewAnswers($data->q_a);
+//        $review->description = null;
+//        if (isset($data->description)) {
+//            $review->description = $data->description;
+//        }
+//        if (isset($data->geo_tag)) {
+//            $review->geo_tag = self::validateReviewGeoTag($data->geo_tag);
+//        }
+            $review->user_id = $data['sub'];
+
+            return $this->getReviewRepository()->createReview($review);
+
+        }
+    }
+
 //    public function searchTasks($tasksName, int $userId, $status): array
 //    {
 //        if ($status !== null) {
@@ -52,29 +83,14 @@ class ReviewService extends BaseService
 //        return $this->getReviewRepository()->searchReviews($tasksName, $userId, $status);
 //    }
 
-    public function createReview(array $input)
+    protected function validateCurrentUser(String $sub)
     {
-        $review = new stdClass();
-        $data = json_decode(json_encode($input), false);
-        if (empty($data->q_a)) {
-            throw new ReviewException('The field "q_a" is required.', 400);
-        }
-        $review->q_a = self::validateReviewAnswers($data->q_a);
-        $review->description = null;
-        if (isset($data->description)) {
-            $review->description = $data->description;
-        }
-        if (isset($data->geo_tag)) {
-            $review->geo_tag = self::validateReviewGeoTag($data->geo_tag);
-        }
-        $review->user_id = $data->decoded->sub;
-
-        return $this->getReviewRepository()->createReview($review);
+        return $this->userService->getUserByGoogleId($sub);
     }
 
     public function updateReview(array $input, int $review_id)
     {
-        $review = $this->checkAndGetReview($review_id, (int) $input['decoded']->sub);
+        $review = $this->checkAndGetReview($review_id, (int)$input['decoded']->sub);
         $data = json_decode(json_encode($input), false);
         if (!isset($data->q_a) && !isset($data->q_a)) {
             throw new ReviewException('Enter the data to update the task.', 400);

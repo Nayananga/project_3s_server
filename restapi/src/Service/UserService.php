@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Exception\UserException;
 use App\Repository\UserRepository;
-use \Firebase\JWT\JWT;
 use stdClass;
 
 class UserService extends BaseService
@@ -32,6 +31,11 @@ class UserService extends BaseService
     public function getUsers(): array
     {
         return $this->userRepository->getUsers();
+    }
+
+    public function getUserByGoogleId(String $google_id)
+    {
+        return $this->checkUserByGoogleId($google_id);
     }
 
     public function getUser(int $user_id)
