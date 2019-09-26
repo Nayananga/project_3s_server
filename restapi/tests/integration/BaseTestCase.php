@@ -4,10 +4,12 @@ namespace Tests\integration;
 
 use Dotenv\Dotenv;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 use Slim\App;
 use Slim\Http\Environment;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Throwable;
 
 class BaseTestCase extends TestCase
 {
@@ -19,9 +21,8 @@ class BaseTestCase extends TestCase
      * @param string $requestMethod the request method (e.g. GET, POST, etc.)
      * @param string $requestUri the request URI
      * @param array|object|null $requestData the request data
-     * @return \Psr\Http\Message\ResponseInterface
-     * @throws \Slim\Exception\MethodNotAllowedException
-     * @throws \Slim\Exception\NotFoundException
+     * @return ResponseInterface
+     * @throws Throwable
      */
     public function runApp($requestMethod, $requestUri, $requestData = null)
     {
