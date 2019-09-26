@@ -13,7 +13,7 @@ class NoteTest extends BaseTestCase
     {
         $response = $this->runApp('GET', '/api/v1/notes');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
         $value = json_encode(json_decode($result));
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -34,7 +34,7 @@ class NoteTest extends BaseTestCase
     {
         $response = $this->runApp('GET', '/api/v1/notes/1');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
@@ -52,7 +52,7 @@ class NoteTest extends BaseTestCase
     {
         $response = $this->runApp('GET', '/api/v1/notes/123456789');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -69,7 +69,7 @@ class NoteTest extends BaseTestCase
     {
         $response = $this->runApp('GET', '/api/v1/notes/search/n');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
@@ -86,7 +86,7 @@ class NoteTest extends BaseTestCase
     {
         $response = $this->runApp('GET', '/api/v1/notes/search/123456789');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -105,7 +105,7 @@ class NoteTest extends BaseTestCase
             ['name' => 'My Test Note', 'description' => 'New Note...']
         );
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         self::$id = json_decode($result)->message->id;
 
@@ -125,7 +125,7 @@ class NoteTest extends BaseTestCase
     {
         $response = $this->runApp('POST', '/api/v1/notes');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -144,7 +144,7 @@ class NoteTest extends BaseTestCase
             ['name' => 'z']
         );
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -163,7 +163,7 @@ class NoteTest extends BaseTestCase
             ['name' => 'Victor Notes', 'description' => 'Pep.']
         );
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
@@ -181,7 +181,7 @@ class NoteTest extends BaseTestCase
     {
         $response = $this->runApp('PUT', '/api/v1/notes/' . self::$id);
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -201,7 +201,7 @@ class NoteTest extends BaseTestCase
             'PUT', '/api/v1/notes/123456789', ['name' => 'Note']
         );
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -219,8 +219,8 @@ class NoteTest extends BaseTestCase
     {
         $response = $this->runApp('DELETE', '/api/v1/notes/' . self::$id);
 
-        $result = (string) $response->getBody();
-        
+        $result = (string)$response->getBody();
+
 //        var_dump($result); exit;
 
         $this->assertEquals(204, $response->getStatusCode());
@@ -235,7 +235,7 @@ class NoteTest extends BaseTestCase
     {
         $response = $this->runApp('DELETE', '/api/v1/notes/123456789');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);

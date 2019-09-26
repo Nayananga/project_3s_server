@@ -13,7 +13,7 @@ class TaskTest extends BaseTestCase
     {
         $response = $this->runApp('GET', '/api/v1/tasks');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
@@ -31,7 +31,7 @@ class TaskTest extends BaseTestCase
     {
         $response = $this->runApp('GET', '/api/v1/tasks/1');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
@@ -49,7 +49,7 @@ class TaskTest extends BaseTestCase
     {
         $response = $this->runApp('GET', '/api/v1/tasks/123456789');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -65,7 +65,7 @@ class TaskTest extends BaseTestCase
     {
         $response = $this->runApp('GET', '/api/v1/tasks/search/');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
@@ -83,7 +83,7 @@ class TaskTest extends BaseTestCase
     {
         $response = $this->runApp('GET', '/api/v1/tasks/search/cine');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
@@ -101,7 +101,7 @@ class TaskTest extends BaseTestCase
     {
         $response = $this->runApp('GET', '/api/v1/tasks/search/?status=1');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
@@ -119,7 +119,7 @@ class TaskTest extends BaseTestCase
     {
         $response = $this->runApp('GET', '/api/v1/tasks/search/?status=0');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
@@ -139,7 +139,7 @@ class TaskTest extends BaseTestCase
             'POST', '/api/v1/tasks', ['name' => 'New Task']
         );
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         self::$id = json_decode($result)->message->id;
 
@@ -159,7 +159,7 @@ class TaskTest extends BaseTestCase
     {
         $response = $this->runApp('POST', '/api/v1/tasks');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -177,7 +177,7 @@ class TaskTest extends BaseTestCase
             'POST', '/api/v1/tasks', ['name' => 'z', 'status' => 1]
         );
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -194,7 +194,7 @@ class TaskTest extends BaseTestCase
             'POST', '/api/v1/tasks', ['name' => 'ToDo', 'status' => 123]
         );
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -214,7 +214,7 @@ class TaskTest extends BaseTestCase
         );
         self::$jwt = $auth;
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(403, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -233,7 +233,7 @@ class TaskTest extends BaseTestCase
         );
         self::$jwt = $auth;
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -250,7 +250,7 @@ class TaskTest extends BaseTestCase
             ['name' => 'Update Task', 'status' => 1]
         );
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
@@ -268,7 +268,7 @@ class TaskTest extends BaseTestCase
     {
         $response = $this->runApp('PUT', '/api/v1/tasks/' . self::$id);
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -286,7 +286,7 @@ class TaskTest extends BaseTestCase
             'PUT', '/api/v1/tasks/123456789', ['name' => 'Task']
         );
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);
@@ -302,7 +302,7 @@ class TaskTest extends BaseTestCase
     {
         $response = $this->runApp('DELETE', '/api/v1/tasks/' . self::$id);
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(204, $response->getStatusCode());
         $this->assertStringContainsString('success', $result);
@@ -316,7 +316,7 @@ class TaskTest extends BaseTestCase
     {
         $response = $this->runApp('DELETE', '/api/v1/tasks/123456789');
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertStringNotContainsString('success', $result);

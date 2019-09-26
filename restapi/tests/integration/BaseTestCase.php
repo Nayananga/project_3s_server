@@ -5,9 +5,9 @@ namespace Tests\integration;
 use Dotenv\Dotenv;
 use PHPUnit\Framework\TestCase;
 use Slim\App;
+use Slim\Http\Environment;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Slim\Http\Environment;
 
 class BaseTestCase extends TestCase
 {

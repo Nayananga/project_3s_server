@@ -11,7 +11,7 @@ class AuthLoginTest extends BaseTestCase
     {
         $response = $this->runApp('POST', '/login', ['nic' => '953464110v']); # TODO: need sms auth
 
-        $result = (string) $response->getBody();
+        $result = (string)$response->getBody();
 
         self::$jwt = json_decode($result)->message->Authorization;
 

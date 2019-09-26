@@ -11,13 +11,6 @@ class UserServiceTest extends BaseTestCase
 {
     private static $id;
 
-    private function getDatabase()
-    {
-        $database = sprintf('mysql:host=%s;dbname=%s', getenv('DB_HOSTNAME'), getenv('DB_DATABASE'));
-
-        return new PDO($database, getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
-    }
-
     public function testGetUser()
     {
         $userRepository = new UserRepository($this->getDatabase());
@@ -26,11 +19,18 @@ class UserServiceTest extends BaseTestCase
         $this->assertStringContainsString('Slahiru', $user->nickname);
     }
 
+    private function getDatabase()
+    {
+        $database = sprintf('mysql:host=%s;dbname=%s', getenv('DB_HOSTNAME'), getenv('DB_DATABASE'));
+
+        return new PDO($database, getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
+    }
+
     public function testCreateUser()
     {
         $userRepository = new UserRepository($this->getDatabase());
         $userService = new UserService($userRepository);
-        $input =  ['nic' => '948052167v', 'nickname' => 'Dilshan', 'email' => 'dilshan@email.com', 'phoneNo' => '0702016666', 'image' => ''];
+        $input = ['nic' => '948052167v', 'nickname' => 'Dilshan', 'email' => 'dilshan@email.com', 'phoneNo' => '0702016666', 'image' => ''];
         $user = $userService->createUser($input);
         self::$id = $user->id;
         $this->assertStringContainsString('Dilshan', $user->nickname);
@@ -53,7 +53,7 @@ class UserServiceTest extends BaseTestCase
         $userRepository = new UserRepository($this->getDatabase());
         $userService = new UserService($userRepository);
         $userId = self::$id;
-        $user = $userService->deleteUser((int) $userId);
+        $user = $userService->deleteUser((int)$userId);
         $this->assertStringContainsString('The user was deleted.', $user);
     }
 }
