@@ -18,16 +18,6 @@ class UserService extends BaseService
         $this->userRepository = $userRepository;
     }
 
-    protected function checkUserByGoogleId(String $sub)
-    {
-        return $this->userRepository->checkUserByGoogleId($sub);
-    }
-
-    protected function checkAndGetUser(int $user_id)
-    {
-        return $this->userRepository->checkAndGetUser($user_id);
-    }
-
     public function getUsers(): array
     {
         return $this->userRepository->getUsers();
@@ -38,9 +28,19 @@ class UserService extends BaseService
         return $this->checkUserByGoogleId($google_id);
     }
 
+    protected function checkUserByGoogleId(String $sub)
+    {
+        return $this->userRepository->checkUserByGoogleId($sub);
+    }
+
     public function getUser(int $user_id)
     {
         return $this->checkAndGetUser($user_id);
+    }
+
+    protected function checkAndGetUser(int $user_id)
+    {
+        return $this->userRepository->checkAndGetUser($user_id);
     }
 
     public function createUser($data)
@@ -74,10 +74,9 @@ class UserService extends BaseService
     {
         $data = $input["decoded"];
         $checkUser = $this->checkUserByGoogleId($data['sub']);
-        if(empty($checkUser)){
+        if (empty($checkUser)) {
             return $this->userRepository->createUser($data);
-        }
-        else{
+        } else {
             return $checkUser;
         }
     }

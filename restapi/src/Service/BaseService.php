@@ -2,9 +2,9 @@
 
 namespace App\Service;
 
+use App\Exception\ComplaintException;
 use App\Exception\ReviewException;
 use App\Exception\UserException;
-use App\Exception\ComplaintException;
 use Respect\Validation\Validator as v;
 
 abstract class BaseService

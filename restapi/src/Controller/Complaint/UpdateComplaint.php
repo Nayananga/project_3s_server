@@ -11,9 +11,9 @@ class UpdateComplaint extends BaseComplaint
     {
         $this->setParams($request, $response, $args);
         $input = $this->getInput();
-        $complaint = $this->getComplaintService()->updateComplaint($input, (int) $this->args['id']);
+        $complaint = $this->getComplaintService()->updateComplaint($input, (int)$this->args['id']);
         if ($this->useRedis() === true) {
-            $this->saveInCache((int) $this->args['id'], $complaint);
+            $this->saveInCache((int)$this->args['id'], $complaint);
         }
 
         return $this->jsonResponse('success', $complaint, 200);

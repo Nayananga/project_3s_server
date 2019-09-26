@@ -12,20 +12,6 @@ class ComplaintRepository extends BaseRepository
         $this->database = $database;
     }
 
-    public function checkAndGetComplaint(int $complaintId)
-    {
-        $query = 'SELECT * FROM complaints WHERE id = :id';
-        $statement = $this->database->prepare($query);
-        $statement->bindParam(':id', $complaintId);
-        $statement->execute();
-        $complaint = $statement->fetchObject();
-        if (empty($complaint)) {
-            throw new ComplaintException('Complaint not found.', 404);
-        }
-
-        return $complaint;
-    }
-
     public function getComplaints(): array
     {
         $query = 'SELECT * FROM complaints ORDER BY id';
@@ -62,7 +48,21 @@ class ComplaintRepository extends BaseRepository
         $statement->bindParam(':image', $data->image);
         $statement->execute();
 
-        return $this->checkAndGetComplaint((int) $this->database->lastInsertId());
+        return $this->checkAndGetComplaint((int)$this->database->lastInsertId());
+    }
+
+    public function checkAndGetComplaint(int $complaintId)
+    {
+        $query = 'SELECT * FROM complaints WHERE id = :id';
+        $statement = $this->database->prepare($query);
+        $statement->bindParam(':id', $complaintId);
+        $statement->execute();
+        $complaint = $statement->fetchObject();
+        if (empty($complaint)) {
+            throw new ComplaintException('Complaint not found.', 404);
+        }
+
+        return $complaint;
     }
 
     public function updateComplaint($complaint)
@@ -74,7 +74,7 @@ class ComplaintRepository extends BaseRepository
         $statement->bindParam(':description', $complaint->description);
         $statement->execute();
 
-        return $this->checkAndGetComplaint((int) $complaint->id);
+        return $this->checkAndGetComplaint((int)$complaint->id);
     }
 
     public function deleteComplaint(int $complaintId)

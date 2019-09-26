@@ -3,8 +3,8 @@
 namespace App\Handler;
 
 use Exception;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use ReflectionClass;
 use Slim\Handlers\Error;
 

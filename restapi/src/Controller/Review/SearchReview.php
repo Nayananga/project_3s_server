@@ -11,7 +11,7 @@ class SearchReview extends BaseReview
     {
         $this->setParams($request, $response, $args);
         $input = $this->getInput();
-        $userId = (int) $input['decoded']->sub;
+        $userId = (int)$input['decoded']->sub;
         $query = '';
         if (isset($this->args['query'])) {
             $query = $this->args['query'];

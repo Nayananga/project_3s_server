@@ -18,11 +18,6 @@ class ComplaintService extends BaseService
         $this->complaintRepository = $complaintRepository;
     }
 
-    protected function checkAndGetComplaint(int $complaint_id)
-    {
-        return $this->complaintRepository->checkAndGetComplaint($complaint_id);
-    }
-
     public function getComplaints(): array
     {
         return $this->complaintRepository->getComplaints();
@@ -31,6 +26,11 @@ class ComplaintService extends BaseService
     public function getComplaint(int $complaint_id)
     {
         return $this->checkAndGetComplaint($complaint_id);
+    }
+
+    protected function checkAndGetComplaint(int $complaint_id)
+    {
+        return $this->complaintRepository->checkAndGetComplaint($complaint_id);
     }
 
     public function searchComplaints(string $strComplaints): array

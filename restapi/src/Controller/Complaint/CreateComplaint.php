@@ -13,7 +13,7 @@ class CreateComplaint extends BaseComplaint
         $input = $this->getInput();
         $complaint = $this->getComplaintService()->createComplaint($input);
         if ($this->useRedis() === true) {
-            $this->saveInCache((int) $complaint->id, $complaint);
+            $this->saveInCache((int)$complaint->id, $complaint);
         }
 
         return $this->jsonResponse('success', $complaint, 201);

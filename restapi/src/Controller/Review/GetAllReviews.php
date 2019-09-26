@@ -11,7 +11,7 @@ class GetAllReviews extends BaseReview
     {
         $this->setParams($request, $response, $args);
         $input = $this->getInput();
-        $user_id = (int) $input['decoded']->sub;
+        $user_id = (int)$input['decoded']->sub;
         $reviews = $this->getReviewService()->getAllReviews($user_id);
 
         return $this->jsonResponse('success', $reviews, 200);

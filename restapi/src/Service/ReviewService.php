@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Exception\ReviewException;
 use App\Repository\ReviewRepository;
-use App\Service\UserService;
 use stdClass;
 
 class ReviewService extends BaseService

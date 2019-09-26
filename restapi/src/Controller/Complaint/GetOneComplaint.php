@@ -11,9 +11,9 @@ class GetOneComplaint extends BaseComplaint
     {
         $this->setParams($request, $response, $args);
         if ($this->useRedis() === true) {
-            $complaint = $this->getComplaintFromCache((int) $this->args['id']);
+            $complaint = $this->getComplaintFromCache((int)$this->args['id']);
         } else {
-            $complaint = $this->getComplaintService()->getComplaint((int) $this->args['id']);
+            $complaint = $this->getComplaintService()->getComplaint((int)$this->args['id']);
         }
 
         return $this->jsonResponse('success', $complaint, 200);

@@ -12,21 +12,6 @@ class ReviewRepository extends BaseRepository
         $this->database = $database;
     }
 
-    public function checkAndGetReview(int $review_id, int $user_id)
-    {
-        $query = 'SELECT * FROM reviews WHERE id = :review_id AND user_id = :user_id';
-        $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('id', $review_id);
-        $statement->bindParam('user_id', $user_id);
-        $statement->execute();
-        $review = $statement->fetchObject();
-        if (empty($review)) {
-            throw new ReviewException('Task not found.', 404);
-        }
-
-        return $review;
-    }
-
     public function getAllReviews(): array
     {
         $query = 'SELECT * FROM reviews ORDER BY id';
@@ -44,6 +29,22 @@ class ReviewRepository extends BaseRepository
         $statement->execute();
 
         return $statement->fetchAll();
+    }
+
+    public function createReview($review)
+    {
+        $query = '
+            INSERT INTO reviews (user_id, `qa`, geo_tag, device_signature)
+            VALUES (:user_id, :qa, :geo_tag, :device_signature)
+        ';
+        $statement = $this->getDb()->prepare($query);
+        $statement->bindParam('user_id', $review->user_id);
+        $statement->bindParam('qa', $review->qa);
+        $statement->bindParam('geo_tag', $review->geo_tag);
+        $statement->bindParam('device_signature', $review->device_signature);
+        $statement->execute();
+
+        return $this->checkAndGetReview((int)$this->database->lastInsertId(), (int)$review->user_id);
     }
 
     # TODO: Discuss about searching reviews, best option is to search  by date
@@ -78,20 +79,19 @@ class ReviewRepository extends BaseRepository
 //        return $query;
 //    }
 
-    public function createReview($review)
+    public function checkAndGetReview(int $review_id, int $user_id)
     {
-        $query = '
-            INSERT INTO reviews (user_id, `qa`, geo_tag, device_signature)
-            VALUES (:user_id, :qa, :geo_tag, :device_signature)
-        ';
+        $query = 'SELECT * FROM reviews WHERE id = :review_id AND user_id = :user_id';
         $statement = $this->getDb()->prepare($query);
-        $statement->bindParam('user_id', $review->user_id);
-        $statement->bindParam('qa', $review->qa);
-        $statement->bindParam('geo_tag', $review->geo_tag);
-        $statement->bindParam('device_signature', $review->device_signature);
+        $statement->bindParam('id', $review_id);
+        $statement->bindParam('user_id', $user_id);
         $statement->execute();
+        $review = $statement->fetchObject();
+        if (empty($review)) {
+            throw new ReviewException('Task not found.', 404);
+        }
 
-        return $this->checkAndGetReview((int) $this->database->lastInsertId(), (int) $review->user_id);
+        return $review;
     }
 
     # TODO: Discuss about update reviews
@@ -109,7 +109,7 @@ class ReviewRepository extends BaseRepository
         $statement->bindParam('user_id', $review->user_id);
         $statement->execute();
 
-        return $this->checkAndGetReview((int) $review->id, (int) $review->user_id);
+        return $this->checkAndGetReview((int)$review->id, (int)$review->user_id);
     }
 
     public function deleteReview(int $review_id, int $user_id): string

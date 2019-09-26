@@ -4,26 +4,12 @@ namespace App\Repository;
 
 use App\Exception\UserException;
 use PDO;
-use phpDocumentor\Reflection\Types\Object_;
 
 class UserRepository extends BaseRepository
 {
     public function __construct(PDO $database)
     {
         $this->database = $database;
-    }
-
-    public function checkAndGetUser(int $id)
-    {
-        $query = 'SELECT `google_id`, `email`, `nickname` FROM `user` WHERE `id` = :id';
-        $statement = $this->database->prepare($query);
-        $statement->bindParam('id', $id);
-        $statement->execute();
-        $user = $statement->fetchObject();
-        if (empty($user)) {
-            throw new UserException('User not found.', 404);
-        }
-        return $user;
     }
 
     public function checkUserByGoogleId(string $google_id)
@@ -56,8 +42,21 @@ class UserRepository extends BaseRepository
         $statement->bindParam('image', $user["picture"]);
         $statement->execute();
 
-        $new_user =  $this->checkAndGetUser((int) $this->database->lastInsertId());
+        $new_user = $this->checkAndGetUser((int)$this->database->lastInsertId());
         return $new_user;
+    }
+
+    public function checkAndGetUser(int $id)
+    {
+        $query = 'SELECT `google_id`, `email`, `nickname` FROM `user` WHERE `id` = :id';
+        $statement = $this->database->prepare($query);
+        $statement->bindParam('id', $id);
+        $statement->execute();
+        $user = $statement->fetchObject();
+        if (empty($user)) {
+            throw new UserException('User not found.', 404);
+        }
+        return $user;
     }
 
     public function updateUser($user)
@@ -69,6 +68,6 @@ class UserRepository extends BaseRepository
         $statement->bindParam('image', $user->image);
         $statement->execute();
 
-        return $this->checkAndGetUser((int) $user->id);
+        return $this->checkAndGetUser((int)$user->id);
     }
 }

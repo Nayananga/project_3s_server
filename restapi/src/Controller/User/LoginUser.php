@@ -12,16 +12,15 @@ class LoginUser extends BaseUser
         $this->setParams($request, $response, $args);
         $loggedUser = $this->getUserService()->loginUser($this->getInput());
         $data = json_decode(json_encode($loggedUser), True);
-        if ($data["google_id"]){
+        if ($data["google_id"]) {
             $message = [
-                'Logged_User_Id'=> $data["google_id"], // TODO: CHANGE THIS DYNAMIC
-                'Logged_User_Name'=> $data["nickname"],
+                'Logged_User_Id' => $data["google_id"], // TODO: CHANGE THIS DYNAMIC
+                'Logged_User_Name' => $data["nickname"],
             ];
             return $this->jsonResponse('success', $message, 200);
-        }
-        else{
+        } else {
             $message = [
-                'Login_Status'=> 'User creation unsuccessful',
+                'Login_Status' => 'User creation unsuccessful',
             ];
             return $this->jsonResponse('failure', $message, 500);
         }

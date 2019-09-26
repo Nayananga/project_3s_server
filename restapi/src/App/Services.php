@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-use App\Service\UserService;
-use App\Service\ReviewService;
 use App\Service\ComplaintService;
+use App\Service\ReviewService;
+use App\Service\UserService;
 use Psr\Container\ContainerInterface;
 
 $container = $app->getContainer();

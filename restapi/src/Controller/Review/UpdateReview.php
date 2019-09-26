@@ -11,7 +11,7 @@ class UpdateReview extends BaseReview
     {
         $this->setParams($request, $response, $args);
         $input = $this->getInput();
-        $review = $this->getReviewService()->updateReview($input, (int) $this->args['id']);
+        $review = $this->getReviewService()->updateReview($input, (int)$this->args['id']);
 
         return $this->jsonResponse('success', $review, 200);
     }

@@ -44,7 +44,7 @@ abstract class BaseController
      * @param int $code
      * @return Response
      */
-    protected function jsonResponse(string $status, $message, int $code):  Response
+    protected function jsonResponse(string $status, $message, int $code): Response
     {
         $result = [
             'code' => $code,
@@ -61,16 +61,6 @@ abstract class BaseController
     protected function getInput()
     {
         return $this->request->getParsedBody();
-    }
-
-    protected function getRedisClient(): Client
-    {
-        try {
-            return $this->container->get('redis');
-        } catch (ContainerException $e) {
-            throw new BaseException('get(redis) failed in BaseController.php.', 400);
-
-        }
     }
 
     protected function useRedis(): bool
@@ -97,6 +87,16 @@ abstract class BaseController
         }
 
         return json_decode($value);
+    }
+
+    protected function getRedisClient(): Client
+    {
+        try {
+            return $this->container->get('redis');
+        } catch (ContainerException $e) {
+            throw new BaseException('get(redis) failed in BaseController.php.', 400);
+
+        }
     }
 
     /**
