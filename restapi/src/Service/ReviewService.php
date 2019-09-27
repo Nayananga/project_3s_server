@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Exception\ReviewException;
 use App\Repository\ReviewRepository;
+use App\Repository\UserRepository;
 use stdClass;
 
 class ReviewService extends BaseService
@@ -12,12 +13,12 @@ class ReviewService extends BaseService
      * @var ReviewRepository
      */
     protected $reviewRepository;
-    protected $userService;
+    protected $userRepository;
 
-    public function __construct(ReviewRepository $reviewRepository, UserService $userService)
+    public function __construct(ReviewRepository $reviewRepository, UserRepository $userRepository)
     {
         $this->reviewRepository = $reviewRepository;
-        $this->userService = $userService;
+        $this->userRepository = $userRepository;
     }
 
     public function getAllReviews(): array
@@ -47,29 +48,33 @@ class ReviewService extends BaseService
 
     public function createReview(array $input)
     {
-        var_dump($input);
-        $data = $input["decoded"];
-        $checkUser = $this->validateCurrentUser($data['sub']);
+        $userData = $input["decoded"];
+        $checkUser = $this->validateCurrentUser($userData['sub']);
         if (empty($checkUser)) {
             throw new ReviewException('Invalid User.', 400);
         } else {
             $review = new stdClass();
-            $data = json_decode(json_encode($input), false);
-//        if (empty($data->q_a)) {
-//            throw new ReviewException('The field "q_a" is required.', 400);
-//        }
-            $review->q_a = self::validateReviewAnswers($data->q_a);
-//        $review->description = null;
-//        if (isset($data->description)) {
-//            $review->description = $data->description;
-//        }
-//        if (isset($data->geo_tag)) {
-//            $review->geo_tag = self::validateReviewGeoTag($data->geo_tag);
-//        }
-            $review->user_id = $data['sub'];
-
-            return $this->getReviewRepository()->createReview($review);
-
+            $reviewData = $input["question_and_answers"];
+            $review->user_id = $userData['sub'];
+            for ($i = 0; $i < (count($reviewData) - 1); $i++) {
+                $review->qa[$i] = $reviewData[$i];
+            }
+            if (empty($review->qa)) {
+                throw new ReviewException('The field "q_a" is required.', 400);
+            } else {
+                $review->qa = json_encode($review->qa);
+                $review->device_signature = $input['device_signature'];
+                if (empty($review->device_signature)) {
+                    throw new ReviewException('The field "device_signature" is required.', 400);
+                } else {
+                    $review->geo_tag = "test_geo_Tag";
+                    if (empty($review->geo_tag)) {
+                        throw new ReviewException('The field "geo_tag" is required.', 400);
+                    } else {
+                        return $this->getReviewRepository()->createReview($review);
+                    }
+                }
+            }
         }
     }
 
@@ -84,7 +89,7 @@ class ReviewService extends BaseService
 
     protected function validateCurrentUser(String $sub)
     {
-        return $this->userService->getUserByGoogleId($sub);
+        return $this->userRepository->checkUserByGoogleId($sub);
     }
 
     public function updateReview(array $input, int $review_id)

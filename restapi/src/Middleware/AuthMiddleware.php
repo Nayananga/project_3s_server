@@ -7,7 +7,6 @@ use Google_Client;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
-
 class AuthMiddleware
 {
     /**
@@ -43,12 +42,13 @@ class AuthMiddleware
         $client_id = getenv('CLIENT_ID');
         $client = new Google_Client(['client_id' => $client_id]);
 
-        $decoded = $client->verifyIdToken($token);
-        if ($decoded) {
-            return $decoded;
-        } else {
-            throw new AuthException('error: Forbidden, not authorized.', 403);
-        }
+            $decoded = $client->verifyIdToken($token);
+            if ($decoded) {
+                return $decoded;
+            }
+            else{
+                throw new AuthException('error: Forbidden, not authorized.', 403);
+            }
     }
 }
 

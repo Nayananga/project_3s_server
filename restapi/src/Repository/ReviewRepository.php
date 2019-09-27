@@ -34,7 +34,7 @@ class ReviewRepository extends BaseRepository
     public function createReview($review)
     {
         $query = '
-            INSERT INTO reviews (user_id, `qa`, geo_tag, device_signature)
+            INSERT INTO reviews (user_id, qa, geo_tag, device_signature)
             VALUES (:user_id, :qa, :geo_tag, :device_signature)
         ';
         $statement = $this->getDb()->prepare($query);

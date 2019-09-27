@@ -12,7 +12,7 @@ $container['user_service'] = function (ContainerInterface $container): UserServi
 };
 
 $container['review_service'] = function (ContainerInterface $container): ReviewService {
-    return new ReviewService($container->get('reviews_repository'));
+    return new ReviewService($container->get('reviews_repository'), $container->get('user_repository') );
 };
 
 $container['complaint_service'] = function (ContainerInterface $container): ComplaintService {
