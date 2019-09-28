@@ -18,24 +18,30 @@ class UserService extends BaseService
         $this->userRepository = $userRepository;
     }
 
+    protected function checkUserByGoogleId(String $google_id)
+    {
+        return $this->userRepository->checkUserByGoogleId($google_id);
+    }
+
+    public function getUser(String $google_id)
+    {
+        return $this->checkUserByGoogleId($google_id);
+    }
+
     public function getUsers(): array
     {
         return $this->userRepository->getUsers();
     }
 
-    protected function checkUserByGoogleId(String $sub)
+    public function loginUser(array $input)
     {
-        return $this->userRepository->checkUserByGoogleId($sub);
-    }
-
-    public function getUser(int $user_id)
-    {
-        return $this->checkAndGetUser($user_id);
-    }
-
-    protected function checkAndGetUser(int $user_id)
-    {
-        return $this->userRepository->checkAndGetUser($user_id);
+        $data = $input["decoded"];
+        $checkUser = $this->checkUserByGoogleId($data['sub']);
+        if (empty($checkUser)) {
+            return $this->userRepository->createUser($data);
+        } else {
+            return $checkUser;
+        }
     }
 
     public function createUser($data)
@@ -48,31 +54,17 @@ class UserService extends BaseService
         return $this->userRepository->createUser($user);
     }
 
-    public function updateUser(array $input, int $user_id)
+    public function updateUser(array $input, String $google_id)
     {
-        $user = $this->checkAndGetUser($user_id);
+        $user = $this->checkUserByGoogleId($google_id);
         $data = json_decode(json_encode($input), false);
         if (!isset($data->name) && !isset($data->email)) {
             throw new UserException('Enter the data to update the user.', 400);
         }
         if (isset($data->name)) {
-            $user->name = self::validateUserName($data->name);
-        }
-        if (isset($data->email)) {
-            $user->email = self::validateEmail($data->email);
+            $user->name = $data->name;
         }
 
         return $this->userRepository->updateUser($user);
-    }
-
-    public function loginUser(array $input)
-    {
-        $data = $input["decoded"];
-        $checkUser = $this->checkUserByGoogleId($data['sub']);
-        if (empty($checkUser)) {
-            return $this->userRepository->createUser($data);
-        } else {
-            return $checkUser;
-        }
     }
 }

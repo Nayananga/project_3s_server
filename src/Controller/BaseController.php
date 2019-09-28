@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use Interop\Container\Exception\ContainerException;
 use Predis\Client;
-use Respect\Validation\Exceptions\BaseException;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -65,12 +63,8 @@ abstract class BaseController
 
     protected function useRedis(): bool
     {
-        try {
-            return $this->container->get('settings')['useRedisCache'];
-        } catch (ContainerException $e) {
-            throw new BaseException('get(settings)[useRedisCache] failed in BaseController.php.', 400);
+        return $this->container->get('settings')['useRedisCache'];
 
-        }
     }
 
     /**
@@ -91,12 +85,7 @@ abstract class BaseController
 
     protected function getRedisClient(): Client
     {
-        try {
-            return $this->container->get('redis');
-        } catch (ContainerException $e) {
-            throw new BaseException('get(redis) failed in BaseController.php.', 400);
-
-        }
+        return $this->container->get('redis');
     }
 
     /**

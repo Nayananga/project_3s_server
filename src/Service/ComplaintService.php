@@ -45,7 +45,7 @@ class ComplaintService extends BaseService
         if (!isset($data->user_id)) {
             throw new ComplaintException('Invalid data: user_id is required.', 400);
         }
-        $complaint->geo_tag = self::validateComplaintGeoTag($data->geo_tag);
+        $complaint->geo_tag = $data->geo_tag;
         $complaint->description = null;
         if (isset($data->description)) {
             $complaint->description = $data->description;
@@ -62,7 +62,7 @@ class ComplaintService extends BaseService
             throw new ComplaintException('Enter the data to update the complaint.', 400);
         }
         if (isset($data->geo_tag)) {
-            $complaint->geo_tag = self::validateComplaintGeoTag($data->geo_tag);
+            $complaint->geo_tag = $data->geo_tag;
         }
         if (isset($data->description)) {
             $complaint->description = $data->description;

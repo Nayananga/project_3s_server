@@ -23,9 +23,22 @@ class UserRepository extends BaseRepository
 
     }
 
+    public function checkAndGetUser(int $id)
+    {
+        $query = 'SELECT `google_id`, `email`, `nickname` FROM `user` WHERE `id` = :id';
+        $statement = $this->database->prepare($query);
+        $statement->bindParam('id', $id);
+        $statement->execute();
+        $user = $statement->fetchObject();
+        if (empty($user)) {
+            throw new UserException('User not found.', 404);
+        }
+        return $user;
+    }
+
     public function getUsers(): array
     {
-        $query = 'SELECT `id`, `nic`, `email` FROM `user` ORDER BY `id`';
+        $query = 'SELECT `google_id`, `nic`, `email` FROM `user` ORDER BY `google_id`';
         $statement = $this->database->prepare($query);
         $statement->execute();
 
@@ -44,19 +57,6 @@ class UserRepository extends BaseRepository
 
         $new_user = $this->checkAndGetUser((int)$this->database->lastInsertId());
         return $new_user;
-    }
-
-    public function checkAndGetUser(int $id)
-    {
-        $query = 'SELECT `google_id`, `email`, `nickname` FROM `user` WHERE `id` = :id';
-        $statement = $this->database->prepare($query);
-        $statement->bindParam('id', $id);
-        $statement->execute();
-        $user = $statement->fetchObject();
-        if (empty($user)) {
-            throw new UserException('User not found.', 404);
-        }
-        return $user;
     }
 
     public function updateUser($user)
