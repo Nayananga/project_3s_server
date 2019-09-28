@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 27, 2019 at 09:29 PM
+-- Generation Time: Sep 29, 2019 at 04:42 AM
 -- Server version: 5.7.27-0ubuntu0.19.04.1
 -- PHP Version: 7.2.19-0ubuntu0.19.04.2
 
@@ -76,7 +76,8 @@ INSERT INTO `complaints` (`id`, `user_id`, `geo_tag`, `description`, `created_at
 --
 
 CREATE TABLE `reviews` (
-  `user_id` varchar(300) NOT NULL,
+  `id` int(11) NOT NULL,
+  `user_id` varchar(30) NOT NULL,
   `qa` text NOT NULL,
   `geo_tag` text NOT NULL,
   `device_signature` text NOT NULL,
@@ -88,8 +89,8 @@ CREATE TABLE `reviews` (
 -- Dumping data for table `reviews`
 --
 
-INSERT INTO `reviews` (`user_id`, `qa`, `geo_tag`, `device_signature`, `created_at`, `updated_at`) VALUES
-('102184603142251166236', '[{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Very much Agree\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Often\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"},{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Very Quick\"}]', 'test_geo_Tag', 'TRT-LX2', '2019-09-27 00:33:56', '2019-09-27 00:33:56');
+INSERT INTO `reviews` (`id`, `user_id`, `qa`, `geo_tag`, `device_signature`, `created_at`, `updated_at`) VALUES
+(10, '118044157704803116440', '[{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Very Quick\"},{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Very much Agree\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Often\"}]', 'test_geo_Tag', 'TRT-LX2', '2019-09-28 23:06:28', '2019-09-28 23:06:28');
 
 -- --------------------------------------------------------
 
@@ -98,7 +99,7 @@ INSERT INTO `reviews` (`user_id`, `qa`, `geo_tag`, `device_signature`, `created_
 --
 
 CREATE TABLE `user` (
-  `google_id` varchar(300) NOT NULL,
+  `google_id` varchar(30) NOT NULL,
   `email` varchar(300) NOT NULL,
   `nickname` varchar(300) DEFAULT NULL,
   `phoneNo` varchar(100) DEFAULT NULL,
@@ -138,7 +139,8 @@ ALTER TABLE `complaints`
 -- Indexes for table `reviews`
 --
 ALTER TABLE `reviews`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `user`
@@ -163,15 +165,10 @@ ALTER TABLE `admin`
 ALTER TABLE `complaints`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
--- Constraints for dumped tables
---
-
---
--- Constraints for table `reviews`
+-- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  ADD CONSTRAINT `reviews_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`google_id`) ON UPDATE NO ACTION;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
