@@ -64,7 +64,8 @@ class ReviewService extends BaseService
                 if (empty($review->device_signature)) {
                     throw new ReviewException('The field "device_signature" is required.', 400);
                 } else {
-                    $review->geo_tag = "test_geo_Tag";
+                    $review->geo_tag = $input["geo_location"];
+                    $review->geo_tag = json_encode($review->geo_tag);
                     if (empty($review->geo_tag)) {
                         throw new ReviewException('The field "geo_tag" is required.', 400);
                     } else {

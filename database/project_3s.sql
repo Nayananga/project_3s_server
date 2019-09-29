@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 29, 2019 at 04:42 AM
+-- Generation Time: Sep 30, 2019 at 02:30 AM
 -- Server version: 5.7.27-0ubuntu0.19.04.1
 -- PHP Version: 7.2.19-0ubuntu0.19.04.2
 
@@ -90,7 +90,8 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `user_id`, `qa`, `geo_tag`, `device_signature`, `created_at`, `updated_at`) VALUES
-(10, '118044157704803116440', '[{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Very Quick\"},{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Very much Agree\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Often\"}]', 'test_geo_Tag', 'TRT-LX2', '2019-09-28 23:06:28', '2019-09-28 23:06:28');
+(30, '118044157704803116440', '[{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Often\"},{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Very Pleasant\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"},{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Very Quick\"}]', '{\"longitude\":80.3709106,\"latitude\":6.7659661}', 'TRT-LX2', '2019-09-29 20:58:38', '2019-09-29 20:58:38'),
+(31, '102184603142251166236', '[{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Very Quick\"},{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Very much Agree\"},{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Pleasant\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"}]', '{\"longitude\":80.3709106,\"latitude\":6.7659661}', 'TRT-LX2', '2019-09-29 21:00:22', '2019-09-29 21:00:22');
 
 -- --------------------------------------------------------
 
@@ -116,7 +117,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`google_id`, `email`, `nickname`, `phoneNo`, `image`, `nic`, `created_at`, `updated_at`) VALUES
 ('102184603142251166236', 'nicknam952@gmail.com', 'Nayananga Muhandiram', NULL, 'https://lh3.googleusercontent.com/a-/AAuE7mDoHBcpm1TliHSrVVY7CSZWezR_-eo8UGGjOQSD=s96-c', NULL, '2019-09-25 16:35:34', '2019-09-25 16:35:34'),
 ('113631093528068171553', 'nicknam95@gmail.com', 'Nayananga Muhandiram', NULL, 'https://lh5.googleusercontent.com/-s3bD7CIReJQ/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfp-DUBv9SkwWHs0PKCmdRG6IVJBA/s96-c/photo.jpg', NULL, '2019-09-25 16:44:40', '2019-09-25 16:44:40'),
-('118044157704803116440', 'nayanangamuhandiram@gmail.com', 'Nayananga Muhandiram', NULL, 'https://lh3.googleusercontent.com/a-/AAuE7mBpeSpCp8amkvOusoZrf0J9tfK398CMJcnHB1ua=s96-c', NULL, '2019-09-08 21:58:50', '2019-09-08 21:58:50');
+('118044157704803116440', 'nayanangamuhandiram@gmail.com', 'Nayananga Muhandiram', NULL, 'https://lh3.googleusercontent.com/a-/AAuE7mBpeSpCp8amkvOusoZrf0J9tfK398CMJcnHB1ua=s96-c', NULL, '2019-09-29 00:19:13', '2019-09-29 00:19:13');
 
 --
 -- Indexes for dumped tables
@@ -168,7 +169,7 @@ ALTER TABLE `complaints`
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
