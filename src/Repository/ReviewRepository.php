@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Exception\ReviewException;
 use PDO;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 
 class ReviewRepository extends BaseRepository
 {
@@ -23,14 +24,14 @@ class ReviewRepository extends BaseRepository
 
     }
 
-    public function checkAndGetReview(int $review_id, String $user_id)
+    public function checkAndGetReview(String $review_id)
     {
-        $query = 'SELECT * FROM reviews WHERE id = :review_id AND user_id = :user_id';
+        $query = 'SELECT `id`, `user_id` FROM reviews WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $review_id);
-        $statement->bindParam('user_id', $user_id);
         $statement->execute();
         $review = $statement->fetchObject();
+
         if (empty($review)) {
             throw new ReviewException('Review not found.', 404);
         }
@@ -69,8 +70,10 @@ class ReviewRepository extends BaseRepository
         $statement->bindParam('geo_tag', $review->geo_tag);
         $statement->bindParam('device_signature', $review->device_signature);
         $statement->execute();
+        $id = $this->getDb()->lastInsertId();
 
-        return $this->checkAndGetReview((int) $this->database->lastInsertId(), (String) $review->user_id);
+        return $this->checkAndGetReview($id);
+
     }
 
     # TODO: Discuss about update reviews
@@ -88,7 +91,7 @@ class ReviewRepository extends BaseRepository
         $statement->bindParam('user_id', $review->user_id);
         $statement->execute();
 
-        return $this->checkAndGetReview((int) $review->id, (String) $review->user_id);
+        return $this->checkAndGetReview($review->id);
     }
 
     public function deleteReview(int $review_id, String $user_id): string

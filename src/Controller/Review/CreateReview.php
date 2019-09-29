@@ -12,6 +12,12 @@ class CreateReview extends BaseReview
         $this->setParams($request, $response, $args);
         $review = $this->getReviewService()->createReview($this->getInput());
 
-        return $this->jsonResponse('success', $review, 201);
+        if(empty($review)){
+            return $this->jsonResponse('failure', $review, 500);
+
+        } else {
+            return $this->jsonResponse('success', $review, 200);
+
+        }
     }
 }
