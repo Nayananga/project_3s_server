@@ -18,14 +18,14 @@ class UserService extends BaseService
         $this->userRepository = $userRepository;
     }
 
-    protected function checkUserByGoogleId(String $google_id)
-    {
-        return $this->userRepository->checkUserByGoogleId($google_id);
-    }
-
     public function getUser(String $google_id)
     {
         return $this->checkUserByGoogleId($google_id);
+    }
+
+    protected function checkUserByGoogleId(String $google_id)
+    {
+        return $this->userRepository->checkUserByGoogleId($google_id);
     }
 
     public function getUsers(): array

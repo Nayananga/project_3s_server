@@ -12,7 +12,7 @@ class CreateReview extends BaseReview
         $this->setParams($request, $response, $args);
         $review = $this->getReviewService()->createReview($this->getInput());
 
-        if(empty($review)){
+        if (empty($review)) {
             return $this->jsonResponse('failure', $review, 500);
 
         } else {

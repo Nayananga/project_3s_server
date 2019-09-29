@@ -1,4 +1,4 @@
-<?php declare (strict_types = 1);
+<?php declare (strict_types=1);
 
 namespace App\Service;
 
@@ -18,19 +18,19 @@ class ReviewService extends BaseService
         $this->reviewRepository = $reviewRepository;
     }
 
-    protected function validateCurrentUser(String $google_id)
+    public function getReview(String $review_id, String $google_id)
     {
-        return $this->reviewRepository->checkUserByGoogleId($google_id);
+        return $this->checkAndGetReview($review_id, $google_id);
     }
 
-    protected function checkAndGetReview(int $review_id, String $google_id)
+    protected function checkAndGetReview(String $review_id, String $google_id)
     {
         return $this->getReviewRepository()->checkAndGetReview($review_id, $google_id);
     }
 
-    public function getReview(int $review_id, String $google_id)
+    protected function getReviewRepository(): ReviewRepository
     {
-        return $this->checkAndGetReview($review_id, $google_id);
+        return $this->reviewRepository;
     }
 
     public function getReviews(String $google_id): array
@@ -41,11 +41,6 @@ class ReviewService extends BaseService
     public function getAllReviews(): array
     {
         return $this->getReviewRepository()->getAllReviews();
-    }
-
-    protected function getReviewRepository(): ReviewRepository
-    {
-        return $this->reviewRepository;
     }
 
     public function createReview(array $input)
@@ -80,9 +75,14 @@ class ReviewService extends BaseService
         }
     }
 
-    public function updateReview(array $input, int $review_id)
+    protected function validateCurrentUser(String $google_id)
     {
-        $review = $this->checkAndGetReview($review_id, (String) $input['decoded']->sub);
+        return $this->reviewRepository->checkUserByGoogleId($google_id);
+    }
+
+    public function updateReview(array $input, String $review_id)
+    {
+        $review = $this->checkAndGetReview($review_id, (String)$input['decoded']->sub);
         $data = json_decode(json_encode($input), false);
         if (!isset($data->q_a) && !isset($data->q_a)) {
             throw new ReviewException('Enter the data to update the task.', 400);
@@ -95,11 +95,11 @@ class ReviewService extends BaseService
         return $this->getReviewRepository()->updateReview($review);
     }
 
-    public function deleteReview(int $taskId, String $userId): string
+    public function deleteReview(String $reviewId, String $userId): string
     {
-        $this->checkAndGetReview($taskId, $userId);
+        $this->checkAndGetReview($reviewId, $userId);
 
-        return $this->getReviewRepository()->deleteReview($taskId, $userId);
+        return $this->getReviewRepository()->deleteReview($reviewId, $userId);
     }
 
     //    public function searchTasks($tasksName, int $userId, $status): array
