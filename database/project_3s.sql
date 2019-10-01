@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 30, 2019 at 02:30 AM
+-- Generation Time: Oct 02, 2019 at 04:39 AM
 -- Server version: 5.7.27-0ubuntu0.19.04.1
 -- PHP Version: 7.2.19-0ubuntu0.19.04.2
 
@@ -51,23 +51,13 @@ INSERT INTO `admin` (`id`, `username`, `email`, `password`) VALUES
 
 CREATE TABLE `complaints` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `geo_tag` text NOT NULL,
+  `user_id` varchar(30) NOT NULL,
+  `geo_tag` varchar(300) NOT NULL,
   `description` varchar(300) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `image` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `complaints`
---
-
-INSERT INTO `complaints` (`id`, `user_id`, `geo_tag`, `description`, `created_at`, `updated_at`, `image`) VALUES
-(1, 3, '<meta name=\"geo.region\" content=\"TW\" />\r\n<meta name=\"geo.placename\" content=\"Xinyi Township\" />\r\n<meta name=\"geo.position\" content=\"23.598298;120.835363\" />\r\n<meta name=\"ICBM\" content=\"23.598298, 120.835363\" />\r\n', 'Hotel\'s staffs are not in good mood.', '2019-07-29 20:14:00', '2019-07-28 11:18:38', NULL),
-(2, 1, '<meta name=\"geo.region\" content=\"SG\" />\r\n<meta name=\"geo.placename\" content=\"Singapore\" />\r\n<meta name=\"geo.position\" content=\"1.340853;103.878447\" />\r\n<meta name=\"ICBM\" content=\"1.340853, 103.878447\" />\r\n', 'Foods are not testy and their services very bad.', '2019-07-29 20:14:00', '2019-07-28 11:18:38', NULL),
-(3, 2, '<meta name=\"geo.region\" content=\"RU\" />\r\n<meta name=\"geo.position\" content=\"64.686314;97.745306\" />\r\n<meta name=\"ICBM\" content=\"64.686314, 97.745306\" />\r\n', 'Tables are arranged in bad way.', '2019-07-29 20:14:00', '2019-07-28 11:24:50', NULL),
-(4, 5, '<meta name=\"geo.region\" content=\"PH\" />\r\n<meta name=\"geo.position\" content=\"12.750349;122.73121\" />\r\n<meta name=\"ICBM\" content=\"12.750349, 122.73121\" />\r\n', 'Toilets are dirty.', '2019-07-29 20:14:00', '2019-07-28 11:24:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -79,7 +69,7 @@ CREATE TABLE `reviews` (
   `id` int(11) NOT NULL,
   `user_id` varchar(30) NOT NULL,
   `qa` text NOT NULL,
-  `geo_tag` text NOT NULL,
+  `geo_tag` varchar(300) NOT NULL,
   `device_signature` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -90,8 +80,8 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `user_id`, `qa`, `geo_tag`, `device_signature`, `created_at`, `updated_at`) VALUES
-(30, '118044157704803116440', '[{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Often\"},{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Very Pleasant\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"},{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Very Quick\"}]', '{\"longitude\":80.3709106,\"latitude\":6.7659661}', 'TRT-LX2', '2019-09-29 20:58:38', '2019-09-29 20:58:38'),
-(31, '102184603142251166236', '[{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Very Quick\"},{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Very much Agree\"},{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Pleasant\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"}]', '{\"longitude\":80.3709106,\"latitude\":6.7659661}', 'TRT-LX2', '2019-09-29 21:00:22', '2019-09-29 21:00:22');
+(36, '113631093528068171553', '[{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Very Pleasant\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Often\"},{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Very Quick\"}]', '{\"longitude\":80.37267905100451,\"latitude\":6.76847377400719}', 'TRT-LX2', '2019-10-01 18:38:58', '2019-10-01 18:38:58'),
+(37, '113631093528068171553', '[{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Agree\"},{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Moderate\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Moderate\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Services\"}]', '{\"longitude\":80.369136,\"latitude\":6.7726488}', 'TRT-LX2', '2019-10-01 18:39:32', '2019-10-01 18:39:32');
 
 -- --------------------------------------------------------
 
@@ -134,14 +124,14 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `complaints`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `complaints_1` (`user_id`);
+  ADD UNIQUE KEY `geo_tag` (`geo_tag`);
 
 --
 -- Indexes for table `reviews`
 --
 ALTER TABLE `reviews`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_id` (`user_id`);
+  ADD UNIQUE KEY `geo_tag` (`geo_tag`);
 
 --
 -- Indexes for table `user`
@@ -169,7 +159,7 @@ ALTER TABLE `complaints`
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
