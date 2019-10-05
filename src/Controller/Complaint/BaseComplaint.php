@@ -8,20 +8,19 @@ use Slim\Container;
 
 abstract class BaseComplaint extends BaseController
 {
-    const KEY = 'project_3s:complaint:';
-
     /**
      * @var ComplaintService
      */
-    protected $complaintService;
+    private $complaintService;
+    private $directory;
 
     public function __construct(Container $container)
     {
-        $this->container = $container;
+        $this->complaintService = $container->get('complaint_service');
     }
 
     protected function getComplaintService(): ComplaintService
     {
-        return $this->container->get('complaint_service');
+        return $this->complaintService;
     }
 }

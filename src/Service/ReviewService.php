@@ -51,8 +51,8 @@ class ReviewService extends BaseService
             throw new ReviewException('Invalid User.', 400);
         } else {
             $review = new stdClass();
-            $reviewData = $input["question_and_answers"];
             $review->user_id = $userData['sub'];
+            $reviewData = $input["question_and_answers"];
             for ($i = 0; $i < (count($reviewData) - 1); $i++) {
                 $review->qa[$i] = $reviewData[$i];
             }
@@ -65,10 +65,10 @@ class ReviewService extends BaseService
                     throw new ReviewException('The field "device_signature" is required.', 400);
                 } else {
                     $review->geo_tag = $input["geo_location"];
-                    $review->geo_tag = json_encode($review->geo_tag);
                     if (empty($review->geo_tag)) {
                         throw new ReviewException('The field "geo_tag" is required.', 400);
                     } else {
+                        $review->geo_tag = json_encode($review->geo_tag);
                         return $this->getReviewRepository()->createReview($review);
                     }
                 }

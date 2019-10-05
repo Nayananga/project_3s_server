@@ -7,15 +7,18 @@ use Slim\Http\Response;
 
 class CreateComplaint extends BaseComplaint
 {
+
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->setParams($request, $response, $args);
-        $input = $this->getInput();
-        $complaint = $this->getComplaintService()->createComplaint($input);
-        if ($this->useRedis() === true) {
-            $this->saveInCache((int)$complaint->id, $complaint);
-        }
+        $complaint = $this->getComplaintService()->createComplaint($this->getInput());
 
-        return $this->jsonResponse('success', $complaint, 201);
+        if (empty($complaint)) {
+            return $this->jsonResponse('failure', $complaint, 500);
+
+        } else {
+            return $this->jsonResponse('success', $complaint, 200);
+
+        }
     }
 }

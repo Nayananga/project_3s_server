@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-#TODO: Change queries accordingly
+
 namespace App\Repository;
 
 use App\Exception\ComplaintException;
@@ -10,6 +10,17 @@ class ComplaintRepository extends BaseRepository
     public function __construct(PDO $database)
     {
         $this->database = $database;
+    }
+
+    public function checkUserByGoogleId(string $google_id)
+    {
+        $query = 'SELECT `google_id`, `email`, `nickname` FROM `user` WHERE `google_id` = :google_id';
+        $statement = $this->database->prepare($query);
+        $statement->bindParam('google_id', $google_id);
+        $statement->execute();
+        $user = $statement->fetchObject();
+        return $user;
+
     }
 
     public function getComplaints(): array
@@ -38,24 +49,25 @@ class ComplaintRepository extends BaseRepository
         return $complaints;
     }
 
-    public function createComplaint($data)
+    public function createComplaint($complaint)
     {
         $query = 'INSERT INTO complaints (user_id, geo_tag, description, image) VALUES (:user_id, :geo_tag, :description, :image)';
         $statement = $this->database->prepare($query);
-        $statement->bindParam(':user_id', $data->user_id);
-        $statement->bindParam(':geo_tag', $data->geo_tag);
-        $statement->bindParam(':description', $data->description);
-        $statement->bindParam(':image', $data->image);
+        $statement->bindParam(':user_id', $complaint->user_id);
+        $statement->bindParam(':geo_tag', $complaint->geo_tag);
+        $statement->bindParam(':description', $complaint->description);
+        $statement->bindParam(':image', $complaint->imageName);
         $statement->execute();
+        $id = $this->getDb()->lastInsertId();
 
-        return $this->checkAndGetComplaint((int)$this->database->lastInsertId());
+        return $this->checkAndGetComplaint($id);
     }
 
-    public function checkAndGetComplaint(int $complaintId)
+    public function checkAndGetComplaint(String $complaint_id)
     {
-        $query = 'SELECT * FROM complaints WHERE id = :id';
+        $query = 'SELECT `id`, `user_id` FROM complaints WHERE id = :id';
         $statement = $this->database->prepare($query);
-        $statement->bindParam(':id', $complaintId);
+        $statement->bindParam(':id', $complaint_id);
         $statement->execute();
         $complaint = $statement->fetchObject();
         if (empty($complaint)) {
@@ -74,7 +86,7 @@ class ComplaintRepository extends BaseRepository
         $statement->bindParam(':description', $complaint->description);
         $statement->execute();
 
-        return $this->checkAndGetComplaint((int)$complaint->id);
+        return $this->checkAndGetComplaint($complaint->id);
     }
 
     public function deleteComplaint(int $complaintId)

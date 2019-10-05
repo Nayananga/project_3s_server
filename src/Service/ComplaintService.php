@@ -4,6 +4,8 @@ namespace App\Service;
 
 use App\Exception\ComplaintException;
 use App\Repository\ComplaintRepository;
+use Nette\Neon\Exception;
+use PhpParser\Node\Scalar\String_;
 use stdClass;
 
 class ComplaintService extends BaseService
@@ -23,12 +25,12 @@ class ComplaintService extends BaseService
         return $this->complaintRepository->getComplaints();
     }
 
-    public function getComplaint(int $complaint_id)
+    public function getComplaint(String $complaint_id)
     {
         return $this->checkAndGetComplaint($complaint_id);
     }
 
-    protected function checkAndGetComplaint(int $complaint_id)
+    protected function checkAndGetComplaint(String $complaint_id)
     {
         return $this->complaintRepository->checkAndGetComplaint($complaint_id);
     }
@@ -38,23 +40,55 @@ class ComplaintService extends BaseService
         return $this->complaintRepository->searchComplaints($strComplaints);
     }
 
-    public function createComplaint($data)
+    public function createComplaint(array $input)
     {
-        $complaint = new stdClass();
-        $data = json_decode(json_encode($data), false);
-        if (!isset($data->user_id)) {
-            throw new ComplaintException('Invalid data: user_id is required.', 400);
-        }
-        $complaint->geo_tag = $data->geo_tag;
-        $complaint->description = null;
-        if (isset($data->description)) {
-            $complaint->description = $data->description;
-        }
+        $userData = $input["decoded"];
+        $checkUser = $this->validateCurrentUser($userData['sub']);
+        if(empty($checkUser)) {
+            throw new ComplaintException('Invalid User.', 400);
+        } else {
+            $complaint = new stdClass();
+            $complaint->user_id = $userData['sub'];
+            $complaint->geo_tag = $input["geo_location"];
+            if(empty($complaint->geo_tag)) {
+                throw new ComplaintException('The field "geo_tag" is required.', 400);
+            } else {
+                $complaint->geo_tag = json_encode($complaint->geo_tag);
+                $complaint->description = $input["description"];
+                if (empty($complaint->description)) {
+                    throw new ComplaintException('The field "description" is required.', 400);
+                } else {
+                    $complaintImageName = $input["image"]["name"];
+                    $complaint->imageName = $complaintImageName;
+                    if(empty($complaintImageName)){
+                        return $this->complaintRepository->createComplaint($complaint);
+                    } else {
+                        $complaintImageFile = $input["image"]["file"];
+                        $realComplaintImage = base64_decode($complaintImageFile);
+//                        $dir = __DIR__ . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $complaint->user_id;
+                        try{
+//                            if (!file_exists($dir))
+//                            {
+//                                mkdir($dir,0775);
+//                            }
+                            file_put_contents(__DIR__, $realComplaintImage);
+                        } catch (Exception $error) {
+                            var_dump($error);
+                        }
 
-        return $this->complaintRepository->createComplaint($complaint);
+                        return $this->complaintRepository->createComplaint($complaint); // put inside try catch
+                    }
+                }
+            }
+        }
     }
 
-    public function updateComplaint($input, int $complaint_id)
+    protected function validateCurrentUser(String $google_id)
+    {
+        return $this->complaintRepository->checkUserByGoogleId($google_id);
+    }
+
+    public function updateComplaint($input, String $complaint_id)
     {
         $complaint = $this->checkAndGetComplaint($complaint_id);
         $data = json_decode(json_encode($input), false);
@@ -71,7 +105,7 @@ class ComplaintService extends BaseService
         return $this->complaintRepository->updateComplaint($complaint);
     }
 
-    public function deleteComplaint(int $complaint_id)
+    public function deleteComplaint(String $complaint_id)
     {
         $this->checkAndGetComplaint($complaint_id);
         $this->complaintRepository->deleteComplaint($complaint_id);
