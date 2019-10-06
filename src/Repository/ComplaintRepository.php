@@ -56,7 +56,7 @@ class ComplaintRepository extends BaseRepository
         $statement->bindParam(':user_id', $complaint->user_id);
         $statement->bindParam(':geo_tag', $complaint->geo_tag);
         $statement->bindParam(':description', $complaint->description);
-        $statement->bindParam(':image', $complaint->imageName);
+        $statement->bindParam(':image', $complaint->image_path);
         $statement->execute();
         $id = $this->getDb()->lastInsertId();
 
@@ -89,7 +89,7 @@ class ComplaintRepository extends BaseRepository
         return $this->checkAndGetComplaint($complaint->id);
     }
 
-    public function deleteComplaint(int $complaintId)
+    public function deleteComplaint(String $complaintId)
     {
         $query = 'DELETE FROM complaints WHERE id = :id';
         $statement = $this->database->prepare($query);

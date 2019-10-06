@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 02, 2019 at 04:39 AM
+-- Generation Time: Oct 06, 2019 at 02:47 PM
 -- Server version: 5.7.27-0ubuntu0.19.04.1
 -- PHP Version: 7.2.19-0ubuntu0.19.04.2
 
@@ -56,8 +56,15 @@ CREATE TABLE `complaints` (
   `description` varchar(300) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `image` blob
+  `image` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `complaints`
+--
+
+INSERT INTO `complaints` (`id`, `user_id`, `geo_tag`, `description`, `created_at`, `updated_at`, `image`) VALUES
+(4, '113631093528068171553', '{\"longitude\":-122.084,\"latitude\":37.4219983}', 'this is test complaint', '2019-10-06 09:10:53', '2019-10-06 09:10:53', '/home/nayananga/Desktop/project_3s_server/src/Service/../../images/113631093528068171553/scaled_image_picker4384564361909838901.jpg');
 
 -- --------------------------------------------------------
 

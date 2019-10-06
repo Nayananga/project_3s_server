@@ -59,24 +59,24 @@ class ComplaintService extends BaseService
                     throw new ComplaintException('The field "description" is required.', 400);
                 } else {
                     $complaintImageName = $input["image"]["name"];
-                    $complaint->imageName = $complaintImageName;
                     if(empty($complaintImageName)){
                         return $this->complaintRepository->createComplaint($complaint);
                     } else {
+                        $complaintImagePath = __DIR__ . '/../../images/' . $complaint->user_id .'/'. $complaintImageName;
+                        $complaint->image_path = $complaintImagePath;
                         $complaintImageFile = $input["image"]["file"];
-                        $realComplaintImage = base64_decode($complaintImageFile);
-//                        $dir = __DIR__ . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $complaint->user_id;
-                        try{
-//                            if (!file_exists($dir))
-//                            {
-//                                mkdir($dir,0775);
-//                            }
-                            file_put_contents(__DIR__, $realComplaintImage);
-                        } catch (Exception $error) {
-                            var_dump($error);
+                        $realComplaintImageFile = base64_decode($complaintImageFile);
+                        if (!is_dir(__DIR__ . '/../../images/' . $complaint->user_id )) {
+                            mkdir(__DIR__ . '/../../images/' . $complaint->user_id , 0777, true);
                         }
-
-                        return $this->complaintRepository->createComplaint($complaint); // put inside try catch
+                        try{
+                            file_put_contents($complaintImagePath , $realComplaintImageFile);
+                            return $this->complaintRepository->createComplaint($complaint);
+                        }
+                        catch(Exception $e)
+                        {
+                            throw new ComplaintException($e, 400);
+                        }
                     }
                 }
             }
