@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 06, 2019 at 02:47 PM
+-- Generation Time: Oct 06, 2019 at 03:51 PM
 -- Server version: 5.7.27-0ubuntu0.19.04.1
 -- PHP Version: 7.2.19-0ubuntu0.19.04.2
 
@@ -64,7 +64,8 @@ CREATE TABLE `complaints` (
 --
 
 INSERT INTO `complaints` (`id`, `user_id`, `geo_tag`, `description`, `created_at`, `updated_at`, `image`) VALUES
-(4, '113631093528068171553', '{\"longitude\":-122.084,\"latitude\":37.4219983}', 'this is test complaint', '2019-10-06 09:10:53', '2019-10-06 09:10:53', '/home/nayananga/Desktop/project_3s_server/src/Service/../../images/113631093528068171553/scaled_image_picker4384564361909838901.jpg');
+(13, '102184603142251166236', '{\"longitude\":79.9814909,\"latitude\":6.9418863}', 'test', '2019-10-06 10:15:33', '2019-10-06 10:15:33', 'NO IMAGE'),
+(14, '102184603142251166236', '{\"longitude\":79.9814909,\"latitude\":6.9418863}', 'test2', '2019-10-06 10:16:29', '2019-10-06 10:16:29', '/home/nayananga/Desktop/project_3s_server/src/Service/../../images/102184603142251166236/scaled_Screenshot_20191006-130116.png');
 
 -- --------------------------------------------------------
 
@@ -87,8 +88,7 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `user_id`, `qa`, `geo_tag`, `device_signature`, `created_at`, `updated_at`) VALUES
-(36, '113631093528068171553', '[{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Very Pleasant\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Often\"},{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Very Quick\"}]', '{\"longitude\":80.37267905100451,\"latitude\":6.76847377400719}', 'TRT-LX2', '2019-10-01 18:38:58', '2019-10-01 18:38:58'),
-(37, '113631093528068171553', '[{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Agree\"},{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Moderate\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Moderate\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Services\"}]', '{\"longitude\":80.369136,\"latitude\":6.7726488}', 'TRT-LX2', '2019-10-01 18:39:32', '2019-10-01 18:39:32');
+(39, '102184603142251166236', '[{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Agree\"},{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Bad\"},{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Pleasant\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"}]', '{\"longitude\":79.9814909,\"latitude\":6.9418863}', 'TRT-LX2', '2019-10-06 10:19:44', '2019-10-06 10:19:44');
 
 -- --------------------------------------------------------
 
@@ -130,15 +130,13 @@ ALTER TABLE `admin`
 -- Indexes for table `complaints`
 --
 ALTER TABLE `complaints`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `geo_tag` (`geo_tag`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `reviews`
 --
 ALTER TABLE `reviews`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `geo_tag` (`geo_tag`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `user`
@@ -161,12 +159,12 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -59,9 +59,8 @@ class ComplaintService extends BaseService
                     throw new ComplaintException('The field "description" is required.', 400);
                 } else {
                     $complaintImageName = $input["image"]["name"];
-                    if(empty($complaintImageName)){
-                        return $this->complaintRepository->createComplaint($complaint);
-                    } else {
+                    $complaint->image_path = 'NO IMAGE';
+                    if($complaintImageName != null) {
                         $complaintImagePath = __DIR__ . '/../../images/' . $complaint->user_id .'/'. $complaintImageName;
                         $complaint->image_path = $complaintImagePath;
                         $complaintImageFile = $input["image"]["file"];
@@ -69,15 +68,9 @@ class ComplaintService extends BaseService
                         if (!is_dir(__DIR__ . '/../../images/' . $complaint->user_id )) {
                             mkdir(__DIR__ . '/../../images/' . $complaint->user_id , 0777, true);
                         }
-                        try{
-                            file_put_contents($complaintImagePath , $realComplaintImageFile);
-                            return $this->complaintRepository->createComplaint($complaint);
-                        }
-                        catch(Exception $e)
-                        {
-                            throw new ComplaintException($e, 400);
-                        }
+                        file_put_contents($complaintImagePath , $realComplaintImageFile);
                     }
+                    return $this->complaintRepository->createComplaint($complaint);
                 }
             }
         }
