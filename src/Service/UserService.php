@@ -54,17 +54,17 @@ class UserService extends BaseService
         return $this->userRepository->createUser($user);
     }
 
-    public function updateUser(array $input, String $google_id)
+    public function updateUser(array $input)
     {
+        $google_id = $input["decoded"]['sub'];
         $user = $this->checkUserByGoogleId($google_id);
-        $data = json_decode(json_encode($input), false);
-        if (!isset($data->name) && !isset($data->email)) {
-            throw new UserException('Enter the data to update the user.', 400);
+        if (isset($user->google_id)) {
+            $user->phoneNo = $input["phoneNo"];
+            $user->nic = $input["nic"];
+            return $this->userRepository->updateUser($user);
         }
-        if (isset($data->name)) {
-            $user->name = $data->name;
-        }
-
-        return $this->userRepository->updateUser($user);
+        else {
+            throw new UserException('This user does not exist.', 400);
+        }  
     }
 }

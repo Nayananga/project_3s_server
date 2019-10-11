@@ -16,7 +16,7 @@ $app->group('/api/v1', function () use ($app) {
         $app->get('/login', 'App\Controller\User\LoginUser');
         $app->get('', 'App\Controller\User\GetAllUsers');
         $app->get('/getoneuser', 'App\Controller\User\GetOneUser');
-        $app->put('/[{id}]', 'App\Controller\User\UpdateUser');
+        $app->put('/updateuser', 'App\Controller\User\UpdateUser');
     })->add(new App\Middleware\AuthMiddleware($app));
     $app->group('/complaints', function () use ($app) {
         $app->get('', 'App\Controller\Complaint\GetAllComplaints');

@@ -68,10 +68,10 @@ abstract class BaseController
     }
 
     /**
-     * @param int $id
+     * @param String $id
      * @return mixed
      */
-    protected function getFromCache(int $id)
+    protected function getFromCache(String $id)
     {
         $redis = $this->getRedisClient();
         $key = $this::KEY . $id;
@@ -89,10 +89,10 @@ abstract class BaseController
     }
 
     /**
-     * @param int $id
+     * @param String $id
      * @param mixed $result
      */
-    protected function saveInCache(int $id, $result)
+    protected function saveInCache(String $id, $result)
     {
         $redis = $this->getRedisClient();
         $key = $this::KEY . $id;
@@ -100,9 +100,9 @@ abstract class BaseController
     }
 
     /**
-     * @param int $id
+     * @param String $id
      */
-    protected function deleteFromCache(int $id)
+    protected function deleteFromCache(String $id)
     {
         $redis = $this->getRedisClient();
         $key = $this::KEY . $id;

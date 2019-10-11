@@ -11,9 +11,10 @@ class UpdateUser extends BaseUser
     {
         $this->setParams($request, $response, $args);
         $input = $this->getInput();
-        $user = $this->getUserService()->updateUser($input, (String)$this->args['id']);
+        $user_id = $input["decoded"]['sub'];
+        $user = $this->getUserService()->updateUser($input);
         if ($this->useRedis() === true) {
-            $this->saveInCache((int)$this->args['id'], $user);
+            $this->saveInCache($user_id, $user);
         }
 
         return $this->jsonResponse('success', $user, 200);

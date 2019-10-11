@@ -46,13 +46,13 @@ class UserRepository extends BaseRepository
 
     public function updateUser($user)
     {
-        $query = 'UPDATE `user` SET `nickname` = :name, `email` = :email, `image` = :image WHERE `google_id` = :id';
+        $query = 'UPDATE `user` SET `phoneNo` = :phoneNo, `nic` = :nic WHERE `google_id` = :google_id';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('name', $user->nickname);
-        $statement->bindParam('email', $user->email);
-        $statement->bindParam('image', $user->image);
+        $statement->bindParam('phoneNo', $user->phoneNo);
+        $statement->bindParam('nic', $user->nic);
+        $statement->bindParam('google_id', $user->google_id);
         $statement->execute();
 
-        return $this->checkUserByGoogleId();
+        return $this->checkUserByGoogleId($user->google_id);
     }
 }
