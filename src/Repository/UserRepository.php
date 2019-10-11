@@ -35,7 +35,7 @@ class UserRepository extends BaseRepository
 
     public function checkUserByGoogleId(string $google_id)
     {
-        $query = 'SELECT `google_id`, `email`, `nickname` FROM `user` WHERE `google_id` = :google_id';
+        $query = 'SELECT `google_id`, `email`, `nickname`, `phoneNo`, `nic` FROM `user` WHERE `google_id` = :google_id';
         $statement = $this->database->prepare($query);
         $statement->bindParam('google_id', $google_id);
         $statement->execute();

@@ -10,10 +10,12 @@ class GetOneUser extends BaseUser
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->setParams($request, $response, $args);
+        $input = $this->getInput();
+        $user_id = $input["decoded"]['sub'];
         if ($this->useRedis() === true) {
-            $user = $this->getUserFromCache((int)$this->args['id']);
+            $user = $this->getUserFromCache($user_id);
         } else {
-            $user = $this->getUserService()->getUser((int)$this->args['id']);
+            $user = $this->getUserService()->getUser($user_id);
         }
         return $this->jsonResponse('success', $user, 200);
     }
@@ -22,7 +24,7 @@ class GetOneUser extends BaseUser
      * @param int $user_id
      * @return mixed
      */
-    private function getUserFromCache(int $user_id)
+    private function getUserFromCache($user_id)
     {
         $user = $this->getFromCache($user_id);
         if ($user === null) {
