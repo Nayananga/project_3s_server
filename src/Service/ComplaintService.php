@@ -4,8 +4,6 @@ namespace App\Service;
 
 use App\Exception\ComplaintException;
 use App\Repository\ComplaintRepository;
-use Nette\Neon\Exception;
-use PhpParser\Node\Scalar\String_;
 use stdClass;
 
 class ComplaintService extends BaseService
@@ -44,13 +42,13 @@ class ComplaintService extends BaseService
     {
         $userData = $input["decoded"];
         $checkUser = $this->validateCurrentUser($userData['sub']);
-        if(empty($checkUser)) {
+        if (empty($checkUser)) {
             throw new ComplaintException('Invalid User.', 400);
         } else {
             $complaint = new stdClass();
             $complaint->user_id = $userData['sub'];
             $complaint->geo_tag = $input["geo_location"];
-            if(empty($complaint->geo_tag)) {
+            if (empty($complaint->geo_tag)) {
                 throw new ComplaintException('The field "geo_tag" is required.', 400);
             } else {
                 $complaint->geo_tag = json_encode($complaint->geo_tag);
@@ -60,15 +58,15 @@ class ComplaintService extends BaseService
                 } else {
                     $complaintImageName = $input["image"]["name"];
                     $complaint->image_path = 'NO IMAGE';
-                    if($complaintImageName != null) {
-                        $complaintImagePath = __DIR__ . '/../../images/' . $complaint->user_id .'/'. $complaintImageName;
+                    if ($complaintImageName != null) {
+                        $complaintImagePath = __DIR__ . '/../../images/' . $complaint->user_id . '/' . $complaintImageName;
                         $complaint->image_path = $complaintImagePath;
                         $complaintImageFile = $input["image"]["file"];
                         $realComplaintImageFile = base64_decode($complaintImageFile);
-                        if (!is_dir(__DIR__ . '/../../images/' . $complaint->user_id )) {
-                            mkdir(__DIR__ . '/../../images/' . $complaint->user_id , 0777, true);
+                        if (!is_dir(__DIR__ . '/../../images/' . $complaint->user_id)) {
+                            mkdir(__DIR__ . '/../../images/' . $complaint->user_id, 0777, true);
                         }
-                        file_put_contents($complaintImagePath , $realComplaintImageFile);
+                        file_put_contents($complaintImagePath, $realComplaintImageFile);
                     }
                     return $this->complaintRepository->createComplaint($complaint);
                 }

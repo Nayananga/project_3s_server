@@ -62,9 +62,8 @@ class UserService extends BaseService
             $user->phoneNo = $input["phoneNo"];
             $user->nic = $input["nic"];
             return $this->userRepository->updateUser($user);
-        }
-        else {
+        } else {
             throw new UserException('This user does not exist.', 400);
-        }  
+        }
     }
 }
