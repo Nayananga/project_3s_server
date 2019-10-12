@@ -21,7 +21,7 @@ class GetOneUser extends BaseUser
     }
 
     /**
-     * @param int $user_id
+     * @param String $user_id
      * @return mixed
      */
     private function getUserFromCache($user_id)

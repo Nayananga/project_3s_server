@@ -12,7 +12,6 @@ abstract class BaseComplaint extends BaseController
      * @var ComplaintService
      */
     private $complaintService;
-    private $directory;
 
     public function __construct(Container $container)
     {

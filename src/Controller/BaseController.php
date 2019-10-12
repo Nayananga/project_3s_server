@@ -106,6 +106,6 @@ abstract class BaseController
     {
         $redis = $this->getRedisClient();
         $key = $this::KEY . $id;
-        $redis->del($key);
+        $redis->del((array)$key);
     }
 }
