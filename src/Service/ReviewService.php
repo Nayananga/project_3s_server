@@ -6,7 +6,7 @@ use App\Exception\ReviewException;
 use App\Repository\ReviewRepository;
 use stdClass;
 
-class ReviewService extends BaseService
+class ReviewService
 {
     /**
      * @var ReviewRepository

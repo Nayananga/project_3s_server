@@ -2,6 +2,8 @@
 
 namespace App\Exception;
 
-class ComplaintException extends BaseException
+use Exception;
+
+class ComplaintException extends Exception
 {
 }

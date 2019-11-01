@@ -6,7 +6,7 @@ use App\Exception\ComplaintException;
 use App\Repository\ComplaintRepository;
 use stdClass;
 
-class ComplaintService extends BaseService
+class ComplaintService
 {
     /**
      * @var ComplaintRepository

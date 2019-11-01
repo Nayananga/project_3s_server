@@ -18,3 +18,7 @@ $container['reviews_repository'] = function (ContainerInterface $container): Rev
 $container['complaints_repository'] = function (ContainerInterface $container): ComplaintRepository {
     return new ComplaintRepository($container->get('db'));
 };
+
+$container['hotels_repository'] = function (ContainerInterface $container): ComplaintRepository {
+    return new ComplaintRepository($container->get('db'));
+};

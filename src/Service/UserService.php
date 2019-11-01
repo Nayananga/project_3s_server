@@ -6,7 +6,7 @@ use App\Exception\UserException;
 use App\Repository\UserRepository;
 use stdClass;
 
-class UserService extends BaseService
+class UserService
 {
     /**
      * @var UserRepository

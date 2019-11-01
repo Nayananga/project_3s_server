@@ -4,6 +4,6 @@ namespace App\Exception;
 
 use Exception;
 
-abstract class BaseException extends Exception
+class HotelException extends Exception
 {
 }

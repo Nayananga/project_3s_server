@@ -18,3 +18,7 @@ $container['review_service'] = function (ContainerInterface $container): ReviewS
 $container['complaint_service'] = function (ContainerInterface $container): ComplaintService {
     return new ComplaintService($container->get('complaints_repository'));
 };
+
+$container['hotel_service'] = function (ContainerInterface $container): ComplaintService {
+    return new ComplaintService($container->get('hotels_repository'));
+};

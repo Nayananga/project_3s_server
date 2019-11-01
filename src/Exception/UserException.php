@@ -2,6 +2,8 @@
 
 namespace App\Exception;
 
-class UserException extends BaseException
+use Exception;
+
+class UserException extends Exception
 {
 }

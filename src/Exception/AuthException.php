@@ -2,6 +2,8 @@
 
 namespace App\Exception;
 
-class AuthException extends BaseException
+use Exception;
+
+class AuthException extends Exception
 {
 }
