@@ -2,9 +2,7 @@
 
 namespace App\Service;
 
-use App\Exception\HotelException;
 use App\Repository\HotelRepository;
-use stdClass;
 
 class HotelService
 {
@@ -16,6 +14,11 @@ class HotelService
     public function __construct(HotelRepository $hotelRepository)
     {
         $this->hotelRepository = $hotelRepository;
+    }
+
+    public function getHotels(): array
+    {
+        return $this->hotelRepository->getHotels();
     }
 
     public function searchHotels(string $strHotels): array

@@ -23,6 +23,7 @@ class DefaultController extends BaseController
             'reviews' => $url . '/api/v1/reviews',
             'users' => $url . '/api/v1/users',
             'complaints' => $url . '/api/v1/complaints',
+            'hotels' => $url . '/api/v1/hotels',
             'status' => $url . '/status',
             'this help' => $url . '',
         ];
@@ -41,11 +42,13 @@ class DefaultController extends BaseController
         $userService = $this->container->get('user_service');
         $complaintService = $this->container->get('complaint_service');
         $reviewService = $this->container->get('review_service');
+        $hotelService = $this->container->get('hotel_service');
 
         $db = [
             'users' => count($userService->getUsers()),
             'reviews' => count($reviewService->getAllReviews()),
             'complaints' => count($complaintService->getComplaints()),
+            'hotels' => count($hotelService->getHotels()),
         ];
         $status = [
             'db' => $db,

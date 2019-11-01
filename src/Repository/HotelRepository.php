@@ -12,6 +12,15 @@ class HotelRepository extends BaseRepository
         $this->database = $database;
     }
 
+    public function getHotels(): array
+    {
+        $query = 'SELECT * FROM hotels ORDER BY id';
+        $statement = $this->database->prepare($query);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
     public function searchHotels(string $strHotels): array
     {
         $query = 'SELECT * FROM hotels WHERE hotel_name LIKE :hotel_name ORDER BY id';

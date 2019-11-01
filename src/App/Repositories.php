@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use App\Repository\HotelRepository;
 use App\Repository\ComplaintRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
@@ -19,6 +20,6 @@ $container['complaints_repository'] = function (ContainerInterface $container): 
     return new ComplaintRepository($container->get('db'));
 };
 
-$container['hotels_repository'] = function (ContainerInterface $container): ComplaintRepository {
-    return new ComplaintRepository($container->get('db'));
+$container['hotels_repository'] = function (ContainerInterface $container): HotelRepository {
+    return new HotelRepository($container->get('db'));
 };

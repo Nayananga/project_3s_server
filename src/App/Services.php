@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use App\Service\HotelService;
 use App\Service\ComplaintService;
 use App\Service\ReviewService;
 use App\Service\UserService;
@@ -19,6 +20,6 @@ $container['complaint_service'] = function (ContainerInterface $container): Comp
     return new ComplaintService($container->get('complaints_repository'));
 };
 
-$container['hotel_service'] = function (ContainerInterface $container): ComplaintService {
-    return new ComplaintService($container->get('hotels_repository'));
+$container['hotel_service'] = function (ContainerInterface $container): HotelService {
+    return new HotelService($container->get('hotels_repository'));
 };

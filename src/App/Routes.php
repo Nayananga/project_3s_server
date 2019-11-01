@@ -27,6 +27,7 @@ $app->group('/api/v1', function () use ($app) {
         $app->delete('/[{id}]', 'App\Controller\Complaint\DeleteComplaint');
     })->add(new App\Middleware\AuthMiddleware($app));
     $app->group('/hotels', function () use ($app) {
-        $app->get('/search/[{query}]', 'App\Controller\Complaint\SearchHotels');
+        $app->get('', 'App\Controller\Hotel\GetAllHotels');
+        $app->get('/search/[{query}]', 'App\Controller\Hotel\SearchHotels');
     })->add(new App\Middleware\AuthMiddleware($app));
 });
