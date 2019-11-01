@@ -23,6 +23,8 @@ class ComplaintRepository extends BaseRepository
 
     }
 
+    # TODO: No get complaints for one user
+
     public function getComplaints(): array
     {
         $query = 'SELECT * FROM complaints ORDER BY id';
