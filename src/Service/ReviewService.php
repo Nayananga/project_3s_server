@@ -69,7 +69,14 @@ class ReviewService
                         throw new ReviewException('The field "geo_tag" is required.', 400);
                     } else {
                         $review->geo_tag = json_encode($review->geo_tag);
-                        return $this->getReviewRepository()->createReview($review);
+
+                        if (isset ($input["hotel_id"])) {
+                            $review->hotel_id = $input["hotel_id"];
+                            return $this->getReviewRepository()->createReview($review);
+
+                        } else {
+                            throw new ReviewException('The field "hotel_id" is required.', 400);
+                        }
                     }
                 }
             }
