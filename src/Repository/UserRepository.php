@@ -11,7 +11,7 @@ class UserRepository extends BaseRepository
         $this->database = $database;
     }
 
-    public function getUsers(): array
+    public function getAllUsers(): array
     {
         $query = 'SELECT `google_id`, `nic`, `email` FROM `user` ORDER BY `google_id`';
         $statement = $this->database->prepare($query);

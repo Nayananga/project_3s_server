@@ -33,9 +33,9 @@ class ReviewService
         return $this->reviewRepository;
     }
 
-    public function getReviews(String $google_id): array
+    public function getReviewsByUser(String $google_id): array
     {
-        return $this->getReviewRepository()->getReviews($google_id);
+        return $this->getReviewRepository()->getReviewsByUser($google_id);
     }
 
     public function getAllReviews(): array

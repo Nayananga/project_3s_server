@@ -10,7 +10,7 @@ class GetAllComplaints extends BaseComplaint
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->setParams($request, $response, $args);
-        $complaints = $this->getComplaintService()->getComplaints();
+        $complaints = $this->getComplaintService()->getAllComplaints();
 
         return $this->jsonResponse('success', $complaints, 200);
     }

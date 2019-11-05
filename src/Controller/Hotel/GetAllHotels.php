@@ -10,7 +10,7 @@ class GetAllHotels extends BaseHotel
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->setParams($request, $response, $args);
-        $hotels = $this->getHotelService()->getHotels();
+        $hotels = $this->getHotelService()->getAllHotels();
 
         return $this->jsonResponse('success', $hotels, 200);
     }

@@ -25,9 +25,9 @@ class ComplaintRepository extends BaseRepository
 
     # TODO: No get complaints for one user
 
-    public function getComplaints(): array
+    public function getAllComplaints(): array
     {
-        $query = 'SELECT * FROM complaints ORDER BY id';
+        $query = 'SELECT * FROM `complaints` ORDER BY `id`';
         $statement = $this->database->prepare($query);
         $statement->execute();
 
@@ -53,7 +53,7 @@ class ComplaintRepository extends BaseRepository
 
     public function createComplaint($complaint)
     {
-        $query = 'INSERT INTO complaints (user_id, geo_tag, description, image) VALUES (:user_id, :geo_tag, :description, :image)';
+        $query = 'INSERT INTO `complaints` (`user_id`, `geo_tag`, `description`, `image`) VALUES (:user_id, :geo_tag, :description, :image)';
         $statement = $this->database->prepare($query);
         $statement->bindParam(':user_id', $complaint->user_id);
         $statement->bindParam(':geo_tag', $complaint->geo_tag);

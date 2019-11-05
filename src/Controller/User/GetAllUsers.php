@@ -10,7 +10,7 @@ class GetAllUsers extends BaseUser
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->setParams($request, $response, $args);
-        $users = $this->getUserService()->getUsers();
+        $users = $this->getUserService()->getAllUsers();
 
         return $this->jsonResponse('success', $users, 200);
     }

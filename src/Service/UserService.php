@@ -28,9 +28,9 @@ class UserService
         return $this->userRepository->checkUserByGoogleId($google_id);
     }
 
-    public function getUsers(): array
+    public function getAllUsers(): array
     {
-        return $this->userRepository->getUsers();
+        return $this->userRepository->getAllUsers();
     }
 
     public function loginUser(array $input)

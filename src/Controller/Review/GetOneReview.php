@@ -13,7 +13,7 @@ class GetOneReview extends BaseReview
         $input = $this->getInput();
         $review_id = (int)$this->args['id'];
         $user_id = (int)$input['decoded']->sub;
-        $review = $this->getReviewService()->getReview($review_id, $user_id);
+        $review = $this->getReviewService()->getReviewsByUser($review_id, $user_id);
 
         return $this->jsonResponse('success', $review, 200);
     }

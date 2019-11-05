@@ -23,7 +23,7 @@ class ReviewRepository extends BaseRepository
 
     }
 
-    public function getReviews(String $user_id): array
+    public function getReviewsByUser(String $user_id): array
     {
         $query = 'SELECT * FROM reviews WHERE user_id = :user_id ORDER BY id';
         $statement = $this->getDb()->prepare($query);
@@ -35,7 +35,7 @@ class ReviewRepository extends BaseRepository
 
     public function getAllReviews(): array
     {
-        $query = 'SELECT * FROM reviews ORDER BY id';
+        $query = 'SELECT * FROM `reviews` ORDER BY `id`';
         $statement = $this->getDb()->prepare($query);
         $statement->execute();
 
@@ -45,7 +45,7 @@ class ReviewRepository extends BaseRepository
     public function createReview($review)
     {
         $query = '
-            INSERT INTO reviews (user_id, qa, geo_tag, device_signature)
+            INSERT INTO `reviews` (`user_id`, `qa`, `geo_tag`, `device_signature`)
             VALUES (:user_id, :qa, :geo_tag, :device_signature)
         ';
         $statement = $this->getDb()->prepare($query);
@@ -62,7 +62,7 @@ class ReviewRepository extends BaseRepository
 
     public function checkAndGetReview(String $review_id)
     {
-        $query = 'SELECT `id`, `user_id` FROM reviews WHERE `id` = :id';
+        $query = 'SELECT `id`, `user_id` FROM `reviews` WHERE `id` = :id';
         $statement = $this->getDb()->prepare($query);
         $statement->bindParam('id', $review_id);
         $statement->execute();

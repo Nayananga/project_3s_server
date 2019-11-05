@@ -12,9 +12,9 @@ class HotelRepository extends BaseRepository
         $this->database = $database;
     }
 
-    public function getHotels(): array
+    public function getAllHotels(): array
     {
-        $query = 'SELECT * FROM hotels ORDER BY id';
+        $query = 'SELECT * FROM `hotels` ORDER BY `id`';
         $statement = $this->database->prepare($query);
         $statement->execute();
 
@@ -23,7 +23,7 @@ class HotelRepository extends BaseRepository
 
     public function searchHotels(string $strHotels): array
     {
-        $query = 'SELECT * FROM hotels WHERE hotel_name LIKE :hotel_name ORDER BY id';
+        $query = 'SELECT `id`, `hotel_name`, `address` FROM `hotels` WHERE `hotel_name` LIKE :hotel_name ORDER BY `id`';
         $hotel_name = '%' . $strHotels . '%';
         $statement = $this->database->prepare($query);
         $statement->bindParam('hotel_name', $hotel_name);

@@ -16,9 +16,9 @@ class HotelService
         $this->hotelRepository = $hotelRepository;
     }
 
-    public function getHotels(): array
+    public function getAllHotels(): array
     {
-        return $this->hotelRepository->getHotels();
+        return $this->hotelRepository->getAllHotels();
     }
 
     public function searchHotels(string $strHotels): array

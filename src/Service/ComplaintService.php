@@ -18,9 +18,9 @@ class ComplaintService
         $this->complaintRepository = $complaintRepository;
     }
 
-    public function getComplaints(): array
+    public function getAllComplaints(): array
     {
-        return $this->complaintRepository->getComplaints();
+        return $this->complaintRepository->getAllComplaints();
     }
 
     public function getComplaint(String $complaint_id)
