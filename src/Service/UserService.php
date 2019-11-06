@@ -38,7 +38,7 @@ class UserService
         $data = $input["decoded"];
         $checkUser = $this->checkUserByGoogleId($data['sub']);
         if (empty($checkUser)) {
-            return $this->userRepository->createUser($data);
+            return $this->createUser($data);
         } else {
             return $checkUser;
         }

@@ -22,15 +22,15 @@ class UserRepository extends BaseRepository
 
     public function createUser($user)
     {
-        $query = 'INSERT INTO user (google_id, email, nickname, image) VALUES (:google_id, :email, :nickname, :image)';
+        $query = 'INSERT INTO `user` (`google_id`, `email`, `nickname`, `image`) VALUES (:google_id, :email, :nickname, :image)';
         $statement = $this->database->prepare($query);
-        $statement->bindParam('google_id', $user['sub']);
-        $statement->bindParam('email', $user['email']);
-        $statement->bindParam('nickname', $user['nickname']);
-        $statement->bindParam('image', $user['image']);
+        $statement->bindParam('google_id', $user->google_id);
+        $statement->bindParam('email', $user->email);
+        $statement->bindParam('nickname', $user->nickname);
+        $statement->bindParam('image', $user->image);
         $statement->execute();
 
-        return $this->checkUserByGoogleId($user['sub']);
+        return $this->checkUserByGoogleId($user->google_id);
     }
 
     public function checkUserByGoogleId(string $google_id)
