@@ -15,7 +15,7 @@ class SearchHotels extends BaseHotel
         } else {
             $hotels = $this->getHotelService()->searchHotels($this->args['query']);
         }
-        
+
         return $this->jsonResponse('success', $hotels, 200);
     }
 

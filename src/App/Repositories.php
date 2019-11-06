@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
-use App\Repository\HotelRepository;
 use App\Repository\ComplaintRepository;
+use App\Repository\HotelRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
 use Psr\Container\ContainerInterface;

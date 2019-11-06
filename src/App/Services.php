@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
-use App\Service\HotelService;
 use App\Service\ComplaintService;
+use App\Service\HotelService;
 use App\Service\ReviewService;
 use App\Service\UserService;
 use Psr\Container\ContainerInterface;
