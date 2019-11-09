@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Exception\QuestionException;
 use PDO;
 
 class QuestionRepository extends BaseRepository
