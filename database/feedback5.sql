@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 06, 2019 at 05:24 AM
+-- Generation Time: Nov 09, 2019 at 11:06 PM
 -- Server version: 5.7.27-0ubuntu0.19.04.1
 -- PHP Version: 7.2.24-0ubuntu0.19.04.1
 
@@ -131,7 +131,7 @@ CREATE TABLE `auth_user` (
 --
 
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-(1, 'pbkdf2_sha256$150000$hij3zxyhssRY$+WnLzVc5InadQNuHkN8Sd2dyexjXz9YIH0O9jdgQK1w=', '2019-10-28 06:24:00.863668', 1, 'Ajanthy', '', '', 'ajanthy@gmail.com', 1, 1, '2019-09-30 13:52:08.669726');
+(1, 'pbkdf2_sha256$150000$hij3zxyhssRY$+WnLzVc5InadQNuHkN8Sd2dyexjXz9YIH0O9jdgQK1w=', '2019-11-06 09:50:44.787071', 1, 'Ajanthy', '', '', 'ajanthy@gmail.com', 1, 1, '2019-09-30 13:52:08.669726');
 
 -- --------------------------------------------------------
 
@@ -180,7 +180,10 @@ CREATE TABLE `complaints` (
 INSERT INTO `complaints` (`id`, `user_id`, `geo_tag`, `description`, `created_at`, `updated_at`, `image`) VALUES
 (13, '102184603142251166236', '{\"longitude\":79.9814909,\"latitude\":6.9418863}', 'test', '2019-10-06 10:15:33', '2019-10-06 10:15:33', 'NO IMAGE'),
 (14, '102184603142251166236', '{\"longitude\":79.9814909,\"latitude\":6.9418863}', 'test2', '2019-10-06 10:16:29', '2019-10-06 10:16:29', '/home/nayananga/Desktop/project_3s_server/src/Service/../../images/102184603142251166236/scaled_Screenshot_20191006-130116.png'),
-(15, '118044157704803116440', '{\"longitude\":80.0271833,\"latitude\":9.6972267}', 'gghh', '2019-11-05 21:30:40', '2019-11-05 21:30:40', 'NO IMAGE');
+(15, '118044157704803116440', '{\"longitude\":80.0271833,\"latitude\":9.6972267}', 'gghh', '2019-11-05 21:30:40', '2019-11-05 21:30:40', 'NO IMAGE'),
+(16, '110929506844893048676', '{\"longitude\":80.0212102,\"latitude\":9.6853719}', 'asdfhjkahsss', '2019-11-07 08:08:40', '2019-11-07 08:08:40', '/home/nayananga/Desktop/project_3s_server/src/Service/../../images/110929506844893048676/scaled_2e6e5ee0-ff79-4278-8381-37285b34fc9e3887362895881359926.jpg'),
+(17, '110929506844893048676', '{\"longitude\":80.021418,\"latitude\":9.6854334}', 'adddf', '2019-11-07 09:33:26', '2019-11-07 09:33:26', 'NO IMAGE'),
+(18, '110929506844893048676', '{\"longitude\":80.021566,\"latitude\":9.685568}', 'not good', '2019-11-07 09:38:12', '2019-11-07 09:38:12', '/home/nayananga/Desktop/project_3s_server/src/Service/../../images/110929506844893048676/scaled_ed184f71-b9cf-456c-a73e-eb2a09e239e23493548699959188352.jpg');
 
 -- --------------------------------------------------------
 
@@ -361,7 +364,12 @@ CREATE TABLE `reviews` (
 INSERT INTO `reviews` (`id`, `user_id`, `qa`, `geo_tag`, `hotel_id`, `device_signature`, `created_at`, `updated_at`) VALUES
 (39, '102184603142251166236', '[{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Agree\"},{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Bad\"},{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Pleasant\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"}]', '{\"longitude\":79.9814909,\"latitude\":6.9418863}', 1, 'TRT-LX2', '2019-10-06 10:19:44', '2019-10-06 10:19:44'),
 (40, '118044157704803116440', '[{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Very much Agree\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Often\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"},{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Very Quick\"}]', '{\"longitude\":80.0271761,\"latitude\":9.6972157}', 1, 'TRT-LX2', '2019-11-05 23:45:42', '2019-11-05 23:45:42'),
-(41, '118044157704803116440', '[{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Worse\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Non\"},{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Moderate\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Often\"}]', '{\"longitude\":80.0271844,\"latitude\":9.6972249}', 2, 'TRT-LX2', '2019-11-05 23:53:17', '2019-11-05 23:53:17');
+(41, '118044157704803116440', '[{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Worse\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Non\"},{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Moderate\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Often\"}]', '{\"longitude\":80.0271844,\"latitude\":9.6972249}', 2, 'TRT-LX2', '2019-11-05 23:53:17', '2019-11-05 23:53:17'),
+(42, '118044157704803116440', '[{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Moderate\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Services\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Moderate\"},{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Moderate\"}]', '{\"longitude\":80.0225766,\"latitude\":9.6890862}', 1, 'TRT-LX2', '2019-11-06 05:02:54', '2019-11-06 05:02:54'),
+(43, '102184603142251166236', '[{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Very Pleasant\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Often\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"},{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Very much Agree\"}]', '{\"longitude\":80.0225766,\"latitude\":9.6890862}', 1, 'TRT-LX2', '2019-11-06 05:03:49', '2019-11-06 05:03:49'),
+(44, '108574536158740548472', '[{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Very Pleasant\"},{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Pleasant\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Often\"},{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Very much Agree\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Services\"}]', '{\"longitude\":80.0169862,\"latitude\":9.6834218}', 2, 'HUAWEI NMO-L31', '2019-11-07 07:41:04', '2019-11-07 07:41:04'),
+(45, '110929506844893048676', '[{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Quick\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Often\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"},{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Moderate\"}]', '{\"longitude\":80.0212333,\"latitude\":9.685372}', 1, 'LLD-L21', '2019-11-07 08:07:47', '2019-11-07 08:07:47'),
+(46, '110929506844893048676', '[{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Rare\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Both\"},{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Worse\"},{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Disagree\"}]', '{\"longitude\":80.021566,\"latitude\":9.685568}', 1, 'LLD-L21', '2019-11-07 09:40:13', '2019-11-07 09:40:13');
 
 -- --------------------------------------------------------
 
@@ -385,8 +393,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`google_id`, `email`, `nickname`, `phoneNo`, `image`, `nic`, `created_at`, `updated_at`) VALUES
+('101612620544792325059', 'rizwathr@gmail.com', 'Rizwan Rizwath', NULL, 'https://lh3.googleusercontent.com/a-/AAuE7mBUTKosEDLw6IrQ26kEr0wvjaYbEXMqocKEXGTG=s96-c', NULL, '2019-11-06 06:45:42', '2019-11-06 06:45:42'),
 ('102184603142251166236', 'nicknam952@gmail.com', 'Nayananga Muhandiram', NULL, 'https://lh3.googleusercontent.com/a-/AAuE7mDoHBcpm1TliHSrVVY7CSZWezR_-eo8UGGjOQSD=s96-c', NULL, '2019-09-25 16:35:34', '2019-09-25 16:35:34'),
-('113631093528068171553', 'nicknam95@gmail.com', 'Nayananga Muhandiram', NULL, 'https://lh5.googleusercontent.com/-s3bD7CIReJQ/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfp-DUBv9SkwWHs0PKCmdRG6IVJBA/s96-c/photo.jpg', NULL, '2019-09-25 16:44:40', '2019-09-25 16:44:40'),
+('108574536158740548472', 'yothiyoges1996@gmail.com', 'yogeswaran yothika', '0776633716', 'https://lh3.googleusercontent.com/a-/AAuE7mA1-eoZbrEQFev00LVUrdsyi-Rd9D1YKxnuvEd9tg=s96-c', '967653500v', '2019-11-07 07:39:21', '2019-11-07 08:13:09'),
+('110929506844893048676', '2016csc048@univ.jfn.ac.lk', '2016csc048 R.S.L.Jayasinghe', NULL, 'https://lh3.googleusercontent.com/a-/AAuE7mDVesL7VJcoNEithZQpoRPxsZw-nLfE1d3yvV46=s96-c', '953464110v', '2019-11-07 08:03:53', '2019-11-07 08:15:11'),
+('112841724570487356528', 'yogestharani25@gmail.com', 'Tharani Yoges', NULL, 'https://lh4.googleusercontent.com/-xlW0yU_vDJw/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3reCKBvm1Ohm63tDFsmTnX7SXQdEhA/s96-c/photo.jpg', NULL, '2019-11-07 08:31:52', '2019-11-07 08:31:52'),
+('113631093528068171553', 'nicknam95@gmail.com', NULL, NULL, NULL, NULL, '2019-11-06 05:56:29', '2019-11-06 05:56:29'),
 ('118044157704803116440', 'nayanangamuhandiram@gmail.com', 'Nayananga Muhandiram', NULL, 'https://lh3.googleusercontent.com/a-/AAuE7mBpeSpCp8amkvOusoZrf0J9tfK398CMJcnHB1ua=s96-c', NULL, '2019-09-29 00:19:13', '2019-09-29 00:19:13');
 
 --
@@ -539,7 +551,7 @@ ALTER TABLE `auth_user_user_permissions`
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `django_admin_log`
 --
@@ -559,7 +571,7 @@ ALTER TABLE `django_migrations`
 -- AUTO_INCREMENT for table `hotels`
 --
 ALTER TABLE `hotels`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `question`
 --
@@ -569,7 +581,7 @@ ALTER TABLE `question`
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- Constraints for dumped tables
 --
