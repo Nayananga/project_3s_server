@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 09, 2019 at 11:06 PM
+-- Generation Time: Nov 10, 2019 at 05:15 AM
 -- Server version: 5.7.27-0ubuntu0.19.04.1
 -- PHP Version: 7.2.24-0ubuntu0.19.04.1
 
@@ -340,6 +340,14 @@ CREATE TABLE `question` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `question`
+--
+
+INSERT INTO `question` (`id`, `question`, `expected_answer`, `created_at`, `updated_at`) VALUES
+(1, 'How good was the outside environment of the restaurant?', '[\"Very Pleasant\", \"Pleasant\", \"Moderate\", \"Bad\", \"Worse\"]', '2019-11-09 20:31:55', '2019-11-09 23:21:10'),
+(2, 'How Often Do You Dine with Us?', '[\"Very Often\", \"Often\", \"Moderate\", \"Rare\", \"Very Rare\"]', '2019-11-09 23:22:29', '2019-11-09 23:22:29');
+
 -- --------------------------------------------------------
 
 --
@@ -369,7 +377,8 @@ INSERT INTO `reviews` (`id`, `user_id`, `qa`, `geo_tag`, `hotel_id`, `device_sig
 (43, '102184603142251166236', '[{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Very Pleasant\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Often\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"},{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Very much Agree\"}]', '{\"longitude\":80.0225766,\"latitude\":9.6890862}', 1, 'TRT-LX2', '2019-11-06 05:03:49', '2019-11-06 05:03:49'),
 (44, '108574536158740548472', '[{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Very Pleasant\"},{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Pleasant\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Often\"},{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Very much Agree\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Services\"}]', '{\"longitude\":80.0169862,\"latitude\":9.6834218}', 2, 'HUAWEI NMO-L31', '2019-11-07 07:41:04', '2019-11-07 07:41:04'),
 (45, '110929506844893048676', '[{\"question\":\"How Quick or Adequate Was the Speed of Service?\",\"answer\":\"Quick\"},{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Often\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Food\"},{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Moderate\"}]', '{\"longitude\":80.0212333,\"latitude\":9.685372}', 1, 'LLD-L21', '2019-11-07 08:07:47', '2019-11-07 08:07:47'),
-(46, '110929506844893048676', '[{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Rare\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Both\"},{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Worse\"},{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Disagree\"}]', '{\"longitude\":80.021566,\"latitude\":9.685568}', 1, 'LLD-L21', '2019-11-07 09:40:13', '2019-11-07 09:40:13');
+(46, '110929506844893048676', '[{\"question\":\"How Often Do You Dine with Us?\",\"answer\":\"Very Rare\"},{\"question\":\"What Did You Like Best About Our Food and Services?\",\"answer\":\"Both\"},{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Worse\"},{\"question\":\"Does the Restaurant Have a Sufficient Selection of Healthy Choices?\",\"answer\":\"Disagree\"}]', '{\"longitude\":80.021566,\"latitude\":9.685568}', 1, 'LLD-L21', '2019-11-07 09:40:13', '2019-11-07 09:40:13'),
+(47, '118044157704803116440', '[{\"question\":\"How good was the outside environment of the restaurant?\",\"answer\":\"Very Pleasant\"}]', '{\"longitude\":80.0271763,\"latitude\":9.6972159}', 2, 'TRT-LX2', '2019-11-09 23:39:44', '2019-11-09 23:39:44');
 
 -- --------------------------------------------------------
 
@@ -576,12 +585,12 @@ ALTER TABLE `hotels`
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 --
 -- Constraints for dumped tables
 --
