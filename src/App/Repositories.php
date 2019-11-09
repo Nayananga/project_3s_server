@@ -2,6 +2,7 @@
 
 use App\Repository\ComplaintRepository;
 use App\Repository\HotelRepository;
+use App\Repository\QuestionRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
 use Psr\Container\ContainerInterface;
@@ -23,3 +24,8 @@ $container['complaints_repository'] = function (ContainerInterface $container): 
 $container['hotels_repository'] = function (ContainerInterface $container): HotelRepository {
     return new HotelRepository($container->get('db'));
 };
+
+$container['question_repository'] = function (ContainerInterface $container): QuestionRepository {
+    return new QuestionRepository($container->get('db'));
+};
+

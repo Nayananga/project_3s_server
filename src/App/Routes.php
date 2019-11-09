@@ -30,4 +30,7 @@ $app->group('/api/v1', function () use ($app) {
         $app->get('', 'App\Controller\Hotel\GetAllHotels');
         $app->get('/search/[{query}]', 'App\Controller\Hotel\SearchHotels');
     })->add(new App\Middleware\AuthMiddleware($app));
+    $app->group('/questions', function () use ($app) {
+        $app->get('', 'App\Controller\Question\GetAllQuestions');
+    })->add(new App\Middleware\AuthMiddleware($app));
 });

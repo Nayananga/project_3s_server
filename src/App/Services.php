@@ -2,6 +2,7 @@
 
 use App\Service\ComplaintService;
 use App\Service\HotelService;
+use App\Service\QuestionService;
 use App\Service\ReviewService;
 use App\Service\UserService;
 use Psr\Container\ContainerInterface;
@@ -22,4 +23,8 @@ $container['complaint_service'] = function (ContainerInterface $container): Comp
 
 $container['hotel_service'] = function (ContainerInterface $container): HotelService {
     return new HotelService($container->get('hotels_repository'));
+};
+
+$container['question_service'] = function (ContainerInterface $container): QuestionService {
+    return new QuestionService($container->get('question_repository'));
 };
