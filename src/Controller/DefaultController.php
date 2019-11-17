@@ -45,10 +45,10 @@ class DefaultController extends BaseController
         $hotelService = $this->container->get('hotel_service');
 
         $db = [
-            'users' => count($userService->getUsers()),
+            'users' => count($userService->getAllUsers()),
             'reviews' => count($reviewService->getAllReviews()),
-            'complaints' => count($complaintService->getComplaints()),
-            'hotels' => count($hotelService->getHotels()),
+            'complaints' => count($complaintService->getAllComplaints()),
+            'hotels' => count($hotelService->getAllHotels()),
         ];
         $status = [
             'db' => $db,
